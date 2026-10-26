@@ -3463,8 +3463,20 @@ main {
   .emergency-bar {
     padding: 10px 12px;
     border-radius: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .emergency-info-group {
+    justify-content: space-between;
+  }
+  .emergency-texts {
+    flex: 1;
+    min-width: 0;
   }
   .btn-emergency-cta {
+    width: 100%;
+    min-height: 42px;
     padding: 7px 16px;
     font-size: 13px;
   }
