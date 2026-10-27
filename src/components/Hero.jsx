@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Stethoscope, Siren, UserRound } from 'lucide-react';
 
 export default function Hero({ 
@@ -11,6 +11,20 @@ export default function Hero({
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const searchBoxRef = useRef(null);
+
+  useEffect(() => {
+    if (!isDropdownOpen) return;
+
+    const handlePointerDown = (event) => {
+      if (searchBoxRef.current && !searchBoxRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handlePointerDown);
+    return () => document.removeEventListener('mousedown', handlePointerDown);
+  }, [isDropdownOpen]);
 
   // Animated counters state
   const [counts, setCounts] = useState({
@@ -57,6 +71,8 @@ export default function Hero({
     requestAnimationFrame(animate);
   }, [stats]);
 
+  const closeDropdown = () => setIsDropdownOpen(false);
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     const query = searchTerm.trim();
@@ -64,7 +80,7 @@ export default function Hero({
       onToast('يرجى كتابة اسم الطبيب أو التخصص المطلوب للبحث', 'normal');
       return;
     }
-    setIsDropdownOpen(false);
+    closeDropdown();
     onToast(`جارِ البحث عن: "${query}" في شبكة أطباء دكتورك...`, 'success');
     if (onSearch) {
       onSearch(query);
@@ -75,7 +91,7 @@ export default function Hero({
 
   const selectSuggestion = (value) => {
     setSearchTerm(value);
-    setIsDropdownOpen(false);
+    closeDropdown();
     onToast(`جارِ البحث عن: "${value}"...`, 'success');
     if (onSearch) {
       onSearch(value);
@@ -128,7 +144,7 @@ export default function Hero({
           </p>
 
           {/* Interactive Search Bar */}
-          <div className="search-box-wrapper">
+          <div className="search-box-wrapper" ref={searchBoxRef}>
             <form className="search-form" onSubmit={handleSearchSubmit}>
               
               <div className="search-input-field">
@@ -158,6 +174,17 @@ export default function Hero({
                 {/* Live Search Suggestions Dropdown */}
                 {isDropdownOpen && (
                   <div className="search-dropdown">
+                    <div className="search-dropdown-header">
+                      <button
+                        type="button"
+                        className="search-dropdown-close"
+                        aria-label="إغلاق القائمة"
+                        onClick={closeDropdown}
+                      >
+                        ×
+                      </button>
+                    </div>
+
                     <div className="dropdown-section">
                       <span className="section-title"><Stethoscope size={15} aria-hidden="true" /> التخصصات الشائعة المتاحة</span>
                       <div className="chips-list">
