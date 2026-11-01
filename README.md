@@ -1,16 +1,96 @@
-# React + Vite
+# 🩺 دكتورك (Doctork) — منصة حجز المواعيد الطبية الذكية
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+منصة رقمية حديثة لحجز مواعيد الكشف الطبي في مصر بكل سهولة وسرعة، مصممة بالكامل لتوفير تجربة مستخدم عربية سلسة (RTL) وبدون أوقات انتظار في العيادات.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 المميزات الرئيسية
 
-## React Compiler
+- **حجز فوري بدون انتظار:** اختيار الطبيب، العيادة، والموعد المناسب وتأكيد الحجز فورياً.
+- **تكامل مباشر مع واتساب:** توليد تذكرة كشف إلكترونية مشفرة برابط مباشر لواتساب يشمل كافة تفاصيل الموعد وعنوان العيادة.
+- **دعم العيادات المتعددة:** عرض كل عيادات الطبيب ومواعيدها الخاصة في مختلف المحافظات.
+- **طوارئ طبية سريعة:** قسم مخصص لطلب استغاثة أو كشف طارئ في ثوانٍ معدودة.
+- **تجربة استخدام متقدمة:** دعم كامل للوضع الداكن/الفاتح (Dark / Light Theme)، وتصميم متجاوب 100% مع شاشات الموبايل والحواسيب.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 🛠️ التقنيات المستخدمة (Tech Stack)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- **الواجهة الأمامية:** React 19 + JavaScript (ES Modules).
+- **أداة البناء والتطوير:** Vite.
+- **الأيقونات:** Font Awesome (React SVG).
+- **الخطوط:** Cairo (Self-hosted).
+- **الفحص والجودة:** Oxlint.
+- **النشر والاستضافة:** مهيأ للنشر على Vercel مع ترويسات حماية متقدمة.
+
+---
+
+## 📁 هيكل المشروع (Project Structure)
+
+```
+doctork/
+├── public/                 # الملفات العامة، الأيقونات و Favicon
+├── src/
+│   ├── assets/             # الصور والوسائط
+│   ├── components/
+│   │   ├── ui/             # مكونات الواجهة العامة (الأيقونات، الأزرار، المودالات)
+│   │   ├── layout/         # الهيدر، الفوتر، والحاويات
+│   │   ├── booking/        # نظام وإجراءات الحجز والتذاكر
+│   │   └── doctors/        # بطاقات واستعراض الأطباء والعيادات
+│   ├── services/           # طبقة البيانات والخدمات (Data Layer)
+│   ├── styles/             # متغيرات التصميم والأنماط الأساسية
+│   ├── App.jsx             # إدارة الحالة والتوجيه الرئيسي
+│   └── main.jsx            # نقطة البداية
+├── docs/                   # التوثيق والتقارير الفنية
+├── index.html              # المدخل الرئيسي للتطبيق
+├── package.json
+└── vite.config.js
+```
+
+---
+
+## 💻 التشغيل المحلي (Getting Started)
+
+### المتطلبات المسبقة:
+- Node.js (الإصدار 18 أو أحدث)
+- npm أو pnpm أو yarn
+
+### خطوات التثبيت والتشغيل:
+
+```bash
+# 1. استنساخ المستودع
+git clone https://github.com/mansourayman146-oss/doctork.git
+cd doctork
+
+# 2. تثبيت الحزم والاعتماديات
+npm ci
+
+# 3. نسخ ملف المتغيرات البيئية
+cp .env.example .env
+
+# 4. تشغيل خادم التطوير المحلي
+npm run dev
+
+# 5. بناء نسخة الإنتاج
+npm run build
+
+# 6. معاينة نسخة الإنتاج
+npm run preview
+
+# 7. فحص جودة الكود
+npm run lint
+```
+
+---
+
+## 🔒 الأمان والخصوصية
+
+- عدم حفظ أي بيانات اعتماد أو أسرار على الواجهة الأمامية.
+- التوافق مع معايير الأمان للترويسات وتأمين الاتصالات (`X-Frame-Options`, `X-Content-Type-Options`).
+- حماية بيانات المريض وخصوصيته وفقاً للأعراف والتشريعات المنظمة لسرية البيانات الطبية.
+
+---
+
+## 📄 الترخيص
+
+هذا المشروع ملك لفريق منصة دكتورك. جميع الحقوق محفوظة © 2026.
