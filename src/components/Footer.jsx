@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, Siren } from 'lucide-react';
+import Icon from './ui/Icon';
 
 export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty }) {
   const handleSpecClick = (specName, e) => {
@@ -18,7 +18,7 @@ export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty 
       <div className="footer-emergency-strip">
         <div className="footer-container strip-container">
           <div className="strip-info">
-            <Siren className="strip-siren" aria-hidden="true" />
+            <Icon name="siren" className="strip-siren" />
             <div>
               <strong>تحتاج استشارة أو رعاية عاجلة في الحال؟</strong>
               <p>طواقم الطوارئ وأطباء الرعاية الفورية متاحون 24 ساعة طوال أيام الأسبوع</p>
@@ -26,7 +26,7 @@ export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty 
           </div>
           <div className="strip-actions">
             <a href="tel:16999" className="hotline-btn">
-              <span><Phone size={15} aria-hidden="true" /> اتصل بالخط الساخن:</span>
+              <span><Icon name="phone" size={15} /> اتصل بالخط الساخن:</span>
               <strong>16999</strong>
             </a>
             <button 
