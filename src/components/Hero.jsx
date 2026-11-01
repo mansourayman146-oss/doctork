@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Stethoscope, Siren, UserRound } from 'lucide-react';
+import Icon from './ui/Icon';
 
 export default function Hero({ 
   onOpenEmergency, 
   onToast, 
-  onSearch,
-  stats = { doctorsCount: 216, bookingsCount: 15200, satisfactionRate: 98, specialtiesCount: 32, emergencyDoctorsCount: 16 },
-  doctors = [],
-  specialties = []
+  onSearch, 
+  stats = { doctorsCount: 216, bookingsCount: 15200, satisfactionRate: 98, specialtiesCount: 32, emergencyDoctorsCount: 16 }, 
+  doctors = [], 
+  specialties = [] 
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -186,7 +186,7 @@ export default function Hero({
                     </div>
 
                     <div className="dropdown-section">
-                      <span className="section-title"><Stethoscope size={15} aria-hidden="true" /> التخصصات الشائعة المتاحة</span>
+                      <span className="section-title"><Icon name="stethoscope" size={15} /> التخصصات الشائعة المتاحة</span>
                       <div className="chips-list">
                         {suggestedSpecialties.map((spec) => (
                           <button 
@@ -202,7 +202,7 @@ export default function Hero({
                     </div>
 
                     <div className="dropdown-section">
-                      <span className="section-title"><UserRound size={15} aria-hidden="true" /> نخبة الأطباء</span>
+                      <span className="section-title"><Icon name="user" size={15} /> نخبة الأطباء</span>
                       <ul className="suggested-doctors">
                         {suggestedDoctors.map((doc) => (
                           <li key={doc.id} className="doctor-item" onClick={() => selectSuggestion(doc.name)}>
@@ -296,7 +296,7 @@ export default function Hero({
                   </span>
                 </div>
                 <div className="emergency-icon-wrap" aria-hidden="true">
-                  <Siren className="siren-pulse" aria-hidden="true" />
+                  <Icon name="siren" className="siren-pulse" />
                 </div>
               </div>
             </div>
