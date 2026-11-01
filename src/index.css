@@ -4862,3 +4862,6 @@ main {
     display: none;
   }
 }
+
+[dir="rtl"] .icon-flip-rtl { transform: scaleX(-1); }
+
