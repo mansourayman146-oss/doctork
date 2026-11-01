@@ -4,7 +4,7 @@
 // ============================================================================
 
 const STORAGE_KEYS = {
-  DOCTORS: 'doctork_doctors_v1',
+  DOCTORS: 'doctork_doctors_v3',
   SPECIALTIES: 'doctork_specialties_v1',
   BOOKINGS: 'doctork_bookings_v1',
   REVIEWS: 'doctork_reviews_v1',
@@ -89,7 +89,7 @@ const INITIAL_SPECIALTIES = [
   }
 ];
 
-// Default Doctors
+// Default Doctors with multiple clinics and distinct appointments per clinic
 const INITIAL_DOCTORS = [
   {
     id: 1,
@@ -106,11 +106,49 @@ const INITIAL_DOCTORS = [
     price: 350,
     waitingTime: '0 دقيقة (دخول فوري بالميعاد)',
     availableToday: true,
-    availableSlots: ['05:00 م', '05:30 م', '06:00 م', '07:00 م', '08:00 م'],
+    availableSlots: ['05:00 م', '05:30 م', '06:00 م', '07:00 م', '07:30 م', '08:00 م'],
     initials: 'د.أ',
     avatarBg: '#d8532c',
     gender: 'male',
-    tags: ['كشف قلب شامل', 'رسم قلب فوري', 'متاح اليوم']
+    tags: ['كشف قلب شامل', 'رسم قلب فوري', 'متاح اليوم', 'متعدد العيادات'],
+    clinics: [
+      {
+        id: 'c1-maadi',
+        name: 'مركز القلب الدولي - المعادي',
+        shortLocation: 'المعادي',
+        city: 'القاهرة',
+        location: 'القاهرة - المعادي، شارع النصر أمام ميدان الجزائر',
+        days: 'السبت، الإثنين، الأربعاء',
+        price: 350,
+        waitingTime: '0 دقيقة (دخول فوري بالميعاد)',
+        availableToday: true,
+        availableSlots: ['05:00 م', '05:30 م', '06:00 م', '07:00 م', '08:00 م']
+      },
+      {
+        id: 'c1-mohandessin',
+        name: 'برج الأطباء التخصصي - المهندسين',
+        shortLocation: 'المهندسين',
+        city: 'الجيزة',
+        location: 'الجيزة - المهندسين، شارع سوريا تقاطع البطل أحمد عبد العزيز',
+        days: 'الأحد، الثلاثاء، الخميس',
+        price: 350,
+        waitingTime: '0 دقيقة (بدون زحمة)',
+        availableToday: true,
+        availableSlots: ['07:30 م', '08:00 م', '08:45 م', '09:30 م']
+      },
+      {
+        id: 'c1-tagamoa',
+        name: 'ميديكال بارك بريميير - التجمع الخامس',
+        shortLocation: 'التجمع الخامس',
+        city: 'القاهرة',
+        location: 'القاهرة - التجمع الخامس، شارع التسعين الشمالي خلف المستشفى الجوي',
+        days: 'الجمعة فقط',
+        price: 350,
+        waitingTime: '0 دقيقة (كشف فندقي VIP)',
+        availableToday: false,
+        availableSlots: ['02:00 م', '02:45 م', '03:30 م', '04:15 م']
+      }
+    ]
   },
   {
     id: 2,
@@ -127,11 +165,49 @@ const INITIAL_DOCTORS = [
     price: 300,
     waitingTime: '0 دقيقة (بدون زحمة)',
     availableToday: true,
-    availableSlots: ['06:30 م', '07:00 م', '07:30 م', '08:30 م'],
+    availableSlots: ['01:00 م', '01:30 م', '06:30 م', '07:00 م', '07:30 م', '08:30 م'],
     initials: 'د.س',
     avatarBg: '#ec4899',
     gender: 'female',
-    tags: ['ليزر وتجميل', 'علاج البشرة والشعر', 'متاح اليوم']
+    tags: ['ليزر وتجميل', 'علاج البشرة والشعر', 'متاح اليوم', 'فروع متعددة'],
+    clinics: [
+      {
+        id: 'c2-zayed',
+        name: 'عيادات ديرما كير كلينيك - الشيخ زايد',
+        shortLocation: 'الشيخ زايد',
+        city: 'الجيزة',
+        location: 'الجيزة - الشيخ زايد، مول أركان بلازا، المبنى الطبي',
+        days: 'السبت، الثلاثاء، الخميس',
+        price: 300,
+        waitingTime: '0 دقيقة (بدون زحمة)',
+        availableToday: true,
+        availableSlots: ['06:30 م', '07:00 م', '07:30 م', '08:30 م']
+      },
+      {
+        id: 'c2-heliopolis',
+        name: 'مركز النخبة للجلدية والليزر - مصر الجديدة',
+        shortLocation: 'مصر الجديدة',
+        city: 'القاهرة',
+        location: 'القاهرة - مصر الجديدة، شارع الأهرام قرب الكوربة',
+        days: 'الأحد والأربعاء',
+        price: 300,
+        waitingTime: '0 دقيقة (جلسات فردية)',
+        availableToday: true,
+        availableSlots: ['01:00 م', '01:30 م', '02:15 م', '03:00 م']
+      },
+      {
+        id: 'c2-dokki',
+        name: 'برج فينيسيا التخصصي - الدقي',
+        shortLocation: 'الدقي',
+        city: 'الجيزة',
+        location: 'الجيزة - الدقي، ميدان المساحة، عمارة برج الأطباء',
+        days: 'الإثنين والجمعة',
+        price: 300,
+        waitingTime: '0 دقيقة (دخول مباشر)',
+        availableToday: false,
+        availableSlots: ['04:00 م', '04:45 م', '05:30 م', '06:15 م']
+      }
+    ]
   },
   {
     id: 3,
@@ -147,12 +223,50 @@ const INITIAL_DOCTORS = [
     hospital: 'مركز العظام والعمود الفقري المتقدم',
     price: 400,
     waitingTime: '0 دقيقة (التزام تام بالموعد)',
-    availableToday: false,
-    availableSlots: ['04:30 م', '05:00 م', '06:00 م', '07:30 م'],
+    availableToday: true,
+    availableSlots: ['02:00 م', '04:30 م', '05:00 م', '06:00 م', '07:00 م', '07:30 م'],
     initials: 'د.ط',
     avatarBg: '#8b5cf6',
     gender: 'male',
-    tags: ['مناظير مفاصل', 'إصابات ملاعب', 'كشف دقيق']
+    tags: ['مناظير مفاصل', 'إصابات ملاعب', 'كشف دقيق', 'أكثر من عيادة'],
+    clinics: [
+      {
+        id: 'c3-heliopolis',
+        name: 'مركز العظام والعمود الفقري - مصر الجديدة',
+        shortLocation: 'مصر الجديدة',
+        city: 'القاهرة',
+        location: 'القاهرة - مصر الجديدة، ميدان تريومف، عمارة مصر للتأمين',
+        days: 'السبت والإثنين والأربعاء',
+        price: 400,
+        waitingTime: '0 دقيقة (التزام تام بالموعد)',
+        availableToday: false,
+        availableSlots: ['04:30 م', '05:00 م', '06:00 م', '07:30 م']
+      },
+      {
+        id: 'c3-nasrcity',
+        name: 'مستشفى العظام التخصصي - مدينة نصر',
+        shortLocation: 'مدينة نصر',
+        city: 'القاهرة',
+        location: 'القاهرة - مدينة نصر، شارع عباس العقاد بجوار جنينة مول',
+        days: 'الأحد والثلاثاء',
+        price: 400,
+        waitingTime: '0 دقيقة (بدون انتظار)',
+        availableToday: true,
+        availableSlots: ['07:00 م', '07:45 م', '08:30 م', '09:15 م']
+      },
+      {
+        id: 'c3-faisal',
+        name: 'مجمع النيل لجراحة العظام - فيصل',
+        shortLocation: 'فيصل والهرم',
+        city: 'الجيزة',
+        location: 'الجيزة - شارع فيصل الرئيسي، محطة العشرين',
+        days: 'الخميس والجمعة',
+        price: 400,
+        waitingTime: '0 دقيقة (كشف منظم)',
+        availableToday: true,
+        availableSlots: ['02:00 م', '02:30 م', '03:15 م', '04:00 م']
+      }
+    ]
   },
   {
     id: 4,
@@ -169,11 +283,49 @@ const INITIAL_DOCTORS = [
     price: 320,
     waitingTime: '0 دقيقة (غرفة كشف مخصصة للأطفال)',
     availableToday: true,
-    availableSlots: ['05:00 م', '05:30 م', '06:30 م', '07:00 م'],
+    availableSlots: ['01:30 م', '02:00 م', '05:00 م', '05:30 م', '06:30 م', '07:00 م'],
     initials: 'د.م',
     avatarBg: '#f59e0b',
     gender: 'female',
-    tags: ['حديثي ولادة', 'تطعيمات', 'حساسية صدر']
+    tags: ['حديثي ولادة', 'تطعيمات', 'حساسية صدر', 'عيادات بالقاهرة والجيزة'],
+    clinics: [
+      {
+        id: 'c4-tagamoa',
+        name: 'مجمع بيبي كير التخصصي - التجمع الخامس',
+        shortLocation: 'التجمع الخامس',
+        city: 'القاهرة',
+        location: 'القاهرة - التجمع الخامس، شارع التسعين الجنوبي، مجمع CMC',
+        days: 'السبت، الإثنين، الخميس',
+        price: 320,
+        waitingTime: '0 دقيقة (غرفة كشف مخصصة للأطفال)',
+        availableToday: true,
+        availableSlots: ['05:00 م', '05:30 م', '06:30 م', '07:00 م']
+      },
+      {
+        id: 'c4-maadi',
+        name: 'مركز أطفال المستقبل - المعادي',
+        shortLocation: 'المعادي',
+        city: 'القاهرة',
+        location: 'القاهرة - المعادي، شارع اللاسلكي أمام القرية الأولمبية',
+        days: 'الأحد والثلاثاء',
+        price: 320,
+        waitingTime: '0 دقيقة (منطقة ألعاب للأطفال)',
+        availableToday: true,
+        availableSlots: ['01:30 م', '02:00 م', '02:45 م', '03:30 م']
+      },
+      {
+        id: 'c4-october',
+        name: 'عيادات كيدز كلينيك التخصصية - 6 أكتوبر',
+        shortLocation: '6 أكتوبر',
+        city: 'الجيزة',
+        location: 'الجيزة - 6 أكتوبر، الحي المتميز، سنتر وادي الملوك',
+        days: 'الأربعاء والجمعة',
+        price: 320,
+        waitingTime: '0 دقيقة (تطهير دوري بعد كل طفل)',
+        availableToday: false,
+        availableSlots: ['07:30 م', '08:00 م', '08:30 م', '09:00 م']
+      }
+    ]
   },
   {
     id: 5,
@@ -190,11 +342,49 @@ const INITIAL_DOCTORS = [
     price: 250,
     waitingTime: '0 دقيقة (حجز غرفة تعقيم مسبق)',
     availableToday: true,
-    availableSlots: ['06:00 م', '07:00 م', '08:00 م', '08:30 م'],
+    availableSlots: ['03:00 م', '03:45 م', '06:00 م', '07:00 م', '08:00 م', '08:30 م'],
     initials: 'د.ح',
     avatarBg: '#06b6d4',
     gender: 'male',
-    tags: ['زراعة أسنان', 'تبييض بالليزر', 'حشو تجميلي']
+    tags: ['زراعة أسنان', 'تبييض بالليزر', 'حشو تجميلي', 'الإسكندرية والجيزة'],
+    clinics: [
+      {
+        id: 'c5-smouha',
+        name: 'مركز سمايل ديزاين - سموحة',
+        shortLocation: 'سموحة',
+        city: 'الإسكندرية',
+        location: 'الإسكندرية - سموحة، شارع فوزي معاذ بجوار مسجد علي بن أبي طالب',
+        days: 'السبت، الإثنين، الأربعاء',
+        price: 250,
+        waitingTime: '0 دقيقة (حجز غرفة تعقيم مسبق)',
+        availableToday: true,
+        availableSlots: ['06:00 م', '07:00 م', '08:00 م', '08:30 م']
+      },
+      {
+        id: 'c5-loran',
+        name: 'عيادات إيليت لطب وزراعة الأسنان - لوران',
+        shortLocation: 'لوران',
+        city: 'الإسكندرية',
+        location: 'الإسكندرية - لوران، طريق الحرية أبو قير، عمارة لوران بالاس',
+        days: 'الأحد والثلاثاء والخميس',
+        price: 250,
+        waitingTime: '0 دقيقة (تعقيم هواء متطور)',
+        availableToday: true,
+        availableSlots: ['03:00 م', '03:45 م', '04:30 م', '05:15 م']
+      },
+      {
+        id: 'c5-mohandessin',
+        name: 'مركز سمايل آرت الدولي - المهندسين',
+        shortLocation: 'المهندسين',
+        city: 'الجيزة',
+        location: 'الجيزة - المهندسين، شارع لبنان، ميدان لبنان',
+        days: 'الجمعة فقط',
+        price: 250,
+        waitingTime: '0 دقيقة (كشف وابتسامة رقمية)',
+        availableToday: false,
+        availableSlots: ['07:30 م', '08:15 م', '09:00 م', '09:45 م']
+      }
+    ]
   },
   {
     id: 6,
@@ -211,11 +401,49 @@ const INITIAL_DOCTORS = [
     price: 350,
     waitingTime: '0 دقيقة (دخول بالاسم فوراً)',
     availableToday: true,
-    availableSlots: ['05:30 م', '06:00 م', '06:45 م', '07:45 م'],
+    availableSlots: ['01:00 م', '01:30 م', '05:30 م', '06:00 م', '06:45 م', '07:45 م'],
     initials: 'د.ن',
     avatarBg: '#10b981',
     gender: 'female',
-    tags: ['قولون عصبي', 'متابعة السكري', 'جرثومة معدة']
+    tags: ['قولون عصبي', 'متابعة السكري', 'جرثومة معدة', 'فروع متعددة'],
+    clinics: [
+      {
+        id: 'c6-mohandessin',
+        name: 'عيادات الجاسترو كير - المهندسين',
+        shortLocation: 'المهندسين',
+        city: 'الجيزة',
+        location: 'الجيزة - المهندسين، شارع جامعة الدول العربية أمام نادي الزمالك',
+        days: 'السبت، الإثنين، الأربعاء',
+        price: 350,
+        waitingTime: '0 دقيقة (دخول بالاسم فوراً)',
+        availableToday: true,
+        availableSlots: ['05:30 م', '06:00 م', '06:45 م', '07:45 م']
+      },
+      {
+        id: 'c6-shoubra',
+        name: 'مجمع الرحمة التخصصي - شبرا',
+        shortLocation: 'شبرا',
+        city: 'القاهرة',
+        location: 'القاهرة - شبرا، شارع شبرا الرئيسي أمام محطة روض الفرج',
+        days: 'الأحد والثلاثاء',
+        price: 350,
+        waitingTime: '0 دقيقة (فحص سونار فوري)',
+        availableToday: true,
+        availableSlots: ['01:00 م', '01:30 م', '02:15 م', '03:00 م']
+      },
+      {
+        id: 'c6-haram',
+        name: 'عيادات صحتي التخصصية - الهرم',
+        shortLocation: 'الهرم',
+        city: 'الجيزة',
+        location: 'الجيزة - شارع الهرم الرئيسي، محطة العريش',
+        days: 'الخميس والجمعة',
+        price: 350,
+        waitingTime: '0 دقيقة (ملف صحي إلكتروني)',
+        availableToday: false,
+        availableSlots: ['08:00 م', '08:30 م', '09:15 م', '10:00 م']
+      }
+    ]
   },
   {
     id: 7,
@@ -231,12 +459,50 @@ const INITIAL_DOCTORS = [
     hospital: 'المركز الدولي للعيون والليزك',
     price: 380,
     waitingTime: '0 دقيقة (فحص أجهزة فوري)',
-    availableToday: false,
-    availableSlots: ['04:30 م', '05:30 م', '06:30 م'],
+    availableToday: true,
+    availableSlots: ['02:00 م', '04:30 م', '05:30 م', '06:30 م', '07:00 م', '07:45 م'],
     initials: 'د.ك',
     avatarBg: '#3b82f6',
     gender: 'male',
-    tags: ['تصحيح إبصار', 'فحص قاع عين', 'ليزك']
+    tags: ['تصحيح إبصار', 'فحص قاع عين', 'ليزك', '3 مراكز مجهزة'],
+    clinics: [
+      {
+        id: 'c7-nasrcity',
+        name: 'المركز الدولي للعيون والليزك - مدينة نصر',
+        shortLocation: 'مدينة نصر',
+        city: 'القاهرة',
+        location: 'القاهرة - مدينة نصر، شارع عباس العقاد تقاطع النصر',
+        days: 'السبت والثلاثاء والخميس',
+        price: 380,
+        waitingTime: '0 دقيقة (فحص أجهزة فوري)',
+        availableToday: false,
+        availableSlots: ['04:30 م', '05:30 م', '06:30 م', '07:30 م']
+      },
+      {
+        id: 'c7-dokki',
+        name: 'مستشفى النور التخصصي للعيون - الدقي',
+        shortLocation: 'الدقي',
+        city: 'الجيزة',
+        location: 'الجيزة - الدقي، ميدان مصطفى محمود، شارع سوريا',
+        days: 'الأحد والإثنين',
+        price: 380,
+        waitingTime: '0 دقيقة (فحص قاع عين دقيق)',
+        availableToday: true,
+        availableSlots: ['07:00 م', '07:45 م', '08:30 م', '09:15 م']
+      },
+      {
+        id: 'c7-heliopolis',
+        name: 'مركز فيجن للرمد والليزك - مصر الجديدة',
+        shortLocation: 'مصر الجديدة',
+        city: 'القاهرة',
+        location: 'القاهرة - مصر الجديدة، شارع الميرغني بجوار كلية البنات',
+        days: 'الأربعاء والجمعة',
+        price: 380,
+        waitingTime: '0 دقيقة (قياس نظر كمبيوتر فوري)',
+        availableToday: true,
+        availableSlots: ['02:00 م', '02:45 م', '03:30 م', '04:15 م']
+      }
+    ]
   },
   {
     id: 8,
@@ -253,11 +519,49 @@ const INITIAL_DOCTORS = [
     price: 450,
     waitingTime: '0 دقيقة (كشف مطول وشامل)',
     availableToday: true,
-    availableSlots: ['07:00 م', '08:00 م', '09:00 م'],
+    availableSlots: ['03:30 م', '04:15 م', '07:00 م', '08:00 م', '09:00 م', '09:45 م'],
     initials: 'د.ع',
     avatarBg: '#6366f1',
     gender: 'male',
-    tags: ['انزلاق غضروفي', 'صداع مزمن', 'أعصاب طرفية']
+    tags: ['انزلاق غضروفي', 'صداع مزمن', 'أعصاب طرفية', 'عيادات الدقي والمعادي وزايد'],
+    clinics: [
+      {
+        id: 'c8-dokki',
+        name: 'مستشفى العلوم العصبية التخصصي - الدقي',
+        shortLocation: 'الدقي',
+        city: 'الجيزة',
+        location: 'الجيزة - الدقي، شارع التحرير بالقرب من مترو الدقي',
+        days: 'السبت، الإثنين، الأربعاء',
+        price: 450,
+        waitingTime: '0 دقيقة (كشف مطول وشامل)',
+        availableToday: true,
+        availableSlots: ['07:00 م', '08:00 م', '09:00 م', '09:45 م']
+      },
+      {
+        id: 'c8-maadi',
+        name: 'مركز القاهرة للأعصاب والعمود الفقري - المعادي',
+        shortLocation: 'المعادي',
+        city: 'القاهرة',
+        location: 'القاهرة - المعادي، كورنيش النيل، برج رويال المعادي',
+        days: 'الأحد والثلاثاء',
+        price: 450,
+        waitingTime: '0 دقيقة (رسم عضلات وأعصاب)',
+        availableToday: true,
+        availableSlots: ['03:30 م', '04:15 م', '05:00 م', '06:00 م']
+      },
+      {
+        id: 'c8-zayed',
+        name: 'توب كير كلينيكس للأعصاب - الشيخ زايد',
+        shortLocation: 'الشيخ زايد',
+        city: 'الجيزة',
+        location: 'الجيزة - الشيخ زايد، المحور المركزي، كابيتال بيزنس بارك',
+        days: 'الخميس والجمعة',
+        price: 450,
+        waitingTime: '0 دقيقة (استشارات دقيقة بالموعد)',
+        availableToday: false,
+        availableSlots: ['12:30 م', '01:15 م', '02:00 م', '02:45 م']
+      }
+    ]
   }
 ];
 
@@ -338,6 +642,20 @@ export const dataService = {
     await new Promise(resolve => setTimeout(resolve, 80));
     let doctors = getStored(STORAGE_KEYS.DOCTORS, INITIAL_DOCTORS);
 
+    // Auto-migrate if stored data lacks rich multi-clinic definitions
+    if (!Array.isArray(doctors) || doctors.length === 0 || doctors.some(d => !Array.isArray(d.clinics) || d.clinics.length < 2)) {
+      doctors = INITIAL_DOCTORS;
+      setStored(STORAGE_KEYS.DOCTORS, doctors);
+    }
+
+    // Guarantee consultation price is unified across all clinics of the same doctor
+    doctors = doctors.map(doc => ({
+      ...doc,
+      clinics: Array.isArray(doc.clinics) 
+        ? doc.clinics.map(clinic => ({ ...clinic, price: doc.price }))
+        : doc.clinics
+    }));
+
     if (filters.specialty && filters.specialty !== 'الكل') {
       doctors = doctors.filter(doc => 
         doc.specialtyFilter === filters.specialty || 
@@ -346,11 +664,18 @@ export const dataService = {
     }
 
     if (filters.city && filters.city !== 'كل المدن') {
-      doctors = doctors.filter(doc => doc.city === filters.city || doc.location.includes(filters.city));
+      doctors = doctors.filter(doc => 
+        doc.city === filters.city || 
+        doc.location.includes(filters.city) ||
+        (Array.isArray(doc.clinics) && doc.clinics.some(c => c.city === filters.city || c.location.includes(filters.city)))
+      );
     }
 
     if (filters.onlyAvailableToday) {
-      doctors = doctors.filter(doc => doc.availableToday);
+      doctors = doctors.filter(doc => 
+        doc.availableToday || 
+        (Array.isArray(doc.clinics) && doc.clinics.some(c => c.availableToday && Array.isArray(c.availableSlots) && c.availableSlots.length > 0))
+      );
     }
 
     if (filters.searchQuery) {
@@ -359,7 +684,13 @@ export const dataService = {
         doc.name.toLowerCase().includes(q) ||
         doc.specialty.toLowerCase().includes(q) ||
         doc.location.toLowerCase().includes(q) ||
-        doc.tags.some(tag => tag.toLowerCase().includes(q))
+        (doc.hospital && doc.hospital.toLowerCase().includes(q)) ||
+        (doc.tags && doc.tags.some(tag => tag.toLowerCase().includes(q))) ||
+        (Array.isArray(doc.clinics) && doc.clinics.some(c => 
+          c.name.toLowerCase().includes(q) || 
+          c.location.toLowerCase().includes(q) ||
+          (c.shortLocation && c.shortLocation.toLowerCase().includes(q))
+        ))
       );
     }
 
@@ -441,6 +772,8 @@ export const dataService = {
       doctorId: bookingData.doctorId,
       doctorName: bookingData.doctorName,
       doctorSpecialty: bookingData.doctorSpecialty,
+      clinicId: bookingData.clinicId,
+      clinicName: bookingData.clinicName,
       doctorLocation: bookingData.doctorLocation,
       price: bookingData.price,
       patientName: bookingData.patientName,
@@ -458,10 +791,34 @@ export const dataService = {
 
     // Remove the booked slot dynamically from doctor's available slots
     const updatedDoctors = doctors.map(doc => {
-      if (doc.id === bookingData.doctorId && Array.isArray(doc.availableSlots)) {
+      if (doc.id !== bookingData.doctorId) return doc;
+
+      if (Array.isArray(doc.clinics) && doc.clinics.length > 0) {
+        const updatedClinics = doc.clinics.map(clinic => {
+          const isSelectedClinic = clinic.id === bookingData.clinicId ||
+            clinic.name === bookingData.clinicName ||
+            clinic.clinicName === bookingData.clinicName ||
+            clinic.hospital === bookingData.clinicName;
+          if (!isSelectedClinic) return clinic;
+
+          const slots = Array.isArray(clinic.availableSlots)
+            ? clinic.availableSlots
+            : doc.availableSlots || [];
+          return {
+            ...clinic,
+            availableSlots: slots.filter(slot => slot !== bookingData.slot)
+          };
+        });
+        const availableSlots = [...new Set(updatedClinics.flatMap(clinic =>
+          Array.isArray(clinic.availableSlots) ? clinic.availableSlots : doc.availableSlots || []
+        ))];
+        return { ...doc, clinics: updatedClinics, availableSlots };
+      }
+
+      if (Array.isArray(doc.availableSlots)) {
         return {
           ...doc,
-          availableSlots: doc.availableSlots.filter(s => s !== bookingData.slot)
+          availableSlots: doc.availableSlots.filter(slot => slot !== bookingData.slot)
         };
       }
       return doc;
@@ -484,6 +841,28 @@ export const dataService = {
     if (target.doctorId && target.slot) {
       const doctors = getStored(STORAGE_KEYS.DOCTORS, INITIAL_DOCTORS);
       const updatedDoctors = doctors.map(doc => {
+        if (doc.id === target.doctorId && Array.isArray(doc.clinics) && doc.clinics.length > 0 && target.clinicName) {
+          const updatedClinics = doc.clinics.map(clinic => {
+            const isSelectedClinic = clinic.id === target.clinicId ||
+              clinic.name === target.clinicName ||
+              clinic.clinicName === target.clinicName ||
+              clinic.hospital === target.clinicName;
+            if (!isSelectedClinic) return clinic;
+
+            const slots = Array.isArray(clinic.availableSlots)
+              ? clinic.availableSlots
+              : doc.availableSlots || [];
+            return {
+              ...clinic,
+              availableSlots: slots.includes(target.slot) ? slots : [...slots, target.slot].sort()
+            };
+          });
+          const availableSlots = [...new Set(updatedClinics.flatMap(clinic =>
+            Array.isArray(clinic.availableSlots) ? clinic.availableSlots : doc.availableSlots || []
+          ))];
+          return { ...doc, clinics: updatedClinics, availableSlots };
+        }
+
         if (doc.id === target.doctorId && Array.isArray(doc.availableSlots)) {
           if (!doc.availableSlots.includes(target.slot)) {
             return {

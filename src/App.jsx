@@ -19,7 +19,12 @@ export default function App() {
   // Modal states
   const [isEmergencyOpen, setIsEmergencyOpen] = useState(false);
   const [authModalState, setAuthModalState] = useState({ isOpen: false, mode: 'login' });
-  const [bookingModalState, setBookingModalState] = useState({ isOpen: false, doctor: null, initialSlot: null });
+  const [bookingModalState, setBookingModalState] = useState({ 
+    isOpen: false, 
+    doctor: null, 
+    initialSlot: null,
+    initialClinicId: null 
+  });
   const [isMyBookingsOpen, setIsMyBookingsOpen] = useState(false);
   const [isAddReviewOpen, setIsAddReviewOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -146,12 +151,12 @@ export default function App() {
   };
 
   // Booking Handlers
-  const handleBookDoctor = (doctor, initialSlot = null) => {
-    setBookingModalState({ isOpen: true, doctor, initialSlot });
+  const handleBookDoctor = (doctor, initialSlot = null, initialClinicId = null) => {
+    setBookingModalState({ isOpen: true, doctor, initialSlot, initialClinicId });
   };
 
   const closeBookingModal = () => {
-    setBookingModalState({ isOpen: false, doctor: null, initialSlot: null });
+    setBookingModalState({ isOpen: false, doctor: null, initialSlot: null, initialClinicId: null });
   };
 
   const handleConfirmBooking = async (bookingData) => {
@@ -305,6 +310,7 @@ export default function App() {
         isOpen={bookingModalState.isOpen}
         doctor={bookingModalState.doctor}
         initialSlot={bookingModalState.initialSlot}
+        initialClinicId={bookingModalState.initialClinicId}
         currentUser={currentUser}
         onClose={closeBookingModal}
         onConfirmBooking={handleConfirmBooking}

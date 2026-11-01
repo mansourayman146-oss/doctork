@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import { CalendarDays, DoorOpen, MessageCircle, Search, Zap } from 'lucide-react';
 
 const STEPS = [
@@ -20,7 +20,7 @@ const STEPS = [
     num: '03',
     icon: MessageCircle,
     title: 'استلم تأكيد الحجز فورياً',
-    desc: 'يصلك كود الحجز وتفاصيل العنوان الدقيق عبر رسالة SMS وتطبيق واتساب فور تأكيد الطلب.',
+    desc: 'يصلك كود الحجز وتفاصيل العنوان الدقيق عبر تطبيق واتساب فور تأكيد الطلب.',
     badge: 'مجاناً 100%'
   },
   {
