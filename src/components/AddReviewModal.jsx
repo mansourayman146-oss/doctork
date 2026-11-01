@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star } from 'lucide-react';
+import Icon from './ui/Icon';
 
 export default function AddReviewModal({ isOpen, onClose, onSubmitReview, onToast, doctors = [] }) {
   const [name, setName] = useState('');
@@ -40,7 +40,7 @@ export default function AddReviewModal({ isOpen, onClose, onSubmitReview, onToas
       <div className="modal-dialog add-review-dialog" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div className="modal-title-wrap">
-            <Star className="modal-icon" aria-hidden="true" />
+            <Icon name="star" className="modal-icon" />
             <div>
               <h3 className="modal-title">أضف تقييمك وتجربتك</h3>
               <p className="modal-subtitle">رأيك يساعد آلاف المرضى في اختيار أفضل رعاية صحية</p>
@@ -90,7 +90,7 @@ export default function AddReviewModal({ isOpen, onClose, onSubmitReview, onToas
                     onClick={() => setStars(s)}
                     aria-label={`${s} نجوم`}
                   >
-                    <Star size={18} fill="currentColor" aria-hidden="true" />
+                    <Icon name="star" size={18} />
                   </button>
                 ))}
                 <span className="stars-count-label">({stars} من 5 نجوم)</span>
