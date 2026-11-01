@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Siren, Zap } from 'lucide-react';
+import Icon from './ui/Icon';
 
 export default function EmergencyModal({ 
   isOpen, 
@@ -40,7 +40,7 @@ export default function EmergencyModal({
       <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header emergency-modal-header">
           <div className="modal-title-wrap">
-            <Siren className="modal-icon" aria-hidden="true" />
+            <Icon name="siren" className="modal-icon" />
             <div>
               <h3 className="modal-title">حجز طوارئ فوري</h3>
               <p className="modal-subtitle">
@@ -93,7 +93,7 @@ export default function EmergencyModal({
           </div>
 
           <div className="emergency-notice-card">
-            <span><Zap size={15} aria-hidden="true" /> سيتم توجيه أقرب طبيب أو إرسال الإسعاف لك على الفور. الخدمة تعمل 24/7.</span>
+            <span><Icon name="zap" size={15} /> سيتم توجيه أقرب طبيب أو إرسال الإسعاف لك على الفور. الخدمة تعمل 24/7.</span>
           </div>
 
           <button 
@@ -105,7 +105,7 @@ export default function EmergencyModal({
               'جارِ الإرسال...'
             ) : (
               <>
-                <Siren className="emergency-submit-icon" aria-hidden="true" />
+                <Icon name="siren" className="emergency-submit-icon" />
                 <span>تأكيد طلب الطوارئ فوراً</span>
               </>
             )}
