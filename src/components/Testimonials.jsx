@@ -1,5 +1,5 @@
 import React from 'react';
-import { BadgeCheck, Star, Stethoscope } from 'lucide-react';
+import Icon from './ui/Icon';
 
 export default function Testimonials({ reviews = [], onOpenAddReview }) {
   return (
@@ -42,11 +42,11 @@ export default function Testimonials({ reviews = [], onOpenAddReview }) {
                     <h4 className="test-name">{review.name}</h4>
                     {review.isUserAdded ? (
                       <span className="verified-badge-mini new-badge" title="تقييم مضاف حديثاً">
-                        <Star size={13} aria-hidden="true" /> مراجعة جديدة
+                        <Icon name="star" size={13} /> مراجعة جديدة
                       </span>
                     ) : review.verified && (
                       <span className="verified-badge-mini" title="حجز مؤكد تم بالفعل">
-                        <BadgeCheck size={13} aria-hidden="true" /> مريض مؤكد
+                        <Icon name="check-circle" size={13} /> مريض مؤكد
                       </span>
                     )}
                   </div>
@@ -56,14 +56,14 @@ export default function Testimonials({ reviews = [], onOpenAddReview }) {
 
               <div className="test-stars">
                 {[...Array(review.stars || 5)].map((_, i) => (
-                  <span key={i} className="star"><Star size={16} fill="currentColor" aria-hidden="true" /></span>
+                  <span key={i} className="star"><Icon name="star" size={16} /></span>
                 ))}
               </div>
 
               <p className="test-text">"{review.text}"</p>
 
               <div className="test-footer">
-                <span className="test-doctor-tag"><Stethoscope size={15} aria-hidden="true" /> {review.doctorVisited}</span>
+                <span className="test-doctor-tag"><Icon name="stethoscope" size={15} /> {review.doctorVisited}</span>
                 <span className="test-date">{review.date}</span>
               </div>
 
