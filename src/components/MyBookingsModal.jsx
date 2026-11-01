@@ -1,5 +1,5 @@
 import React from 'react';
-import { BadgeCheck, CalendarDays, MapPin, Stethoscope, Zap } from 'lucide-react';
+import Icon from './ui/Icon';
 
 export default function MyBookingsModal({ 
   isOpen, 
@@ -17,7 +17,7 @@ export default function MyBookingsModal({
         {/* Header */}
         <div className="modal-header">
           <div className="modal-title-wrap">
-            <CalendarDays className="modal-icon" aria-hidden="true" />
+            <Icon name="calendar" className="modal-icon" />
             <div>
               <h3 className="modal-title">حجوزاتي الطبية</h3>
               <p className="modal-subtitle">
@@ -34,7 +34,7 @@ export default function MyBookingsModal({
         <div className="modal-body my-bookings-body">
           {bookings.length === 0 ? (
             <div className="empty-bookings-state">
-              <Stethoscope className="empty-icon" aria-hidden="true" />
+              <Icon name="stethoscope" className="empty-icon" />
               <h4>لم تقم بحجز أي موعد حتى الآن</h4>
               <p>تصفح قائمة الأطباء والاستشاريين واحجز ميعادك في أقل من دقيقة بدون أي زحمة أو انتظار.</p>
               <button 
@@ -58,13 +58,13 @@ export default function MyBookingsModal({
                       <span>كود التذكرة:</span>
                       <strong>{booking.bookingCode}</strong>
                     </div>
-                    <span className="b-status-pill">{booking.status || 'مؤكد'} <BadgeCheck size={14} aria-hidden="true" /></span>
+                    <span className="b-status-pill">{booking.status || 'مؤكد'} <Icon name="check-circle" size={14} /></span>
                   </div>
 
                   <div className="b-card-content">
                     <h4 className="b-doc-name">{booking.doctorName}</h4>
                     <p className="b-doc-spec">{booking.doctorSpecialty}</p>
-                    <p className="b-doc-loc"><MapPin size={14} aria-hidden="true" /> {booking.doctorLocation}</p>
+                    <p className="b-doc-loc"><Icon name="pin" size={14} /> {booking.doctorLocation}</p>
                     
                     <div className="b-meta-grid">
                       <div className="b-meta-tile">
@@ -87,7 +87,7 @@ export default function MyBookingsModal({
                   </div>
 
                   <div className="b-card-footer">
-                    <span className="no-wait-note"><Zap size={14} aria-hidden="true" /> دخول فوري بدون انتظار</span>
+                    <span className="no-wait-note"><Icon name="zap" size={14} /> دخول فوري بدون انتظار</span>
                     <button 
                       type="button" 
                       className="btn-cancel-booking"
