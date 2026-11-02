@@ -6,7 +6,7 @@ import Doctors from './components/Doctors';
 import HowItWorks from './components/HowItWorks';
 import Testimonials from './components/Testimonials';
 import Footer from './components/layout/Footer';
-import EmergencyModal from './components/EmergencyModal';
+import EmergencyModal from './features/booking/EmergencyModal';
 import AuthModal from './components/AuthModal';
 import BookingModal from './features/booking/BookingModal';
 import MyBookingsModal from './features/booking/MyBookingsModal';
