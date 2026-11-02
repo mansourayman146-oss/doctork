@@ -5,7 +5,7 @@ import Specialties from './components/Specialties';
 import Doctors from './components/Doctors';
 import HowItWorks from './components/HowItWorks';
 import Testimonials from './components/Testimonials';
-import Footer from './components/Footer';
+import Footer from './components/layout/Footer';
 import EmergencyModal from './components/EmergencyModal';
 import AuthModal from './components/AuthModal';
 import BookingModal from './components/BookingModal';

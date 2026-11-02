@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from './ui/Icon';
+import Icon from '@/components/ui/Icon';
 
 export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty }) {
   const handleSpecClick = (specName, e) => {
