@@ -58,3 +58,4 @@ export function generateWhatsAppUrl(phone, text) {
   const normalizedPhone = normalizeEgyptianPhone(phone);
   return `https://wa.me/${normalizedPhone}?text=${encodeURIComponent(text || '')}`;
 }
+
