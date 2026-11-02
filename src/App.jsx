@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Header from './components/Header';
+import Header from './components/layout/Header';
 import Hero from './components/Hero';
 import Specialties from './components/Specialties';
 import Doctors from './components/Doctors';
