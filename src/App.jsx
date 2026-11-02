@@ -139,7 +139,7 @@ export default function App() {
       addToast(`مرحباً بك مجدداً يا ${user.name}! تم تسجيل الدخول بنجاح.`, 'success');
     } else {
       user = await dataService.register(credentials.name, credentials.email, credentials.password);
-      addToast(`أهلاً بك يا ${user.name}! تم إنشاء حسابك بنجاح في دكتورك.`, 'success');
+      addToast(`أهلاً بك يا ${user.name}! تم إنشاء حسابك بنجاح في حجز الأطباء.`, 'success');
     }
     setCurrentUser(user);
   };

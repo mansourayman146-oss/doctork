@@ -81,7 +81,7 @@ export default function Hero({
       return;
     }
     closeDropdown();
-    onToast(`جارِ البحث عن: "${query}" في شبكة أطباء دكتورك...`, 'success');
+    onToast(`جارِ البحث عن: "${query}" في شبكة الأطباء...`, 'success');
     if (onSearch) {
       onSearch(query);
     }
@@ -119,7 +119,7 @@ export default function Hero({
       <div className="hero-bg" aria-hidden="true">
         <img 
           src="/assets/hero-bg.jpg" 
-          alt="عيادة دكتورك الطبية" 
+          alt="عيادة طبية" 
           className="hero-bg-img" 
           loading="eager"
         />
@@ -234,7 +234,7 @@ export default function Hero({
             
             {/* Card Header Title */}
             <div className="stats-card-header">
-              <span className="stats-title-badge">إحصائيات دكتورك</span>
+              <span className="stats-title-badge">إحصائيات حجز الأطباء</span>
             </div>
 
             {/* 2x2 Metrics Grid */}

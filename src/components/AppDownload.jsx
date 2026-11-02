@@ -3,7 +3,7 @@ import { Apple, Bell, Check, Play, Smartphone } from 'lucide-react';
 
 export default function AppDownload({ onToast }) {
   const handleStoreClick = (storeName) => {
-    onToast(`جارِ توجيهك لتحميل تطبيق دكتورك على ${storeName}... قريباً متاح بالمتجر!`, 'normal');
+    onToast(`جارِ توجيهك لتحميل تطبيق حجز الأطباء على ${storeName}... قريباً متاح بالمتجر!`, 'normal');
   };
 
   return (
@@ -14,7 +14,7 @@ export default function AppDownload({ onToast }) {
           
           <div className="download-content">
             <div className="download-badge">
-              <span><Smartphone size={16} aria-hidden="true" /> تطبيق دكتورك للهواتف الذكية</span>
+              <span><Smartphone size={16} aria-hidden="true" /> تطبيق حجز الأطباء للهواتف الذكية</span>
             </div>
             
             <h2 className="download-title">
@@ -23,7 +23,7 @@ export default function AppDownload({ onToast }) {
             </h2>
 
             <p className="download-desc">
-              حمّل تطبيق دكتورك المجاني لتلقي إشعارات المواعيد، حفظ الروشتات والتحاليل الطبية في ملفك الصحي الموحد، وتعديل حجزك بسهولة تامة.
+              حمّل تطبيق حجز الأطباء المجاني لتلقي إشعارات المواعيد، حفظ الروشتات والتحاليل الطبية في ملفك الصحي الموحد، وتعديل حجزك بسهولة تامة.
             </p>
 
             <div className="download-buttons-group">
@@ -74,7 +74,7 @@ export default function AppDownload({ onToast }) {
               <div className="phone-screen">
                 <div className="mock-app-header">
                   <div className="mock-logo">د</div>
-                  <span>دكتورك - تطبيق المريض</span>
+                  <span>حجز الأطباء - تطبيق المريض</span>
                 </div>
                 <div className="mock-notification">
                   <Bell className="mock-notif-icon" aria-hidden="true" />

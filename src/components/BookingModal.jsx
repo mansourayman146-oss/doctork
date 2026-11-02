@@ -252,7 +252,7 @@ export default function BookingModal({
                     phone = '20' + phone;
                   }
                   const text = 
-`🏥 *تأكيد حجز كشف طبي - منصة دكتورك*
+`🏥 *تأكيد حجز كشف طبي - منصة حجز الأطباء*
 ══════════════════
 🎫 *كود التذكرة:* ${bookingResult.bookingCode}
 👤 *اسم المريض:* ${bookingResult.patientName}

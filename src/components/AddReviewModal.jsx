@@ -22,7 +22,7 @@ export default function AddReviewModal({ isOpen, onClose, onSubmitReview, onToas
     setIsSubmitting(true);
     await onSubmitReview({
       name,
-      doctorVisited: doctorVisited || (doctors[0] ? `${doctors[0].name} (${doctors[0].specialtyFilter})` : 'طبيب استشاري في دكتورك'),
+      doctorVisited: doctorVisited || (doctors[0] ? `${doctors[0].name} (${doctors[0].specialtyFilter})` : 'طبيب استشاري عبر حجز الأطباء'),
       stars: Number(stars),
       role: role.trim() || 'مريض معتمد',
       location: location.trim() || 'مصر',
