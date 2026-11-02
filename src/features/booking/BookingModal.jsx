@@ -2,6 +2,7 @@ import './BookingModal.css';
 import React, { useState, useEffect, useMemo } from 'react';
 import Icon from '@/components/ui/Icon';
 import { DEFAULT_SLOTS } from '@/lib/constants';
+import { isValidName, isValidEgyptianPhone, generateWhatsAppUrl } from './validate';
 
 
 
@@ -101,6 +102,16 @@ export default function BookingModal({
     e.preventDefault();
     if (!patientName.trim() || !patientPhone.trim()) {
       onToast('يرجى ملء اسم المريض ورقم الهاتف لتأكيد الموعد', 'normal');
+      return;
+    }
+
+    if (!isValidName(patientName)) {
+      onToast('يرجى إدخال اسم صحيح لا يقل عن 3 أحرف', 'normal');
+      return;
+    }
+
+    if (!isValidEgyptianPhone(patientPhone)) {
+      onToast('يرجى إدخال رقم هاتف مصري صحيح (مثال: 01012345678)', 'normal');
       return;
     }
 
@@ -229,12 +240,6 @@ export default function BookingModal({
             <div className="ticket-whatsapp-action">
               <a 
                 href={(() => {
-                  let phone = (bookingResult.patientPhone || '').replace(/\D/g, '');
-                  if (phone.startsWith('0')) {
-                    phone = '2' + phone;
-                  } else if (!phone.startsWith('2') && phone.length === 10) {
-                    phone = '20' + phone;
-                  }
                   const text = 
 `🏥 *تأكيد حجز كشف طبي - منصة دكتورك*
 ══════════════════
@@ -247,7 +252,7 @@ export default function BookingModal({
 💰 *سعر الكشف:* ${bookingResult.price} ج.م (الدفع داخل العيادة)
 ══════════════════
 ⚡ *تنبيه:* يرجى الحضور قبل الموعد بـ 5 دقائق للدخول فوراً بدون أي انتظار.`;
-                  return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+                  return generateWhatsAppUrl(bookingResult.patientPhone, text);
                 })()}
                 target="_blank" 
                 rel="noopener noreferrer"
