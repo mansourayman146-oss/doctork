@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Header from './components/layout/Header';
 import Hero from './features/landing/Hero';
-import Specialties from './components/Specialties';
+import Specialties from './features/landing/Specialties';
 import Doctors from './features/doctors/Doctors';
 import HowItWorks from './components/HowItWorks';
 import Testimonials from './components/Testimonials';
