@@ -1,16 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Icon from './ui/Icon';
+import { DEFAULT_SLOTS } from '@/lib/constants';
 
-const DEFAULT_SLOTS = [
-  '05:00 م',
-  '05:30 م',
-  '06:00 م',
-  '06:30 م',
-  '07:00 م',
-  '07:30 م',
-  '08:00 م',
-  '08:30 م'
-];
+
 
 export default function BookingModal({ 
   isOpen, 

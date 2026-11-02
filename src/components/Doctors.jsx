@@ -1,35 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Icon from './ui/Icon';
+import { EGYPT_GOVERNORATES } from '@/lib/constants';
 
-const EGYPT_GOVERNORATES = [
-  'القاهرة',
-  'الجيزة',
-  'الإسكندرية',
-  'الدقهلية',
-  'البحر الأحمر',
-  'البحيرة',
-  'الفيوم',
-  'الغربية',
-  'الإسماعيلية',
-  'المنوفية',
-  'المنيا',
-  'القليوبية',
-  'الوادي الجديد',
-  'السويس',
-  'أسوان',
-  'أسيوط',
-  'بني سويف',
-  'بورسعيد',
-  'دمياط',
-  'الشرقية',
-  'جنوب سيناء',
-  'كفر الشيخ',
-  'مطروح',
-  'الأقصر',
-  'قنا',
-  'شمال سيناء',
-  'سوهاج'
-];
+
 
 /**
  * Individual Doctor Card with Interactive Multi-Clinic Selector
