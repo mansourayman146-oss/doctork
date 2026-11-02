@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Icon from './ui/Icon';
+import Icon from '@/components/ui/Icon';
 
 export default function Hero({ 
   onOpenEmergency, 
