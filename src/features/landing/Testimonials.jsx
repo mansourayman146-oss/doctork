@@ -1,3 +1,4 @@
+import './Testimonials.css';
 import React from 'react';
 import Icon from '@/components/ui/Icon';
 

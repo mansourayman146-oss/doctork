@@ -1,3 +1,4 @@
+import './HowItWorks.css';
 import React from 'react';
 import Icon from '@/components/ui/Icon';
 

@@ -1,3 +1,4 @@
+import './Doctors.css';
 import React, { useState, useMemo, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import { EGYPT_GOVERNORATES } from '@/lib/constants';

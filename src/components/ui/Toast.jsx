@@ -1,3 +1,4 @@
+import './Toast.css';
 import React from 'react';
 
 export default function Toast({ toasts, onDismiss }) {
