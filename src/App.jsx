@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Header from './components/layout/Header';
 import Hero from './components/Hero';
 import Specialties from './components/Specialties';
-import Doctors from './components/Doctors';
+import Doctors from './features/doctors/Doctors';
 import HowItWorks from './components/HowItWorks';
 import Testimonials from './components/Testimonials';
 import Footer from './components/layout/Footer';

@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import Icon from './ui/Icon';
+import Icon from '@/components/ui/Icon';
 import { EGYPT_GOVERNORATES } from '@/lib/constants';
 
 
