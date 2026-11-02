@@ -1,23 +1,23 @@
 import React from 'react';
-import { Baby, Bone, Brain, Eye, HeartPulse, Lightbulb, Sparkles, Stethoscope, Smile, Zap } from 'lucide-react';
+import Icon from './ui/Icon';
 
 const SPECIALTY_ICONS = {
-  cardiology: HeartPulse,
-  dermatology: Sparkles,
-  pediatrics: Baby,
-  orthopedics: Bone,
-  dentistry: Smile,
-  internal: Stethoscope,
-  ophthalmology: Eye,
-  neurology: Brain,
-  heart: HeartPulse,
-  sparkles: Sparkles,
-  baby: Baby,
-  bone: Bone,
-  tooth: Smile,
-  stethoscope: Stethoscope,
-  eye: Eye,
-  brain: Brain
+  cardiology: 'heart-pulse',
+  dermatology: 'sparkles',
+  pediatrics: 'baby',
+  orthopedics: 'bone',
+  dentistry: 'smile',
+  internal: 'stethoscope',
+  ophthalmology: 'eye',
+  neurology: 'brain',
+  heart: 'heart-pulse',
+  sparkles: 'sparkles',
+  baby: 'baby',
+  bone: 'bone',
+  tooth: 'smile',
+  stethoscope: 'stethoscope',
+  eye: 'eye',
+  brain: 'brain'
 };
 
 export default function Specialties({ 
@@ -59,7 +59,7 @@ export default function Specialties({
           <div className="specialties-grid">
             {specialties.map((spec) => {
               const isSelected = selectedSpecialty === spec.shortName || selectedSpecialty === spec.name;
-              const SpecialtyIcon = SPECIALTY_ICONS[spec.id] || SPECIALTY_ICONS[spec.icon] || Stethoscope;
+              const iconName = SPECIALTY_ICONS[spec.id] || SPECIALTY_ICONS[spec.icon] || 'stethoscope';
               return (
                 <div 
                   key={spec.id} 
@@ -76,7 +76,7 @@ export default function Specialties({
                 >
                   <div className="spec-card-top">
                     <div className="spec-icon-box">
-                      <SpecialtyIcon className="spec-icon" aria-hidden="true" />
+                      <Icon name={iconName} className="spec-icon" />
                     </div>
                     <span className="spec-count-badge">
                       {spec.doctorCount} طبيب متاح
@@ -93,7 +93,7 @@ export default function Specialties({
                       عرض الأطباء المتاحين
                       <span className="arrow-icon">←</span>
                     </span>
-                    <span className="no-wait-pill">بدون انتظار <Zap size={14} aria-hidden="true" /></span>
+                    <span className="no-wait-pill">بدون انتظار <Icon name="zap" size={14} /></span>
                   </div>
                 </div>
               );
@@ -103,7 +103,7 @@ export default function Specialties({
 
         {/* Bottom Fast Search CTA */}
         <div className="specialties-footer-note">
-          <Lightbulb className="info-icon" aria-hidden="true" />
+          <Icon name="lightbulb" className="info-icon" />
           <span>لم تجد تخصصك المطلوب في القائمة؟ تصفح كافة التخصصات الإضافية من خلال مربع البحث في الأعلى أو اتصل بنا على <strong>16999</strong></span>
         </div>
 
