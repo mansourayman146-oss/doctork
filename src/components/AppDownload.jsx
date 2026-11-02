@@ -1,5 +1,5 @@
 import React from 'react';
-import { Apple, Bell, Check, Play, Smartphone } from 'lucide-react';
+import Icon from './ui/Icon';
 
 export default function AppDownload({ onToast }) {
   const handleStoreClick = (storeName) => {
@@ -14,7 +14,7 @@ export default function AppDownload({ onToast }) {
           
           <div className="download-content">
             <div className="download-badge">
-              <span><Smartphone size={16} aria-hidden="true" /> تطبيق دكتورك للهواتف الذكية</span>
+              <span><Icon name="smartphone" size={16} /> تطبيق دكتورك للهواتف الذكية</span>
             </div>
             
             <h2 className="download-title">
@@ -32,7 +32,7 @@ export default function AppDownload({ onToast }) {
                 className="store-btn"
                 onClick={() => handleStoreClick('App Store (iOS)')}
               >
-                <Apple className="store-icon" aria-hidden="true" />
+                <Icon name="apple" className="store-icon" />
                 <div className="store-text">
                   <span className="store-small">متوفر على</span>
                   <span className="store-brand">App Store</span>
@@ -44,7 +44,7 @@ export default function AppDownload({ onToast }) {
                 className="store-btn"
                 onClick={() => handleStoreClick('Google Play (Android)')}
               >
-                <Play className="store-icon" aria-hidden="true" />
+                <Icon name="googleplay" className="store-icon" />
                 <div className="store-text">
                   <span className="store-small">متوفر على</span>
                   <span className="store-brand">Google Play</span>
@@ -55,15 +55,15 @@ export default function AppDownload({ onToast }) {
 
             <div className="download-perks">
               <div className="perk-item">
-                <span className="perk-check"><Check size={14} aria-hidden="true" /></span>
+                <span className="perk-check"><Icon name="check" size={14} /></span>
                 <span>تطبيق خفيف وسريع</span>
               </div>
               <div className="perk-item">
-                <span className="perk-check"><Check size={14} aria-hidden="true" /></span>
+                <span className="perk-check"><Icon name="check" size={14} /></span>
                 <span>حفظ تاريخك الطبي وروشتاتك</span>
               </div>
               <div className="perk-item">
-                <span className="perk-check"><Check size={14} aria-hidden="true" /></span>
+                <span className="perk-check"><Icon name="check" size={14} /></span>
                 <span>دعم مباشر 24/7</span>
               </div>
             </div>
@@ -77,7 +77,7 @@ export default function AppDownload({ onToast }) {
                   <span>دكتورك - تطبيق المريض</span>
                 </div>
                 <div className="mock-notification">
-                  <Bell className="mock-notif-icon" aria-hidden="true" />
+                  <Icon name="bell" className="mock-notif-icon" />
                   <div>
                     <strong>موعدك اليوم مع د. أحمد منصور</strong>
                     <p>الساعة 06:00 م - العيادة بانتظارك فوراً</p>
