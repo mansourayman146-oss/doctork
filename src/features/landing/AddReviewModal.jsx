@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Icon from './ui/Icon';
+import Icon from '@/components/ui/Icon';
 
 export default function AddReviewModal({ isOpen, onClose, onSubmitReview, onToast, doctors = [] }) {
   const [name, setName] = useState('');

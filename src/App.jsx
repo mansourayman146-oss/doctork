@@ -10,7 +10,7 @@ import EmergencyModal from './features/booking/EmergencyModal';
 import AuthModal from './features/landing/AuthModal';
 import BookingModal from './features/booking/BookingModal';
 import MyBookingsModal from './features/booking/MyBookingsModal';
-import AddReviewModal from './components/AddReviewModal';
+import AddReviewModal from './features/landing/AddReviewModal';
 import Toast from './components/ui/Toast';
 
 import { dataService } from './services/dataService';
