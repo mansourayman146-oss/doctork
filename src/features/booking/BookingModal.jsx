@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import Icon from './ui/Icon';
+import Icon from '@/components/ui/Icon';
 import { DEFAULT_SLOTS } from '@/lib/constants';
 
 

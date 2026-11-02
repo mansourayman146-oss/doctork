@@ -8,7 +8,7 @@ import Testimonials from './components/Testimonials';
 import Footer from './components/layout/Footer';
 import EmergencyModal from './components/EmergencyModal';
 import AuthModal from './components/AuthModal';
-import BookingModal from './components/BookingModal';
+import BookingModal from './features/booking/BookingModal';
 import MyBookingsModal from './components/MyBookingsModal';
 import AddReviewModal from './components/AddReviewModal';
 import Toast from './components/ui/Toast';
