@@ -7,7 +7,7 @@ import HowItWorks from './features/landing/HowItWorks';
 import Testimonials from './features/landing/Testimonials';
 import Footer from './components/layout/Footer';
 import EmergencyModal from './features/booking/EmergencyModal';
-import AuthModal from './components/AuthModal';
+import AuthModal from './features/landing/AuthModal';
 import BookingModal from './features/booking/BookingModal';
 import MyBookingsModal from './features/booking/MyBookingsModal';
 import AddReviewModal from './components/AddReviewModal';
