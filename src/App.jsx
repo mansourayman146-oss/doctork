@@ -11,7 +11,7 @@ import AuthModal from './components/AuthModal';
 import BookingModal from './components/BookingModal';
 import MyBookingsModal from './components/MyBookingsModal';
 import AddReviewModal from './components/AddReviewModal';
-import Toast from './components/Toast';
+import Toast from './components/ui/Toast';
 
 import { dataService } from './services/dataService';
 
