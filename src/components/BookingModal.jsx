@@ -1,14 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { 
-  AlertTriangle, 
-  Banknote, 
-  Building2, 
-  CalendarDays, 
-  Check, 
-  Clock3, 
-  MapPin, 
-  Zap 
-} from 'lucide-react';
+import Icon from './ui/Icon';
 
 const DEFAULT_SLOTS = [
   '05:00 م',
@@ -166,7 +157,7 @@ export default function BookingModal({
         {/* Header */}
         <div className="modal-header booking-modal-header">
           <div className="modal-title-wrap">
-            <CalendarDays className="modal-icon" aria-hidden="true" />
+            <Icon name="calendar" className="modal-icon" />
             <div>
               <h3 className="modal-title">
                 {isSuccess ? 'تأكيد الحجز الفوري' : 'حجز موعد كشف طبي'}
@@ -188,9 +179,9 @@ export default function BookingModal({
             <h4 className="booking-doc-name">{doctor.name}</h4>
             <span className="booking-doc-spec">{doctor.specialty}</span>
             <div className="booking-doc-details">
-              <span><MapPin size={14} aria-hidden="true" /> {activeClinic?.location || doctor.location}</span>
+              <span><Icon name="pin" size={14} /> {activeClinic?.location || doctor.location}</span>
               <span className="dot-divider">•</span>
-              <span><Banknote size={14} aria-hidden="true" /> {currentPrice} ج.م (الدفع داخل العيادة)</span>
+              <span><Icon name="money" size={14} /> {currentPrice} ج.م (الدفع داخل العيادة)</span>
             </div>
           </div>
         </div>
@@ -198,7 +189,7 @@ export default function BookingModal({
         {isSuccess && bookingResult ? (
           /* Success Screen */
           <div className="booking-success-box">
-            <div className="success-badge-icon"><Check size={24} aria-hidden="true" /></div>
+            <div className="success-badge-icon"><Icon name="check" size={24} /></div>
             <h3 className="success-title">تم تأكيد حجزك بنجاح!</h3>
             <p className="success-subtitle">
               تم تجهيز تأكيد حجزك الكامل لفتحه واستلامه عبر تطبيق واتساب على هاتفك: <strong>{bookingResult.patientPhone}</strong>
@@ -237,7 +228,7 @@ export default function BookingModal({
                 </div>
               </div>
               <div className="ticket-alert">
-                <Zap size={15} aria-hidden="true" /> <strong>تذكير مهم:</strong> حضورك قبل الميعاد بـ 5 دقائق يكفل لك الدخول فوراً بدون أي زحمة أو انتظار.
+                <Icon name="zap" size={15} /> <strong>تذكير مهم:</strong> حضورك قبل الميعاد بـ 5 دقائق يكفل لك الدخول فوراً بدون أي زحمة أو انتظار.
               </div>
             </div>
 
@@ -270,9 +261,7 @@ export default function BookingModal({
                 className="btn btn-whatsapp-direct"
                 id="whatsapp-confirm-link"
               >
-                <svg className="wa-icon-svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 18.09c-1.52 0-3.01-.41-4.31-1.18l-.31-.18-3.12.82.83-3.04-.2-.32a8.03 8.03 0 0 1-1.23-4.28c0-4.47 3.64-8.11 8.13-8.11 2.17 0 4.21.85 5.74 2.38s2.38 3.57 2.38 5.74c0 4.48-3.64 8.11-8.12 8.11zm4.46-6.07c-.24-.12-1.45-.71-1.67-.79-.23-.09-.39-.12-.56.12-.17.24-.65.79-.8 1-.15.2-.29.24-.54.12-.24-.12-1.03-.38-1.97-1.21-.73-.65-1.22-1.45-1.36-1.7-.15-.24-.02-.37.1-.49.11-.11.24-.29.37-.43.12-.15.17-.24.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.24-.88.86-.88 2.09s.9 2.43 1.03 2.6c.12.17 1.77 2.7 4.28 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.45-.59 1.66-1.17.2-.57.2-1.07.14-1.17-.06-.1-.23-.16-.48-.28z"/>
-                </svg>
+                <Icon name="whatsapp" size={20} className="wa-icon-svg" />
                 <span>فتح التذكرة وتأكيدها عبر واتساب</span>
               </a>
               <span className="wa-help-text">
@@ -308,19 +297,19 @@ export default function BookingModal({
                       }}
                     >
                       <div className="modal-clinic-card-top">
-                        <Building2 size={15} className="clinic-modal-icon" aria-hidden="true" />
+                        <Icon name="building" size={15} className="clinic-modal-icon" />
                         <strong className="modal-clinic-name">{clinic.name}</strong>
-                        {isSelected && <span className="modal-clinic-check"><Check size={13} /></span>}
+                        {isSelected && <span className="modal-clinic-check"><Icon name="check" size={13} /></span>}
                       </div>
 
                       <div className="modal-clinic-loc">
-                        <MapPin size={13} aria-hidden="true" />
+                        <Icon name="pin" size={13} />
                         <span>{clinic.location}</span>
                       </div>
 
                       {clinic.days && (
                         <div className="modal-clinic-days">
-                          <CalendarDays size={12} aria-hidden="true" />
+                          <Icon name="calendar" size={12} />
                           <span>{clinic.days}</span>
                         </div>
                       )}
@@ -345,7 +334,7 @@ export default function BookingModal({
               </label>
               {activeSlots.length === 0 ? (
                 <div className="no-slots-alert">
-                  <AlertTriangle size={16} aria-hidden="true" /> لا توجد مواعيد متاحة في هذه العيادة حاليًا، يرجى اختيار عيادة أخرى من الخطوة 1 أعلاه.
+                  <Icon name="alert" size={16} /> لا توجد مواعيد متاحة في هذه العيادة حاليًا، يرجى اختيار عيادة أخرى من الخطوة 1 أعلاه.
                 </div>
               ) : (
                 <div className="time-slots-grid">
@@ -356,7 +345,7 @@ export default function BookingModal({
                       className={`slot-btn ${selectedSlot === slot ? 'active' : ''}`}
                       onClick={() => setSelectedSlot(slot)}
                     >
-                      <Clock3 size={12} className="inline-slot-icon" aria-hidden="true" />
+                      <Icon name="clock" size={12} className="inline-slot-icon" />
                       <span>{slot}</span>
                     </button>
                   ))}
@@ -364,59 +353,57 @@ export default function BookingModal({
               )}
             </div>
 
-            {/* Step 3: Patient Information */}
+            {/* Step 3: Booking Type & Patient Info */}
             <div className="form-group">
               <label className="form-label">
                 <span className="step-num">3</span>
-                <span>بيانات المريض</span>
+                <span>نوع الحجز:</span>
               </label>
-
-              <div className="form-row-2">
-                <div className="input-with-label">
-                  <span className="mini-label">اسم المريض الثلاثي *</span>
-                  <input 
-                    type="text" 
-                    className="form-control"
-                    placeholder="مثال: محمد أحمد علي"
-                    required
-                    value={patientName}
-                    onChange={(e) => setPatientName(e.target.value)}
-                  />
-                </div>
-
-                <div className="input-with-label">
-                  <span className="mini-label">رقم الهاتف للتأكيد (واتساب) *</span>
-                  <input 
-                    type="tel" 
-                    className="form-control"
-                    placeholder="01xxxxxxxxx"
-                    required
-                    dir="ltr"
-                    value={patientPhone}
-                    onChange={(e) => setPatientPhone(e.target.value)}
-                  />
-                </div>
+              <div className="booking-types-selector">
+                {['كشف أول مرة', 'استشارة ومتابعة', 'فحص مستعجل'].map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    className={`booking-type-btn ${bookingType === type ? 'active' : ''}`}
+                    onClick={() => setBookingType(type)}
+                  >
+                    {type}
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* Step 4: Booking Type & Notes */}
-            <div className="form-group">
-              <div className="form-row-2">
-                <div className="input-with-label">
-                  <span className="mini-label">نوع الحجز</span>
-                  <select 
-                    className="form-control"
-                    value={bookingType}
-                    onChange={(e) => setBookingType(e.target.value)}
-                  >
-                    <option value="كشف أول مرة">كشف عيادة أول مرة</option>
-                    <option value="استشارة / متابعة">استشارة / متابعة كشف</option>
-                    <option value="فحص شامل">فحص شامل وتحاليل</option>
-                  </select>
-                </div>
+            <div className="form-row">
+              <div className="form-group">
+                <label className="form-label">اسم المريض ثلاثي</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  placeholder="مثال: محمد حسام عبد الله"
+                  required
+                  value={patientName}
+                  onChange={(e) => setPatientName(e.target.value)}
+                />
+              </div>
 
-                <div className="input-with-label">
-                  <span className="mini-label">ملاحظات للأخصائي (اختياري)</span>
+              <div className="form-group">
+                <label className="form-label">رقم الهاتف لتأكيد التذكرة (واتساب)</label>
+                <input 
+                  type="tel" 
+                  className="form-control" 
+                  placeholder="01012345678"
+                  dir="ltr"
+                  required
+                  value={patientPhone}
+                  onChange={(e) => setPatientPhone(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">ملاحظات أو سبب الزيارة (اختياري)</label>
+              <div className="form-row" style={{ marginBottom: 0 }}>
+                <div style={{ flex: 1 }}>
                   <input 
                     type="text" 
                     className="form-control"
@@ -450,7 +437,7 @@ export default function BookingModal({
                 className="btn btn-primary btn-confirm-booking"
                 disabled={isSubmitting || !selectedSlot}
               >
-                {isSubmitting ? 'جارِ تأكيد الموعد...' : <>تأكيد الحجز فوراً بدون زحمة <Check size={16} aria-hidden="true" /></>}
+                {isSubmitting ? 'جارِ تأكيد الموعد...' : <>تأكيد الحجز فوراً بدون زحمة <Icon name="check" size={16} /></>}
               </button>
             </div>
 
