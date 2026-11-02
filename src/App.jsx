@@ -3,7 +3,7 @@ import Header from './components/layout/Header';
 import Hero from './features/landing/Hero';
 import Specialties from './features/landing/Specialties';
 import Doctors from './features/doctors/Doctors';
-import HowItWorks from './components/HowItWorks';
+import HowItWorks from './features/landing/HowItWorks';
 import Testimonials from './components/Testimonials';
 import Footer from './components/layout/Footer';
 import EmergencyModal from './features/booking/EmergencyModal';
