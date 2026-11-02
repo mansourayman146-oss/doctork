@@ -39,7 +39,7 @@
   --glass-blur: 18px;
 
   /* Typography & Layout */
-  --font-family-base: 'Cairo', 'Tajawal', system-ui, -apple-system, sans-serif;
+  --font-family-base: 'Cairo', system-ui, -apple-system, sans-serif;
   --header-height: 76px;
   --max-width: 1280px;
 
