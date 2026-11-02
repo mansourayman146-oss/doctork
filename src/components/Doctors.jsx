@@ -1,18 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { 
-  ArrowLeft, 
-  ArrowRight, 
-  BadgeCheck, 
-  Building2, 
-  CalendarDays, 
-  Clock3, 
-  MapPin, 
-  Search, 
-  Star, 
-  Stethoscope, 
-  X, 
-  Zap 
-} from 'lucide-react';
+import Icon from './ui/Icon';
 
 const EGYPT_GOVERNORATES = [
   'القاهرة',
@@ -109,14 +96,14 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
           <div className="doc-title-row">
             <h3 className="doc-card-name">{doc.name}</h3>
             <span className="verified-check" title="طبيب معتمد وموثق بنقابة الأطباء">
-              <BadgeCheck size={14} aria-hidden="true" /> موثق
+              <Icon name="check-circle" size={14} /> موثق
             </span>
           </div>
           <span className="doc-card-specialty">{doc.specialty}</span>
           
           <div className="doc-rating-row">
             <div className="stars-group" aria-label={`تقييم ${doc.rating} من 5`}>
-              <Star className="star-icon" size={14} fill="currentColor" aria-hidden="true" />
+              <Icon name="star" className="star-icon" size={14} />
               <strong className="rating-value">{doc.rating}</strong>
               <span className="reviews-count">({doc.reviewsCount} تقييم مريض)</span>
             </div>
@@ -140,7 +127,7 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
         {/* Multi-Clinic Selection Section */}
         <div className="doc-clinics-picker">
           <div className="clinics-picker-header">
-            <Building2 size={13} className="clinics-picker-icon" aria-hidden="true" />
+            <Icon name="building" size={13} className="clinics-picker-icon" />
             <span className="clinics-picker-label">اختر العيادة الأنسب لموقعك:</span>
             <span className="clinics-count-pill">{clinics.length} عيادات</span>
           </div>
@@ -157,7 +144,7 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
                   aria-selected={isSelected}
                   title={`عرض مواعيد عيادة ${clinic.shortLocation || clinic.name}`}
                 >
-                  <MapPin size={12} className="clinic-pill-pin" aria-hidden="true" />
+                  <Icon name="pin" size={12} className="clinic-pill-pin" />
                   <span className="clinic-pill-name">{clinic.shortLocation || clinic.name}</span>
                   {clinic.availableToday && (
                     <span className="clinic-today-dot" title="متاح كشف اليوم"></span>
@@ -172,16 +159,16 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
         <div className="selected-clinic-box">
           <div className="selected-clinic-header">
             <div className="clinic-title-line">
-              <Building2 size={14} className="meta-icon" aria-hidden="true" />
+              <Icon name="building" size={14} className="meta-icon" />
               <strong className="clinic-hospital-title">{activeClinic.name}</strong>
             </div>
             <div className="clinic-address-line">
-              <MapPin size={13} className="meta-icon" aria-hidden="true" />
+              <Icon name="pin" size={13} className="meta-icon" />
               <span className="clinic-address-sub">{activeClinic.location}</span>
             </div>
             {activeClinic.days && (
               <div className="clinic-days-line">
-                <CalendarDays size={13} className="meta-icon text-orange" aria-hidden="true" />
+                <Icon name="calendar" size={13} className="meta-icon text-orange" />
                 <span className="clinic-work-days">أيام العمل: <strong>{activeClinic.days}</strong></span>
               </div>
             )}
@@ -212,7 +199,7 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
                     onClick={() => onBookDoctor(doc, slot, activeClinic.id)}
                     title={`اضغط للحجز الفوري في ${activeClinic.name} - الساعة ${slot}`}
                   >
-                    <Clock3 size={11} aria-hidden="true" />
+                    <Icon name="clock" size={11} />
                     <span>{slot}</span>
                   </button>
                 ))}
@@ -223,7 +210,7 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
 
         {/* Zero Waiting Banner */}
         <div className="doc-wait-badge">
-          <Clock3 className="wait-icon" size={14} aria-hidden="true" />
+          <Icon name="clock" className="wait-icon" size={14} />
           <span className="wait-text">وقت الانتظار: <strong>0 دقيقة (دخول فوري بدون زحمة)</strong></span>
         </div>
       </div>
@@ -233,107 +220,97 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
         <div className="doc-price-slot">
           <div className="price-group">
             <span className="price-label">سعر الكشف</span>
-            <div className="price-val-wrap">
-              <span className="price-val">{doc.price}</span>
-              <span className="price-curr">ج.م</span>
-            </div>
+            <span className="doc-price-val">{doc.price} ج.م</span>
           </div>
-          <div className={`next-slot-pill ${!hasSlots ? 'booked-out' : ''}`}>
-            <span className="slot-indicator"></span>
-            <span>{nextSlotText}</span>
-          </div>
+          <span className="price-note">داخل العيادة المحددة</span>
         </div>
 
-        <div className="doc-cta-group">
-          <button 
-            type="button" 
-            className="btn btn-book-doctor"
-            onClick={() => onBookDoctor(doc, activeSlots[0] || null, activeClinic.id)}
-            title={`احجز الآن في ${activeClinic.name}`}
-          >
-            <span>احجز الآن بالعيادة</span>
-            <span className="btn-arrow">←</span>
-          </button>
-        </div>
+        <button 
+          type="button" 
+          className="btn btn-primary btn-book-doctor"
+          onClick={() => onBookDoctor(doc, activeSlots[0] || null, activeClinic.id)}
+        >
+          <span>احجز الآن في {activeClinic.shortLocation || 'العيادة'}</span>
+          <span className="btn-sub-note">{nextSlotText}</span>
+        </button>
       </div>
     </article>
   );
 }
 
 export default function Doctors({ 
-  doctors = [],
+  doctors = [], 
   selectedSpecialty, 
   onSelectSpecialty, 
-  searchQuery, 
+  searchQuery = '',
   onBookDoctor,
-  loading = false
+  loading = false 
 }) {
   const [internalSearch, setInternalSearch] = useState('');
-  const [onlyAvailableToday, setOnlyAvailableToday] = useState(false);
   const [selectedCity, setSelectedCity] = useState('كل المدن');
+  const [onlyAvailableToday, setOnlyAvailableToday] = useState(false);
   const [pagination, setPagination] = useState({ page: 1, filterKey: '' });
-  const [isMobile, setIsMobile] = useState(false);
 
+  // Sync internal search with hero search prop
   useEffect(() => {
-    const mobileQuery = window.matchMedia('(max-width: 767px)');
-    const updateIsMobile = () => setIsMobile(mobileQuery.matches);
-    updateIsMobile();
-    mobileQuery.addEventListener('change', updateIsMobile);
-    return () => mobileQuery.removeEventListener('change', updateIsMobile);
-  }, []);
+    if (searchQuery) {
+      setInternalSearch(searchQuery);
+    }
+  }, [searchQuery]);
 
-  const doctorsPerPage = isMobile ? 1 : 6;
-
-  // Dynamic Specialties derived from doctors data
+  // Specialty tabs list
   const specialtyTabs = useMemo(() => {
-    const list = doctors.map(d => d.specialtyFilter).filter(Boolean);
-    return ['الكل', ...Array.from(new Set(list))];
+    const list = ['الكل'];
+    doctors.forEach(doc => {
+      const spec = doc.specialtyFilter || doc.specialty;
+      if (spec && !list.includes(spec)) {
+        list.push(spec);
+      }
+    });
+    return list;
   }, [doctors]);
 
+  // Active specialty helper
   const activeSpecialty = selectedSpecialty || 'الكل';
 
-  // Dynamic Filter logic supporting multi-clinics & city matching
+  // Filter doctors
   const filteredDoctors = useMemo(() => {
-    return doctors.filter((doc) => {
+    return doctors.filter(doc => {
       // 1. Specialty filter
-      if (activeSpecialty && activeSpecialty !== 'الكل') {
-        const matchesSpec = 
-          doc.specialtyFilter === activeSpecialty || 
-          doc.specialty.includes(activeSpecialty);
+      if (activeSpecialty !== 'الكل') {
+        const matchesSpec = doc.specialtyFilter === activeSpecialty || doc.specialty.includes(activeSpecialty);
         if (!matchesSpec) return false;
       }
 
-      // 2. Today filter (check doctor or any clinic)
-      if (onlyAvailableToday) {
-        const hasAvailableToday = doc.availableToday || (
-          Array.isArray(doc.clinics) && doc.clinics.some(c => c.availableToday && Array.isArray(c.availableSlots) && c.availableSlots.length > 0)
-        );
-        if (!hasAvailableToday) return false;
+      // 2. City filter
+      if (selectedCity !== 'كل المدن') {
+        const docMatchesCity = doc.city === selectedCity || doc.location.includes(selectedCity);
+        const clinicMatchesCity = Array.isArray(doc.clinics) && doc.clinics.some(c => c.city === selectedCity || c.location?.includes(selectedCity));
+        if (!docMatchesCity && !clinicMatchesCity) return false;
       }
 
-      // 3. City filter (check doctor city OR any clinic city / location)
-      if (selectedCity !== 'كل المدن') {
-        const matchesMainCity = doc.city === selectedCity || (doc.location && doc.location.includes(selectedCity));
-        const matchesClinicCity = Array.isArray(doc.clinics) && doc.clinics.some(c => 
-          c.city === selectedCity || (c.location && c.location.includes(selectedCity))
-        );
-        if (!matchesMainCity && !matchesClinicCity) return false;
+      // 3. Available today filter
+      if (onlyAvailableToday) {
+        const docAvailable = doc.availableToday;
+        const clinicAvailable = Array.isArray(doc.clinics) && doc.clinics.some(c => c.availableToday && Array.isArray(c.availableSlots) && c.availableSlots.length > 0);
+        if (!docAvailable && !clinicAvailable) return false;
       }
 
       // 4. Search query
       const term = (internalSearch || searchQuery || '').trim().toLowerCase();
       if (term) {
-        const matchesName = doc.name.toLowerCase().includes(term);
-        const matchesSpec = doc.specialty.toLowerCase().includes(term);
-        const matchesLoc = doc.location.toLowerCase().includes(term);
-        const matchesHospital = doc.hospital && doc.hospital.toLowerCase().includes(term);
-        const matchesTags = doc.tags?.some(tag => tag.toLowerCase().includes(term));
-        const matchesClinics = Array.isArray(doc.clinics) && doc.clinics.some(c => 
-          c.name.toLowerCase().includes(term) ||
+        const nameMatch = doc.name.toLowerCase().includes(term);
+        const specMatch = doc.specialty.toLowerCase().includes(term);
+        const locMatch = doc.location.toLowerCase().includes(term);
+        const hospMatch = doc.hospital && doc.hospital.toLowerCase().includes(term);
+        const tagsMatch = doc.tags && doc.tags.some(t => t.toLowerCase().includes(term));
+        const clinicMatch = Array.isArray(doc.clinics) && doc.clinics.some(c => 
+          c.name.toLowerCase().includes(term) || 
           c.location.toLowerCase().includes(term) ||
           (c.shortLocation && c.shortLocation.toLowerCase().includes(term))
         );
-        if (!matchesName && !matchesSpec && !matchesLoc && !matchesHospital && !matchesTags && !matchesClinics) {
+
+        if (!nameMatch && !specMatch && !locMatch && !hospMatch && !tagsMatch && !clinicMatch) {
           return false;
         }
       }
@@ -342,21 +319,17 @@ export default function Doctors({
     });
   }, [doctors, activeSpecialty, onlyAvailableToday, selectedCity, internalSearch, searchQuery]);
 
-  const pageCount = Math.ceil(filteredDoctors.length / doctorsPerPage);
-  const filterKey = JSON.stringify([
-    selectedSpecialty || 'الكل',
-    onlyAvailableToday,
-    selectedCity,
-    internalSearch,
-    searchQuery
-  ]);
+  const pageSize = 4;
+  const pageCount = Math.max(1, Math.ceil(filteredDoctors.length / pageSize));
+  const filterKey = `${activeSpecialty}|${selectedCity}|${onlyAvailableToday}|${internalSearch}|${searchQuery}`;
   const currentPage = pagination.filterKey === filterKey
-    ? Math.min(pagination.page, Math.max(pageCount, 1))
+    ? Math.min(pagination.page, pageCount)
     : 1;
-  const visibleDoctors = filteredDoctors.slice(
-    (currentPage - 1) * doctorsPerPage,
-    currentPage * doctorsPerPage
-  );
+
+  const visibleDoctors = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    return filteredDoctors.slice(startIndex, startIndex + pageSize);
+  }, [filteredDoctors, currentPage, pageSize]);
 
   return (
     <section className="doctors-section" id="doctors">
@@ -364,8 +337,11 @@ export default function Doctors({
         
         {/* Section Header */}
         <div className="section-header-center">
+          <div className="badge-pill-header">
+            <span>نخبة الأطباء والعيادات المعتمدة</span>
+          </div>
           <h2 className="section-main-title">
-            احجز مع <span className="highlight-text">أفضل الأطباء المعتمدين</span>
+            احجز مع <span className="highlight-text">أفضل الاستشاريين</span> في مدينتك
           </h2>
           <p className="section-main-subtitle">
             اختر الطبيب والعيادة الأقرب لموقعك واطّلع على المواعيد المتاحة لكل عيادة بدقة. جميع المواعيد مؤكدة بدون أي دقيقة انتظار.
@@ -378,7 +354,7 @@ export default function Doctors({
           {/* Top Search & City Bar */}
           <div className="filter-top-row">
             <div className="filter-search-box">
-              <Search className="search-symbol" aria-hidden="true" />
+              <Icon name="search" className="search-symbol" />
               <input 
                 type="text" 
                 className="filter-search-input"
@@ -393,7 +369,7 @@ export default function Doctors({
                   onClick={() => setInternalSearch('')}
                   aria-label="مسح البحث"
                 >
-                  <X size={14} aria-hidden="true" />
+                  <Icon name="close" size={14} />
                 </button>
               )}
             </div>
@@ -417,7 +393,7 @@ export default function Doctors({
                 className={`filter-toggle-btn ${onlyAvailableToday ? 'active' : ''}`}
                 onClick={() => setOnlyAvailableToday(prev => !prev)}
               >
-                <Zap className="lightning-icon" aria-hidden="true" />
+                <Icon name="zap" className="lightning-icon" />
                 <span>متاح اليوم فقط</span>
               </button>
             </div>
@@ -465,7 +441,7 @@ export default function Doctors({
           </div>
         ) : filteredDoctors.length === 0 ? (
           <div className="no-doctors-card">
-            <Stethoscope className="no-doctors-icon" aria-hidden="true" />
+            <Icon name="stethoscope" className="no-doctors-icon" />
             <h3 className="no-doctors-title">لم نجد أطباء يطابقون خيارات البحث الحالية</h3>
             <p className="no-doctors-desc">
               جرب تغيير التخصص، إلغاء فلتر "متاح اليوم فقط"، أو مسح كلمة البحث لرؤية كافة الأطباء والعيادات.
@@ -493,7 +469,7 @@ export default function Doctors({
                 disabled={currentPage === 1}
                 aria-label="عرض الأطباء السابقين"
               >
-                <ArrowRight size={20} aria-hidden="true" />
+                <Icon name="arrow-right" size={20} />
               </button>
             )}
             <div className="doctors-grid">
@@ -514,7 +490,7 @@ export default function Doctors({
                 disabled={currentPage === pageCount}
                 aria-label="عرض باقي الأطباء"
               >
-                <ArrowLeft size={20} aria-hidden="true" />
+                <Icon name="arrow-left" size={20} />
               </button>
             )}
           </div>

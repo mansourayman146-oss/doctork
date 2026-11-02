@@ -103,7 +103,7 @@ const ICONS = {
 };
 
 // أيقونات اتجاهية: تتعكس في RTL
-const DIRECTIONAL = new Set(['back', 'arrow-left', 'arrow-right']);
+const DIRECTIONAL = new Set(['back']);
 
 export default function Icon({ name, label, size, className = '', style, ...rest }) {
   const icon = ICONS[name];
