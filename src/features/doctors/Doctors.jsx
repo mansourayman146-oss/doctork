@@ -147,16 +147,22 @@ function DoctorCard({ doc, selectedCity, searchQuery, onBookDoctor }) {
 
           {clinics.length > 1 && (
             <div className="doc-branches-display">
-              <span className="branches-tag">الفروع المتاحة ({clinics.length}):</span>
+              <span className="branches-tag">الفروع ({clinics.length}):</span>
               <div className="branches-tags-row">
-                {clinics.map((clinic) => (
-                  <span
-                    key={clinic.id}
-                    className="branch-static-tag"
-                  >
-                    {clinic.shortLocation || clinic.city || clinic.name}
-                  </span>
-                ))}
+                {clinics.map((clinic) => {
+                  const isCurrent = clinic.id === activeClinic.id;
+                  return (
+                    <button
+                      key={clinic.id}
+                      type="button"
+                      className={`branch-pill-btn ${isCurrent ? 'active' : ''}`}
+                      onClick={() => setActiveClinicId(clinic.id)}
+                      title={`عرض مواعيد وتفاصيل فرع ${clinic.shortLocation || clinic.city || clinic.name}`}
+                    >
+                      {clinic.shortLocation || clinic.city || clinic.name}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}

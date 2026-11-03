@@ -1,5 +1,5 @@
 import './BookingModal.css';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Icon from '@/components/ui/Icon';
 import { DEFAULT_SLOTS } from '@/lib/constants';
 import { isValidName, isValidEgyptianPhone, generateWhatsAppUrl } from './validate';
@@ -145,10 +145,18 @@ export default function BookingModal({
 
   const upcomingDays = useMemo(() => generateUpcomingDays(activeClinic?.days), [activeClinic?.days]);
 
+  // Track open transition and doctor changes to initialize wizard once per session
+  const prevIsOpenRef = useRef(false);
+  const prevDocIdRef = useRef(null);
+
   useEffect(() => {
-    if (isOpen && clinics.length > 0) {
+    const justOpened = isOpen && !prevIsOpenRef.current;
+    const docChanged = isOpen && doctor?.id !== prevDocIdRef.current;
+
+    if (justOpened || docChanged) {
       setIsSuccess(false);
       setBookingResult(null);
+      setCurrentStep(1);
 
       // Pre-fill user data if logged in
       if (currentUser) {
@@ -157,12 +165,6 @@ export default function BookingModal({
       } else {
         setPatientName('');
         setPatientPhone('');
-      }
-
-      // Initialize date
-      if (upcomingDays.length > 0) {
-        setSelectedDateIso(upcomingDays[0].isoDate);
-        setSelectedDay(upcomingDays[0].fullLabel);
       }
 
       // Determine initial clinic index
@@ -176,11 +178,34 @@ export default function BookingModal({
       const finalIndex = targetIndex >= 0 ? targetIndex : 0;
       setSelectedClinicIndex(finalIndex);
 
-      const clinicSlots = clinics[finalIndex]?.availableSlots || [];
-      setSelectedSlot(clinicSlots[0] || '');
-      setCurrentStep(1);
+      const chosenClinic = clinics[finalIndex] || clinics[0];
+      const initialDays = generateUpcomingDays(chosenClinic?.days);
+      if (initialDays.length > 0) {
+        setSelectedDateIso(initialDays[0].isoDate);
+        setSelectedDay(initialDays[0].fullLabel);
+      }
+      const clinicSlots = chosenClinic?.availableSlots || [];
+      setSelectedSlot(initialSlot && clinicSlots.includes(initialSlot) ? initialSlot : (clinicSlots[0] || ''));
     }
-  }, [isOpen, doctor, initialSlot, initialClinicId, currentUser, clinics, upcomingDays]);
+
+    prevIsOpenRef.current = isOpen;
+    prevDocIdRef.current = doctor?.id || null;
+  }, [isOpen, doctor?.id, initialClinicId, initialSlot, currentUser, clinics]);
+
+  // Direct clinic selection handler without reset loops
+  const handleSelectClinic = (index) => {
+    setSelectedClinicIndex(index);
+    const chosenClinic = clinics[index];
+    if (chosenClinic) {
+      const days = generateUpcomingDays(chosenClinic.days);
+      if (days.length > 0) {
+        setSelectedDateIso(days[0].isoDate);
+        setSelectedDay(days[0].fullLabel);
+      }
+      const slots = chosenClinic.availableSlots || [];
+      setSelectedSlot(slots[0] || '');
+    }
+  };
 
   if (!isOpen || !doctor) return null;
 
@@ -451,15 +476,11 @@ export default function BookingModal({
                         role="button"
                         tabIndex={0}
                         className={`booking-clinic-card ${isSelected ? 'active' : ''}`}
-                        onClick={() => {
-                          setSelectedClinicIndex(index);
-                          setSelectedSlot(clinic.availableSlots[0] || '');
-                        }}
+                        onClick={() => handleSelectClinic(index)}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            setSelectedClinicIndex(index);
-                            setSelectedSlot(clinic.availableSlots[0] || '');
+                            handleSelectClinic(index);
                           }
                         }}
                       >
