@@ -96,7 +96,43 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
     : 'اكتملت مواعيد هذه العيادة';
 
   return (
-    <article className="doctor-card modern-doc-card" id={`doctor-${doc.id}`}>
+    <article 
+      className="doctor-card modern-doc-card" 
+      id={`doctor-${doc.id}`}
+      style={{ '--doc-theme': doc.avatarBg || '#183b2b' }}
+    >
+      {/* Corner Geometric Triangle & Diagonal Accent Line */}
+      <div className="doc-corner-triangle-wrap" aria-hidden="true">
+        <svg 
+          className="doc-corner-triangle-svg" 
+          viewBox="0 0 170 170" 
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id={`doc-grad-${doc.id}`} x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor={doc.avatarBg || '#183b2b'} stopOpacity="0.24" />
+              <stop offset="60%" stopColor={doc.avatarBg || '#183b2b'} stopOpacity="0.10" />
+              <stop offset="100%" stopColor={doc.avatarBg || '#183b2b'} stopOpacity="0.02" />
+            </linearGradient>
+          </defs>
+          <polygon 
+            points="0,0 170,0 170,170" 
+            fill={`url(#doc-grad-${doc.id})`}
+            className="corner-poly"
+          />
+          <line 
+            x1="0" 
+            y1="0" 
+            x2="170" 
+            y2="170" 
+            stroke={doc.avatarBg || '#183b2b'} 
+            strokeWidth="1.5" 
+            strokeOpacity="0.38"
+            className="corner-line"
+          />
+        </svg>
+      </div>
+
       {/* Doctor Card Top / Badges */}
       <div className="doc-card-header">
         <DoctorAvatar doc={doc} hasSlots={hasSlots} />
