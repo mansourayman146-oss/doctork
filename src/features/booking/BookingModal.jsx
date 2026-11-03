@@ -183,14 +183,8 @@ export default function BookingModal({
       setSelectedClinicIndex(finalIndex);
 
       const clinicSlots = clinics[finalIndex]?.availableSlots || [];
-      if (initialSlot && clinicSlots.includes(initialSlot)) {
-        setSelectedSlot(initialSlot);
-        // If both clinic and slot were explicitly chosen from card, jump to step 2 for quick verification
-        setCurrentStep(2);
-      } else {
-        setSelectedSlot(clinicSlots[0] || '');
-        setCurrentStep(1);
-      }
+      setSelectedSlot(clinicSlots[0] || '');
+      setCurrentStep(1);
     }
   }, [isOpen, doctor, initialSlot, initialClinicId, currentUser, clinics, upcomingDays]);
 

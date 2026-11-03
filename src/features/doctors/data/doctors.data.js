@@ -485,7 +485,7 @@ export const INITIAL_DOCTORS = [
     name: 'د. ياسمين الشاذلي',
     title: 'استشاري أول أمراض الباطنة العامة والجهاز الهضمي والكبد والمناظير',
     specialty: 'أمراض الباطنة والجهاز الهضمي والكبد',
-    specialtyFilter: 'باطنة وجهاز هضمي',
+    specialtyFilter: 'باطنة عامة',
     rating: 4.96,
     reviewsCount: 240,
     experience: '16 سنة خبرة',

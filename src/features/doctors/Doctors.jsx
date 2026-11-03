@@ -1,7 +1,7 @@
 import './Doctors.css';
 import React, { useState, useMemo, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
-import { EGYPT_GOVERNORATES } from '@/lib/constants';
+import { EGYPT_MEDICAL_REGIONS } from '@/lib/constants';
 
 
 
@@ -50,7 +50,7 @@ function DoctorAvatar({ doc, hasSlots }) {
  * Individual Doctor Card with Interactive Multi-Clinic Selector
  * and Real-Time Clinic-Specific Available Appointments
  */
-function DoctorCard({ doc, selectedCity, onBookDoctor }) {
+function DoctorCard({ doc, selectedCity, searchQuery, onBookDoctor }) {
   const clinics = useMemo(() => {
     if (Array.isArray(doc.clinics) && doc.clinics.length > 0) {
       return doc.clinics.map(c => ({ ...c, price: doc.price }));
@@ -71,23 +71,34 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
     ];
   }, [doc]);
 
-  // Find if a clinic matches the currently filtered city
-  const cityMatchingClinic = useMemo(() => {
-    if (!selectedCity || selectedCity === 'كل المدن') return null;
-    return clinics.find(c => c.city === selectedCity || c.location?.includes(selectedCity));
-  }, [clinics, selectedCity]);
+  // Find if a clinic matches the currently filtered city, region, or search term
+  const effectiveFilter = useMemo(() => {
+    if (selectedCity && selectedCity !== 'كل المدن') return selectedCity.trim().toLowerCase();
+    if (searchQuery) return searchQuery.trim().toLowerCase();
+    return '';
+  }, [selectedCity, searchQuery]);
 
-  const [activeClinicId, setActiveClinicId] = useState(() => (cityMatchingClinic || clinics[0])?.id);
+  const matchingClinic = useMemo(() => {
+    if (!effectiveFilter) return null;
+    return clinics.find(c => 
+      c.city?.toLowerCase().includes(effectiveFilter) || 
+      c.location?.toLowerCase().includes(effectiveFilter) ||
+      c.shortLocation?.toLowerCase().includes(effectiveFilter) ||
+      c.name?.toLowerCase().includes(effectiveFilter)
+    );
+  }, [clinics, effectiveFilter]);
 
-  // If city filter changes, automatically switch to the matching clinic if available
+  const [activeClinicId, setActiveClinicId] = useState(() => (matchingClinic || clinics[0])?.id);
+
+  // If filter changes, automatically switch to the matching clinic if available
   useEffect(() => {
-    if (cityMatchingClinic) {
-      setActiveClinicId(cityMatchingClinic.id);
+    if (matchingClinic) {
+      setActiveClinicId(matchingClinic.id);
     }
-  }, [cityMatchingClinic]);
+  }, [matchingClinic]);
 
   // Fallback to first clinic if activeClinicId not in list
-  const activeClinic = clinics.find(c => c.id === activeClinicId) || clinics[0];
+  const activeClinic = clinics.find(c => c.id === activeClinicId) || matchingClinic || clinics[0];
   const activeSlots = Array.isArray(activeClinic?.availableSlots) ? activeClinic.availableSlots : [];
   const hasSlots = activeSlots.length > 0;
   const isAvailableToday = Boolean(activeClinic?.availableToday);
@@ -218,7 +229,7 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
         <button 
           type="button" 
           className="btn btn-primary btn-book-doctor"
-          onClick={() => onBookDoctor(doc)}
+          onClick={() => onBookDoctor(doc, activeSlots[0], activeClinic.id)}
           title={`بدء حجز موعد كشف مع ${doc.name}`}
         >
           <span className="btn-book-text">احجز موعد كشف</span>
@@ -275,8 +286,14 @@ export default function Doctors({
 
       // 2. City filter
       if (selectedCity !== 'كل المدن') {
-        const docMatchesCity = doc.city === selectedCity || doc.location.includes(selectedCity);
-        const clinicMatchesCity = Array.isArray(doc.clinics) && doc.clinics.some(c => c.city === selectedCity || c.location?.includes(selectedCity));
+        const cityTerm = selectedCity.trim().toLowerCase();
+        const docMatchesCity = doc.city?.toLowerCase().includes(cityTerm) || doc.location?.toLowerCase().includes(cityTerm);
+        const clinicMatchesCity = Array.isArray(doc.clinics) && doc.clinics.some(c => 
+          c.city?.toLowerCase().includes(cityTerm) || 
+          c.location?.toLowerCase().includes(cityTerm) ||
+          c.shortLocation?.toLowerCase().includes(cityTerm) ||
+          c.name?.toLowerCase().includes(cityTerm)
+        );
         if (!docMatchesCity && !clinicMatchesCity) return false;
       }
 
@@ -370,11 +387,11 @@ export default function Doctors({
                 className="filter-select"
                 value={selectedCity}
                 onChange={(e) => setSelectedCity(e.target.value)}
-                aria-label="اختر المدينة"
+                aria-label="اختر المدينة أو المنطقة"
               >
-                {['كل المدن', ...EGYPT_GOVERNORATES].map(city => (
+                {['كل المدن', ...EGYPT_MEDICAL_REGIONS].map(city => (
                   <option key={city} value={city}>
-                    {city === 'كل المدن' ? 'كل المدن والمحافظات' : city}
+                    {city === 'كل المدن' ? 'كل المدن والمناطق' : city}
                   </option>
                 ))}
               </select>
@@ -469,6 +486,7 @@ export default function Doctors({
                   key={doc.id}
                   doc={doc}
                   selectedCity={selectedCity}
+                  searchQuery={internalSearch || searchQuery}
                   onBookDoctor={onBookDoctor}
                 />
               ))}
