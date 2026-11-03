@@ -25,6 +25,26 @@
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
   overflow: hidden;
   animation: modal-pop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  scrollbar-width: thin;
+}
+
+.modal-dialog::-webkit-scrollbar {
+  width: 5px;
+}
+
+.modal-dialog::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-dialog::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.25);
+  border-radius: 9999px;
+}
+
+.modal-dialog::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .modal-header {
