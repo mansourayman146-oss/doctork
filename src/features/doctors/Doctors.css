@@ -339,54 +339,7 @@
   transform: scale(1.05);
 }
 
-/* Pulsing Status Beacon */
-.doc-status-dot {
-  position: absolute;
-  bottom: 3px;
-  left: 3px;
-  width: 14px;
-  height: 14px;
-  background-color: #22c55e;
-  border: 2px solid var(--clr-white);
-  border-radius: 50%;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
-}
 
-.doc-status-dot.busy {
-  background-color: #94a3b8;
-}
-
-.doc-status-ping {
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  background-color: #22c55e;
-  opacity: 0.6;
-  animation: doc-beacon-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-.doc-status-dot.busy .doc-status-ping {
-  display: none;
-}
-
-@keyframes doc-beacon-pulse {
-  0% {
-    transform: scale(0.9);
-    opacity: 0.8;
-  }
-  70% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(2.4);
-    opacity: 0;
-  }
-}
 
 .doc-header-info {
   flex: 1;
@@ -906,9 +859,7 @@
   box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
-:root[data-theme="dark"] .doc-status-dot {
-  border-color: #1e293b;
-}
+
 
 
 

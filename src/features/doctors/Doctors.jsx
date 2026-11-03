@@ -9,7 +9,7 @@ import { EGYPT_MEDICAL_REGIONS } from '@/lib/constants';
  * Professional Medical Doctor Avatar with refined squircle framing,
  * live availability beacon, and graceful monogram fallback.
  */
-function DoctorAvatar({ doc, hasSlots }) {
+function DoctorAvatar({ doc }) {
   const [imgError, setImgError] = useState(false);
   const showImg = Boolean(doc.image && !imgError);
 
@@ -29,13 +29,6 @@ function DoctorAvatar({ doc, hasSlots }) {
       ) : (
         <span className="doc-initials">{doc.initials}</span>
       )}
-      <span 
-        className={`doc-status-dot ${hasSlots ? 'active' : 'busy'}`} 
-        title={hasSlots ? 'متواجد وجاهز للحجز الفوري' : 'المواعيد ممتلئة'}
-        aria-label={hasSlots ? 'متواجد وجاهز للحجز' : 'المواعيد ممتلئة'}
-      >
-        <span className="doc-status-ping"></span>
-      </span>
     </div>
   );
 }
@@ -108,7 +101,7 @@ function DoctorCard({ doc, selectedCity, searchQuery, onBookDoctor }) {
     >
       {/* Doctor Card Top / Badges */}
       <div className="doc-card-header">
-        <DoctorAvatar doc={doc} hasSlots={hasSlots} />
+        <DoctorAvatar doc={doc} />
 
         <div className="doc-header-info">
           <div className="doc-title-row">
