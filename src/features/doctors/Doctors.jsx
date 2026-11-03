@@ -191,21 +191,30 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
 
       {/* Card Footer: Price & CTA */}
       <div className="doc-card-footer">
-        <div className="doc-price-slot">
-          <div className="price-group">
+        <div className="doc-footer-meta">
+          <div className="doc-price-slot">
             <span className="price-label">سعر الكشف</span>
-            <span className="doc-price-val">{doc.price} ج.م</span>
+            <div className="price-group">
+              <span className="price-val">{doc.price}</span>
+              <span className="price-curr">ج.م</span>
+            </div>
+            <span className="price-note">داخل العيادة</span>
           </div>
-          <span className="price-note">داخل العيادة المحددة</span>
+
+          <div className="doc-next-slot-pill" title="أقرب موعد كشف متاح">
+            <span className="slot-indicator"></span>
+            <span className="next-slot-label">{nextSlotText}</span>
+          </div>
         </div>
 
         <button 
           type="button" 
           className="btn btn-primary btn-book-doctor"
           onClick={() => onBookDoctor(doc, activeSlots[0] || null, activeClinic.id)}
+          title={`احجز الآن في عيادة ${activeClinic.shortLocation || activeClinic.name}`}
         >
-          <span>احجز الآن في {activeClinic.shortLocation || 'العيادة'}</span>
-          <span className="btn-sub-note">{nextSlotText}</span>
+          <span className="btn-book-text">احجز الآن في {activeClinic.shortLocation || 'العيادة'}</span>
+          <Icon name="arrow-left" size={14} className="btn-arrow" />
         </button>
       </div>
     </article>
