@@ -416,19 +416,45 @@
   color: var(--clr-forest-base);
 }
 
+.schedule-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.clinic-days-hint {
+  font-size: 11.5px;
+  color: var(--clr-slate-600);
+  background-color: #f8fafc;
+  border: 1px solid var(--clr-slate-200);
+  padding: 3px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.clinic-days-hint strong {
+  color: var(--clr-forest-base);
+}
+
 .wizard-day-selector {
   display: flex;
   gap: 8px;
   margin-top: 6px;
+  margin-bottom: 12px;
 }
 
 .wizard-day-btn {
   flex: 1;
-  padding: 9px 12px;
+  padding: 9px 8px;
   background-color: var(--clr-slate-50);
   border: 1.5px solid var(--clr-slate-200);
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 700;
   color: var(--clr-slate-700);
   display: inline-flex;
@@ -437,6 +463,7 @@
   gap: 6px;
   cursor: pointer;
   transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
 .wizard-day-btn:hover {
@@ -449,6 +476,166 @@
   border-color: var(--clr-forest-base);
   color: var(--clr-white);
   box-shadow: 0 4px 10px var(--clr-forest-glow);
+}
+
+/* Full Schedule 14-Day Strip */
+.schedule-strip-container {
+  margin-top: 8px;
+  margin-bottom: 12px;
+  background-color: #f8fafc;
+  border: 1px solid var(--clr-slate-200);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.schedule-strip-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--clr-slate-600);
+  margin-bottom: 8px;
+}
+
+.schedule-days-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+
+.schedule-day-card {
+  flex: 0 0 76px;
+  min-width: 76px;
+  padding: 10px 4px;
+  border-radius: 12px;
+  border: 1.5px solid var(--clr-slate-200);
+  background-color: var(--clr-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.schedule-day-card:hover {
+  border-color: var(--clr-forest-base);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.schedule-day-card.active {
+  background-color: var(--clr-forest-base);
+  border-color: var(--clr-forest-base);
+  color: var(--clr-white);
+  box-shadow: 0 4px 12px var(--clr-forest-glow);
+}
+
+.sched-day-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--clr-slate-600);
+}
+
+.sched-date-num {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--clr-slate-900);
+  line-height: 1.2;
+}
+
+.sched-month-name {
+  font-size: 10.5px;
+  color: var(--clr-slate-500);
+}
+
+.sched-status-dot {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-top: 2px;
+}
+
+.sched-status-dot.open {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.sched-status-dot.off {
+  background-color: #f1f5f9;
+  color: #94a3b8;
+}
+
+.schedule-day-card.active .sched-day-name,
+.schedule-day-card.active .sched-date-num,
+.schedule-day-card.active .sched-month-name {
+  color: var(--clr-white);
+}
+
+.schedule-day-card.active .sched-status-dot.open {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: var(--clr-white);
+}
+
+.schedule-day-card.active .sched-status-dot.off {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #e2e8f0;
+}
+
+/* Custom Date Picker */
+.custom-date-picker-row {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.custom-date-input-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: var(--clr-slate-50);
+  border: 1px dashed var(--clr-slate-300);
+  border-radius: 10px;
+  padding: 8px 12px;
+  flex-wrap: wrap;
+}
+
+.custom-date-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--clr-slate-700);
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.custom-date-input {
+  height: 38px;
+  font-size: 13px;
+  font-weight: 700;
+  max-width: 190px;
+  background-color: var(--clr-white);
+  border: 1px solid var(--clr-slate-300);
+  border-radius: 8px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.selected-date-preview-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--clr-slate-800);
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 8px 14px;
+  border-radius: 10px;
+  margin-top: 8px;
 }
 
 .time-slots-grid {
@@ -909,6 +1096,44 @@
 
 :root[data-theme="dark"] .summary-label {
   color: #94a3b8;
+}
+
+:root[data-theme="dark"] .schedule-strip-container,
+:root[data-theme="dark"] .custom-date-input-wrap {
+  background-color: #131e2e;
+  border-color: #2a394e;
+}
+
+:root[data-theme="dark"] .schedule-day-card {
+  background-color: #1a2739;
+  border-color: #33445c;
+}
+
+:root[data-theme="dark"] .sched-day-name,
+:root[data-theme="dark"] .sched-date-num {
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .clinic-days-hint {
+  background-color: #131e2e;
+  border-color: #2a394e;
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .custom-date-label {
+  color: #cbd5e1;
+}
+
+:root[data-theme="dark"] .custom-date-input {
+  background-color: #1a2739;
+  border-color: #33445c;
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .selected-date-preview-pill {
+  background-color: #132820;
+  border-color: #1e4535;
+  color: #86efac;
 }
 
 /* Responsive adjustments */

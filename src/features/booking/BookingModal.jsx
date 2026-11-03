@@ -4,6 +4,59 @@ import Icon from '@/components/ui/Icon';
 import { DEFAULT_SLOTS } from '@/lib/constants';
 import { isValidName, isValidEgyptianPhone, generateWhatsAppUrl } from './validate';
 
+const ARABIC_DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+const ARABIC_MONTHS = [
+  'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+  'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+];
+
+function isClinicWorkingOnDay(clinicDays, dayName) {
+  if (!clinicDays) return true;
+  if (clinicDays.includes('يومياً')) {
+    if (clinicDays.includes('عدا الجمعة') && dayName === 'الجمعة') return false;
+    return true;
+  }
+  return clinicDays.includes(dayName);
+}
+
+function generateUpcomingDays(clinicDays, count = 14) {
+  const list = [];
+  const now = new Date();
+  for (let i = 0; i < count; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+    const dayName = ARABIC_DAYS[d.getDay()];
+    const dayNumber = d.getDate();
+    const monthName = ARABIC_MONTHS[d.getMonth()];
+    const year = d.getFullYear();
+    const isoDate = `${year}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
+
+    let quickName = '';
+    if (i === 0) quickName = 'اليوم';
+    else if (i === 1) quickName = 'غداً';
+    else if (i === 2) quickName = 'بعد غد';
+    else if (i === 7) quickName = 'بعد أسبوع';
+
+    const fullLabel = i === 0 
+      ? `اليوم (${dayName} ${dayNumber} ${monthName})`
+      : (i === 1 
+        ? `غداً (${dayName} ${dayNumber} ${monthName})` 
+        : `${dayName} ${dayNumber} ${monthName}`);
+
+    list.push({
+      index: i,
+      isoDate,
+      dayName,
+      dayNumber,
+      monthName,
+      year,
+      quickName,
+      fullLabel,
+      isWorkingDay: isClinicWorkingOnDay(clinicDays, dayName)
+    });
+  }
+  return list;
+}
+
 export default function BookingModal({ 
   isOpen, 
   doctor, 
@@ -18,6 +71,10 @@ export default function BookingModal({
   const [selectedClinicIndex, setSelectedClinicIndex] = useState(0);
   const [selectedSlot, setSelectedSlot] = useState('');
   const [selectedDay, setSelectedDay] = useState('اليوم');
+  const [selectedDateIso, setSelectedDateIso] = useState(() => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  });
   const [bookingType, setBookingType] = useState('كشف أول مرة');
   const [patientName, setPatientName] = useState('');
   const [patientPhone, setPatientPhone] = useState('');
@@ -60,6 +117,8 @@ export default function BookingModal({
   const activeClinic = clinics[selectedClinicIndex] || clinics[0];
   const activeSlots = activeClinic?.availableSlots || [];
 
+  const upcomingDays = useMemo(() => generateUpcomingDays(activeClinic?.days), [activeClinic?.days]);
+
   useEffect(() => {
     if (isOpen && clinics.length > 0) {
       setIsSuccess(false);
@@ -72,6 +131,12 @@ export default function BookingModal({
       } else {
         setPatientName('');
         setPatientPhone('');
+      }
+
+      // Initialize date
+      if (upcomingDays.length > 0) {
+        setSelectedDateIso(upcomingDays[0].isoDate);
+        setSelectedDay(upcomingDays[0].fullLabel);
       }
 
       // Determine initial clinic index
@@ -95,7 +160,7 @@ export default function BookingModal({
         setCurrentStep(1);
       }
     }
-  }, [isOpen, doctor, initialSlot, initialClinicId, currentUser, clinics]);
+  }, [isOpen, doctor, initialSlot, initialClinicId, currentUser, clinics, upcomingDays]);
 
   if (!isOpen || !doctor) return null;
 
@@ -464,21 +529,108 @@ export default function BookingModal({
                   </button>
                 </div>
 
-                {/* Day selector */}
+                {/* Day & Full Schedule Selector */}
                 <div className="form-group mb-3">
-                  <label className="form-label">اختر يوم الكشف:</label>
+                  <div className="schedule-header-row">
+                    <label className="form-label mb-0">اختر يوم وتاريخ الكشف:</label>
+                    <span className="clinic-days-hint">
+                      <Icon name="calendar" size={12} /> أيام عمل العيادة: <strong>{activeClinic?.days || 'يومياً'}</strong>
+                    </span>
+                  </div>
+
+                  {/* 1. Quick Day Buttons */}
                   <div className="wizard-day-selector">
-                    {['اليوم', 'غداً', 'بعد غد'].map((day) => (
-                      <button
-                        key={day}
-                        type="button"
-                        className={`wizard-day-btn ${selectedDay === day ? 'active' : ''}`}
-                        onClick={() => setSelectedDay(day)}
-                      >
+                    {[
+                      { key: 'today', label: 'اليوم', idx: 0 },
+                      { key: 'tomorrow', label: 'غداً', idx: 1 },
+                      { key: 'afterTomorrow', label: 'بعد غد', idx: 2 },
+                      { key: 'nextWeek', label: 'بعد أسبوع', idx: 7 }
+                    ].map((item) => {
+                      const targetDay = upcomingDays[item.idx];
+                      const isSelected = targetDay && selectedDateIso === targetDay.isoDate;
+                      return (
+                        <button
+                          key={item.key}
+                          type="button"
+                          className={`wizard-day-btn ${isSelected ? 'active' : ''}`}
+                          onClick={() => {
+                            if (targetDay) {
+                              setSelectedDateIso(targetDay.isoDate);
+                              setSelectedDay(targetDay.fullLabel);
+                            }
+                          }}
+                        >
+                          <Icon name="calendar" size={13} />
+                          <span>{item.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* 2. Full Schedule Strip (14 Days Ahead Carousel) */}
+                  <div className="schedule-strip-container">
+                    <div className="schedule-strip-label">
+                      <span>جدول الأيام المتاحة للحجز (الـ 14 يوماً القادمة):</span>
+                    </div>
+                    <div className="schedule-days-scroll">
+                      {upcomingDays.map((day) => {
+                        const isSelected = selectedDateIso === day.isoDate;
+                        return (
+                          <button
+                            key={day.isoDate}
+                            type="button"
+                            className={`schedule-day-card ${isSelected ? 'active' : ''} ${!day.isWorkingDay ? 'non-working' : ''}`}
+                            onClick={() => {
+                              setSelectedDateIso(day.isoDate);
+                              setSelectedDay(day.fullLabel);
+                            }}
+                            title={`${day.fullLabel} - ${day.isWorkingDay ? 'متاح بالعيادة' : 'خارج أيام العمل الرسمية'}`}
+                          >
+                            <span className="sched-day-name">
+                              {day.quickName || day.dayName}
+                            </span>
+                            <span className="sched-date-num">{day.dayNumber}</span>
+                            <span className="sched-month-name">{day.monthName}</span>
+                            <span className={`sched-status-dot ${day.isWorkingDay ? 'open' : 'off'}`}>
+                              {day.isWorkingDay ? 'متاح' : 'مغلق'}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* 3. Custom Date Picker (Any future date) */}
+                  <div className="custom-date-picker-row">
+                    <div className="custom-date-input-wrap">
+                      <label htmlFor="custom-booking-date" className="custom-date-label">
                         <Icon name="calendar" size={13} />
-                        <span>{day}</span>
-                      </button>
-                    ))}
+                        <span>أو حدد تاريخاً مخصصاً بعد أسبوع أو أكثر:</span>
+                      </label>
+                      <input
+                        id="custom-booking-date"
+                        type="date"
+                        min={upcomingDays[0]?.isoDate}
+                        value={selectedDateIso}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (!val) return;
+                          setSelectedDateIso(val);
+                          const [y, m, dNum] = val.split('-').map(Number);
+                          const dObj = new Date(y, m - 1, dNum);
+                          const dName = ARABIC_DAYS[dObj.getDay()];
+                          const mName = ARABIC_MONTHS[dObj.getMonth()];
+                          setSelectedDay(`${dName} ${dNum} ${mName} ${y}`);
+                        }}
+                        className="form-control custom-date-input"
+                      />
+                    </div>
+                  </div>
+
+                  {/* 4. Active Selected Date Confirmation Pill */}
+                  <div className="selected-date-preview-pill">
+                    <Icon name="calendar-check" size={14} className="text-forest" />
+                    <span>الموعد المختار: <strong>{selectedDay}</strong></span>
                   </div>
                 </div>
 
