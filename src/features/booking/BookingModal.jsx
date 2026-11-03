@@ -4,8 +4,6 @@ import Icon from '@/components/ui/Icon';
 import { DEFAULT_SLOTS } from '@/lib/constants';
 import { isValidName, isValidEgyptianPhone, generateWhatsAppUrl } from './validate';
 
-
-
 export default function BookingModal({ 
   isOpen, 
   doctor, 
@@ -16,8 +14,10 @@ export default function BookingModal({
   onConfirmBooking,
   onToast 
 }) {
+  const [currentStep, setCurrentStep] = useState(1);
   const [selectedClinicIndex, setSelectedClinicIndex] = useState(0);
   const [selectedSlot, setSelectedSlot] = useState('');
+  const [selectedDay, setSelectedDay] = useState('اليوم');
   const [bookingType, setBookingType] = useState('كشف أول مرة');
   const [patientName, setPatientName] = useState('');
   const [patientPhone, setPatientPhone] = useState('');
@@ -88,8 +88,11 @@ export default function BookingModal({
       const clinicSlots = clinics[finalIndex]?.availableSlots || [];
       if (initialSlot && clinicSlots.includes(initialSlot)) {
         setSelectedSlot(initialSlot);
+        // If both clinic and slot were explicitly chosen from card, jump to step 2 for quick verification
+        setCurrentStep(2);
       } else {
         setSelectedSlot(clinicSlots[0] || '');
+        setCurrentStep(1);
       }
     }
   }, [isOpen, doctor, initialSlot, initialClinicId, currentUser, clinics]);
@@ -97,6 +100,26 @@ export default function BookingModal({
   if (!isOpen || !doctor) return null;
 
   const currentPrice = doctor.price;
+
+  const handleNextFromLocation = () => {
+    if (!activeClinic) {
+      onToast('يرجى اختيار العيادة أولاً للمتابعة', 'normal');
+      return;
+    }
+    // Set first available slot if not selected
+    if (!selectedSlot && activeSlots.length > 0) {
+      setSelectedSlot(activeSlots[0]);
+    }
+    setCurrentStep(2);
+  };
+
+  const handleNextFromSlot = () => {
+    if (!selectedSlot) {
+      onToast('يرجى اختيار توقيت الكشف المناسب للمتابعة', 'normal');
+      return;
+    }
+    setCurrentStep(3);
+  };
 
   const handleConfirm = async (e) => {
     e.preventDefault();
@@ -132,7 +155,7 @@ export default function BookingModal({
         price: currentPrice,
         patientName: patientName.trim(),
         patientPhone: patientPhone.trim(),
-        day: 'اليوم',
+        day: selectedDay,
         slot: selectedSlot,
         bookingType,
         notes: notes.trim()
@@ -141,7 +164,7 @@ export default function BookingModal({
       setBookingResult(result);
       setIsSuccess(true);
       onToast(`تم تأكيد حجزك بنجاح بكود: ${result.bookingCode} في ${activeClinic?.name}!`, 'success');
-    } catch (err) {
+    } catch {
       onToast('حدث خطأ أثناء تأكيد الحجز، يرجى المحاولة مرة أخرى', 'normal');
     } finally {
       setIsSubmitting(false);
@@ -151,6 +174,7 @@ export default function BookingModal({
   const handleClose = () => {
     setIsSuccess(false);
     setBookingResult(null);
+    setCurrentStep(1);
     onClose();
   };
 
@@ -167,7 +191,9 @@ export default function BookingModal({
                 {isSuccess ? 'تأكيد الحجز الفوري' : 'حجز موعد كشف طبي'}
               </h3>
               <p className="modal-subtitle">
-                {isSuccess ? 'بيانات التذكرة الطبية والموعد المؤكد' : 'اختر العيادة المناسبة لموقعك والوقت المحدد بدون أي دقيقة انتظار'}
+                {isSuccess 
+                  ? 'بيانات التذكرة الطبية والموعد المؤكد' 
+                  : 'احجز موعدك بسهولة في 3 خطوات سريعة بدون أي انتظار'}
               </p>
             </div>
           </div>
@@ -183,9 +209,9 @@ export default function BookingModal({
             <h4 className="booking-doc-name">{doctor.name}</h4>
             <span className="booking-doc-spec">{doctor.specialty}</span>
             <div className="booking-doc-details">
-              <span><Icon name="pin" size={14} /> {activeClinic?.location || doctor.location}</span>
+              <span><Icon name="pin" size={13} /> {activeClinic?.shortLocation || doctor.location}</span>
               <span className="dot-divider">•</span>
-              <span><Icon name="money" size={14} /> {currentPrice} ج.م (الدفع داخل العيادة)</span>
+              <span><Icon name="money" size={13} /> {currentPrice} ج.م (الدفع داخل العيادة)</span>
             </div>
           </div>
         </div>
@@ -272,174 +298,393 @@ export default function BookingModal({
             </button>
           </div>
         ) : (
-          /* Booking Form */
-          <form className="modal-body booking-modal-body" onSubmit={handleConfirm}>
-            
-            {/* Step 1: Choose Clinic Suitable for Location */}
-            <div className="form-group">
-              <label className="form-label">
-                <span className="step-num">1</span>
-                <span>اختر العيادة الأنسب لموقعك ({clinics.length} عيادات متاحة للطبيب):</span>
-              </label>
-              <div className="booking-clinics-grid">
-                {clinics.map((clinic, index) => {
-                  const isSelected = selectedClinicIndex === index;
-                  return (
-                    <button
-                      key={clinic.id}
-                      type="button"
-                      className={`booking-clinic-card ${isSelected ? 'active' : ''}`}
-                      onClick={() => {
-                        setSelectedClinicIndex(index);
-                        setSelectedSlot(clinic.availableSlots[0] || '');
-                      }}
-                    >
-                      <div className="modal-clinic-card-top">
-                        <Icon name="building" size={15} className="clinic-modal-icon" />
-                        <strong className="modal-clinic-name">{clinic.name}</strong>
-                        {isSelected && <span className="modal-clinic-check"><Icon name="check" size={13} /></span>}
-                      </div>
+          /* Multi-Step Wizard Flow */
+          <div className="booking-wizard">
+            {/* Progress Indicator Stepper */}
+            <div className="wizard-stepper" role="progressbar" aria-valuenow={currentStep} aria-valuemin="1" aria-valuemax="3">
+              <div 
+                className={`wizard-step-item ${currentStep === 1 ? 'active' : ''} ${currentStep > 1 ? 'completed' : ''}`}
+                onClick={() => currentStep > 1 && setCurrentStep(1)}
+              >
+                <div className="wizard-step-circle">
+                  {currentStep > 1 ? <Icon name="check" size={13} /> : '1'}
+                </div>
+                <div className="wizard-step-meta">
+                  <span className="wizard-step-num">الخطوة 1</span>
+                  <span className="wizard-step-title">المكان والفرع</span>
+                </div>
+              </div>
 
-                      <div className="modal-clinic-loc">
-                        <Icon name="pin" size={13} />
-                        <span>{clinic.location}</span>
-                      </div>
+              <div className={`wizard-stepper-line ${currentStep > 1 ? 'active' : ''}`}></div>
 
-                      {clinic.days && (
-                        <div className="modal-clinic-days">
-                          <Icon name="calendar" size={12} />
-                          <span>{clinic.days}</span>
+              <div 
+                className={`wizard-step-item ${currentStep === 2 ? 'active' : ''} ${currentStep > 2 ? 'completed' : ''}`}
+                onClick={() => currentStep > 2 && setCurrentStep(2)}
+              >
+                <div className="wizard-step-circle">
+                  {currentStep > 2 ? <Icon name="check" size={13} /> : '2'}
+                </div>
+                <div className="wizard-step-meta">
+                  <span className="wizard-step-num">الخطوة 2</span>
+                  <span className="wizard-step-title">الموعد والتوقيت</span>
+                </div>
+              </div>
+
+              <div className={`wizard-stepper-line ${currentStep > 2 ? 'active' : ''}`}></div>
+
+              <div className={`wizard-step-item ${currentStep === 3 ? 'active' : ''}`}>
+                <div className="wizard-step-circle">
+                  3
+                </div>
+                <div className="wizard-step-meta">
+                  <span className="wizard-step-num">الخطوة 3</span>
+                  <span className="wizard-step-title">تأكيد الحجز</span>
+                </div>
+              </div>
+            </div>
+
+            {/* STEP 1: CHOOSE LOCATION */}
+            {currentStep === 1 && (
+              <div className="wizard-step-card" id="booking-step-1">
+                <div className="step-card-header">
+                  <div className="step-title-row">
+                    <span className="step-number-pill">1</span>
+                    <div>
+                      <h4 className="step-heading">اختر العيادة أو الفرع المناسب</h4>
+                      <p className="step-instruction">
+                        حدد مكان الكشف المناسب لموقعك لمشاهدة المواعيد المتاحة
+                      </p>
+                    </div>
+                  </div>
+                  <span className="step-count-badge">{clinics.length} فروع متاحة</span>
+                </div>
+
+                <div className="booking-clinics-grid">
+                  {clinics.map((clinic, index) => {
+                    const isSelected = selectedClinicIndex === index;
+                    return (
+                      <div
+                        key={clinic.id}
+                        role="button"
+                        tabIndex={0}
+                        className={`booking-clinic-card ${isSelected ? 'active' : ''}`}
+                        onClick={() => {
+                          setSelectedClinicIndex(index);
+                          setSelectedSlot(clinic.availableSlots[0] || '');
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setSelectedClinicIndex(index);
+                            setSelectedSlot(clinic.availableSlots[0] || '');
+                          }
+                        }}
+                      >
+                        <div className="modal-clinic-card-top">
+                          <Icon name="building" size={16} className="clinic-modal-icon" />
+                          <strong className="modal-clinic-name">{clinic.name}</strong>
+                          <div className={`modal-clinic-radio ${isSelected ? 'checked' : ''}`}>
+                            {isSelected && <Icon name="check" size={11} />}
+                          </div>
                         </div>
-                      )}
 
-                      <div className="modal-clinic-bottom">
-                        <span className="modal-slots-count">
-                          {clinic.availableSlots.length} مواعيد متاحة
-                        </span>
-                        <span className="modal-clinic-price">{clinic.price} ج.م</span>
+                        <div className="modal-clinic-loc">
+                          <Icon name="pin" size={13} />
+                          <span>{clinic.location}</span>
+                        </div>
+
+                        {clinic.days && (
+                          <div className="modal-clinic-days">
+                            <Icon name="calendar" size={12} />
+                            <span>أيام العمل: <strong>{clinic.days}</strong></span>
+                          </div>
+                        )}
+
+                        <div className="modal-clinic-bottom">
+                          <span className="modal-slots-count">
+                            <Icon name="clock" size={11} /> {clinic.availableSlots.length} مواعيد متاحة
+                          </span>
+                          <span className="modal-clinic-price">{clinic.price} ج.م</span>
+                        </div>
                       </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Step 2: Choose Slot for Selected Clinic */}
-            <div className="form-group">
-              <label className="form-label">
-                <span className="step-num">2</span>
-                <span>المواعيد المتاحة في ({activeClinic?.shortLocation || activeClinic?.name}):</span>
-              </label>
-              {activeSlots.length === 0 ? (
-                <div className="no-slots-alert">
-                  <Icon name="alert" size={16} /> لا توجد مواعيد متاحة في هذه العيادة حاليًا، يرجى اختيار عيادة أخرى من الخطوة 1 أعلاه.
+                    );
+                  })}
                 </div>
-              ) : (
-                <div className="time-slots-grid">
-                  {activeSlots.map((slot) => (
-                    <button
-                      key={slot}
-                      type="button"
-                      className={`slot-btn ${selectedSlot === slot ? 'active' : ''}`}
-                      onClick={() => setSelectedSlot(slot)}
-                    >
-                      <Icon name="clock" size={12} className="inline-slot-icon" />
-                      <span>{slot}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
 
-            {/* Step 3: Booking Type & Patient Info */}
-            <div className="form-group">
-              <label className="form-label">
-                <span className="step-num">3</span>
-                <span>نوع الحجز:</span>
-              </label>
-              <div className="booking-types-selector">
-                {['كشف أول مرة', 'استشارة ومتابعة', 'فحص مستعجل'].map((type) => (
-                  <button
-                    key={type}
-                    type="button"
-                    className={`booking-type-btn ${bookingType === type ? 'active' : ''}`}
-                    onClick={() => setBookingType(type)}
-                  >
-                    {type}
+                {/* Step 1 Actions */}
+                <div className="wizard-actions">
+                  <button type="button" className="btn btn-outline wizard-btn-cancel" onClick={handleClose}>
+                    إلغاء
                   </button>
-                ))}
+                  <button 
+                    type="button" 
+                    className="btn btn-primary wizard-btn-next"
+                    onClick={handleNextFromLocation}
+                  >
+                    <span>المتابعة لاختيار الموعد</span>
+                    <Icon name="arrow-left" size={14} />
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
 
-            <div className="form-row">
-              <div className="form-group">
-                <label className="form-label">اسم المريض ثلاثي</label>
-                <input 
-                  type="text" 
-                  className="form-control" 
-                  placeholder="مثال: محمد حسام عبد الله"
-                  required
-                  value={patientName}
-                  onChange={(e) => setPatientName(e.target.value)}
-                />
+            {/* STEP 2: SELECT DATE & TIME */}
+            {currentStep === 2 && (
+              <div className="wizard-step-card" id="booking-step-2">
+                <div className="step-card-header">
+                  <div className="step-title-row">
+                    <span className="step-number-pill">2</span>
+                    <div>
+                      <h4 className="step-heading">اختر اليوم والموعد المناسب</h4>
+                      <p className="step-instruction">
+                        مواعيد مؤكدة بدون أي دقيقة انتظار بالعيادة
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Selected Location Summary Box */}
+                <div className="selected-location-banner">
+                  <div className="selected-location-content">
+                    <Icon name="building" size={15} className="sel-loc-icon" />
+                    <div>
+                      <span className="sel-loc-label">العيادة المحددة:</span>
+                      <strong className="sel-loc-name">{activeClinic?.name}</strong>
+                      <span className="sel-loc-address"><Icon name="pin" size={11} /> {activeClinic?.location}</span>
+                    </div>
+                  </div>
+                  <button 
+                    type="button" 
+                    className="btn-change-step" 
+                    onClick={() => setCurrentStep(1)}
+                    title="تغيير العيادة أو الفرع"
+                  >
+                    <span>تغيير الفرع</span>
+                    <Icon name="arrow-right" size={12} />
+                  </button>
+                </div>
+
+                {/* Day selector */}
+                <div className="form-group mb-3">
+                  <label className="form-label">اختر يوم الكشف:</label>
+                  <div className="wizard-day-selector">
+                    {['اليوم', 'غداً', 'بعد غد'].map((day) => (
+                      <button
+                        key={day}
+                        type="button"
+                        className={`wizard-day-btn ${selectedDay === day ? 'active' : ''}`}
+                        onClick={() => setSelectedDay(day)}
+                      >
+                        <Icon name="calendar" size={13} />
+                        <span>{day}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Available Slots */}
+                <div className="form-group">
+                  <label className="form-label">
+                    <span>التوقيت المناسب في ({activeClinic?.shortLocation || activeClinic?.name}):</span>
+                    {activeSlots.length > 0 && (
+                      <span className="text-muted-small">({activeSlots.length} أوقات متوفرة)</span>
+                    )}
+                  </label>
+
+                  {activeSlots.length === 0 ? (
+                    <div className="no-slots-alert">
+                      <Icon name="alert" size={16} /> 
+                      <div>
+                        <strong>اكتملت مواعيد هذه العيادة حالياً.</strong>
+                        <p>يمكنك الرجوع للخطوة 1 واختيار فرع آخر للطبيب.</p>
+                      </div>
+                      <button type="button" className="btn btn-outline btn-sm mt-2" onClick={() => setCurrentStep(1)}>
+                        الرجوع لاختيار فرع آخر
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="time-slots-grid">
+                      {activeSlots.map((slot) => {
+                        const isSlotSelected = selectedSlot === slot;
+                        return (
+                          <button
+                            key={slot}
+                            type="button"
+                            className={`slot-btn ${isSlotSelected ? 'active' : ''}`}
+                            onClick={() => setSelectedSlot(slot)}
+                          >
+                            <Icon name="clock" size={13} className="inline-slot-icon" />
+                            <span>{slot}</span>
+                            {isSlotSelected && <Icon name="check" size={11} className="slot-check-icon" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                {/* Step 2 Actions */}
+                <div className="wizard-actions">
+                  <button 
+                    type="button" 
+                    className="btn btn-outline wizard-btn-prev" 
+                    onClick={() => setCurrentStep(1)}
+                  >
+                    <Icon name="arrow-right" size={14} />
+                    <span>السابق</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    className="btn btn-primary wizard-btn-next"
+                    disabled={!selectedSlot}
+                    onClick={handleNextFromSlot}
+                  >
+                    <span>المتابعة لتأكيد البيانات</span>
+                    <Icon name="arrow-left" size={14} />
+                  </button>
+                </div>
               </div>
+            )}
 
-              <div className="form-group">
-                <label className="form-label">رقم الهاتف لتأكيد التذكرة (واتساب)</label>
-                <input 
-                  type="tel" 
-                  className="form-control" 
-                  placeholder="01012345678"
-                  dir="ltr"
-                  required
-                  value={patientPhone}
-                  onChange={(e) => setPatientPhone(e.target.value)}
-                />
-              </div>
-            </div>
+            {/* STEP 3: ENTER DETAILS & CONFIRM */}
+            {currentStep === 3 && (
+              <form className="wizard-step-card" id="booking-step-3" onSubmit={handleConfirm}>
+                <div className="step-card-header">
+                  <div className="step-title-row">
+                    <span className="step-number-pill">3</span>
+                    <div>
+                      <h4 className="step-heading">بيانات المريض وتأكيد الموعد</h4>
+                      <p className="step-instruction">
+                        أدخل بياناتك وسيصلك تأكيد الحجز الفوري وتذكرتك مباشرة
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
-            <div className="form-group">
-              <label className="form-label">ملاحظات أو سبب الزيارة (اختياري)</label>
-              <div className="form-row" style={{ marginBottom: 0 }}>
-                <div style={{ flex: 1 }}>
+                {/* Full Booking Summary Card */}
+                <div className="wizard-booking-summary">
+                  <div className="summary-card-header">
+                    <span className="summary-badge">ملخص الحجز</span>
+                    <button 
+                      type="button" 
+                      className="summary-edit-btn" 
+                      onClick={() => setCurrentStep(2)}
+                      title="تعديل الموعد أو العيادة"
+                    >
+                      تعديل الموعد
+                    </button>
+                  </div>
+                  <div className="summary-items-grid">
+                    <div className="summary-item">
+                      <span className="summary-label">العيادة والفرع:</span>
+                      <strong>{activeClinic?.name} ({activeClinic?.shortLocation})</strong>
+                    </div>
+                    <div className="summary-item">
+                      <span className="summary-label">اليوم والتوقيت:</span>
+                      <strong className="text-forest">{selectedDay} - الساعة {selectedSlot}</strong>
+                    </div>
+                    <div className="summary-item">
+                      <span className="summary-label">الطبيب المعالج:</span>
+                      <strong>{doctor.name} ({doctor.specialty})</strong>
+                    </div>
+                    <div className="summary-item">
+                      <span className="summary-label">إجمالي الكشف:</span>
+                      <strong className="price-tag">{currentPrice} ج.م (الدفع داخل العيادة)</strong>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Booking Type */}
+                <div className="form-group mb-3">
+                  <label className="form-label">نوع الزيارة:</label>
+                  <div className="booking-types-selector">
+                    {['كشف أول مرة', 'استشارة ومتابعة', 'فحص مستعجل'].map((type) => (
+                      <button
+                        key={type}
+                        type="button"
+                        className={`booking-type-btn ${bookingType === type ? 'active' : ''}`}
+                        onClick={() => setBookingType(type)}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Patient Information */}
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label">
+                      <span>اسم المريض ثلاثي</span>
+                      <span className="required-star">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="مثال: أحمد مصطفى كامل"
+                      required
+                      value={patientName}
+                      onChange={(e) => setPatientName(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">
+                      <span>رقم الهاتف (واتساب لتأكيد التذكرة)</span>
+                      <span className="required-star">*</span>
+                    </label>
+                    <input 
+                      type="tel" 
+                      className="form-control" 
+                      placeholder="01012345678"
+                      dir="ltr"
+                      required
+                      value={patientPhone}
+                      onChange={(e) => setPatientPhone(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group mb-3">
+                  <label className="form-label">ملاحظات أو سبب الزيارة (اختياري)</label>
                   <input 
                     type="text" 
                     className="form-control"
-                    placeholder="مثل: أعراض معينة أو تحاليل سابقة..."
+                    placeholder="مثل: أعراض معينة أو استفسار للطبيب..."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                   />
                 </div>
-              </div>
-            </div>
 
-            {/* Booking Summary Box */}
-            <div className="booking-summary-strip">
-              <div className="summary-col">
-                <span className="summary-title">العيادة والميعاد:</span>
-                <span className="summary-val">{activeClinic?.name} - {selectedSlot || 'يرجى اختيار موعد'}</span>
-              </div>
-              <div className="summary-col">
-                <span className="summary-title">إجمالي الكشف:</span>
-                <span className="summary-val price-highlight">{currentPrice} جنيه (بالعيادة)</span>
-              </div>
-            </div>
-
-            {/* Submit Action Buttons */}
-            <div className="booking-actions">
-              <button type="button" className="btn btn-outline" onClick={handleClose}>
-                إلغاء
-              </button>
-              <button 
-                type="submit" 
-                className="btn btn-primary btn-confirm-booking"
-                disabled={isSubmitting || !selectedSlot}
-              >
-                {isSubmitting ? 'جارِ تأكيد الموعد...' : <>تأكيد الحجز فوراً بدون زحمة <Icon name="check" size={16} /></>}
-              </button>
-            </div>
-
-          </form>
+                {/* Step 3 Actions */}
+                <div className="wizard-actions">
+                  <button 
+                    type="button" 
+                    className="btn btn-outline wizard-btn-prev" 
+                    onClick={() => setCurrentStep(2)}
+                    disabled={isSubmitting}
+                  >
+                    <Icon name="arrow-right" size={14} />
+                    <span>السابق</span>
+                  </button>
+                  <button 
+                    type="submit" 
+                    className="btn btn-primary btn-confirm-booking"
+                    disabled={isSubmitting || !selectedSlot}
+                  >
+                    {isSubmitting ? (
+                      'جارِ تأكيد الحجز...'
+                    ) : (
+                      <>
+                        <span>تأكيد الحجز فوراً بدون انتظار</span>
+                        <Icon name="check" size={16} />
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
         )}
 
       </div>

@@ -1,20 +1,22 @@
 /* ==========================================================================
-   3. BOOKING MODAL
+   3. BOOKING MODAL (MULTI-STEP WIZARD)
    ========================================================================== */
 .booking-modal-dialog {
-  max-width: 580px;
+  max-width: 620px;
+  width: 95%;
   max-height: 92vh;
   overflow-y: auto;
+  border-radius: 24px;
 }
 
 .booking-modal-header {
   background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
-  border-bottom: 1px solid rgba(24, 59, 43, 0.15);
+  border-bottom: 1px solid rgba(24, 59, 43, 0.12);
 }
 
 .booking-doctor-banner {
   background-color: var(--clr-slate-100);
-  padding: 16px 24px;
+  padding: 14px 24px;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -24,7 +26,7 @@
 .booking-avatar-wrap {
   width: 48px;
   height: 48px;
-  border-radius: 12px;
+  border-radius: 14px;
   color: var(--clr-white);
   display: flex;
   align-items: center;
@@ -32,6 +34,7 @@
   font-weight: 800;
   font-size: 16px;
   flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .booking-doc-info {
@@ -60,63 +63,214 @@
   margin-top: 2px;
 }
 
-.booking-modal-body {
-  padding: 24px;
-  gap: 20px;
-}
-
-.step-num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  background-color: var(--clr-forest-base);
-  color: var(--clr-white);
-  border-radius: 50%;
-  font-size: 12px;
-  font-weight: 800;
-  margin-left: 6px;
-}
-
-.day-picker-grid,
-.booking-clinics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 12px;
-}
-
-.day-card,
-.booking-clinic-card {
-  padding: 12px 14px;
-  background-color: var(--clr-slate-50);
-  border: 1.5px solid var(--clr-slate-200);
-  border-radius: 14px;
+/* ==========================================================================
+   STEPPER PROGRESS BAR
+   ========================================================================== */
+.wizard-stepper {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  text-align: right;
-  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px 14px;
+  background-color: var(--clr-white);
+  border-bottom: 1px solid var(--clr-slate-200);
+  position: relative;
+}
+
+.wizard-step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: default;
   transition: all var(--transition-fast);
 }
 
-.day-card:hover,
-.booking-clinic-card:hover {
-  background-color: var(--clr-white);
-  border-color: var(--clr-slate-400);
-  transform: translateY(-2px);
+.wizard-step-item.completed {
+  cursor: pointer;
 }
 
-.day-card.active,
+.wizard-step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  background-color: var(--clr-slate-100);
+  border: 1.5px solid var(--clr-slate-300);
+  color: var(--clr-slate-500);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.wizard-step-item.active .wizard-step-circle {
+  background-color: var(--clr-forest-base);
+  border-color: var(--clr-forest-base);
+  color: var(--clr-white);
+  box-shadow: 0 0 0 4px var(--clr-forest-glow);
+}
+
+.wizard-step-item.completed .wizard-step-circle {
+  background-color: #16a34a;
+  border-color: #16a34a;
+  color: var(--clr-white);
+}
+
+.wizard-step-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.wizard-step-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--clr-slate-400);
+  line-height: 1.2;
+}
+
+.wizard-step-item.active .wizard-step-num {
+  color: var(--clr-forest-base);
+}
+
+.wizard-step-title {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--clr-slate-700);
+  white-space: nowrap;
+}
+
+.wizard-step-item.active .wizard-step-title {
+  color: var(--clr-slate-900);
+}
+
+.wizard-stepper-line {
+  flex: 1;
+  height: 2px;
+  background-color: var(--clr-slate-200);
+  margin: 0 10px;
+  transition: background-color var(--transition-fast);
+}
+
+.wizard-stepper-line.active {
+  background-color: #16a34a;
+}
+
+/* ==========================================================================
+   WIZARD STEP CARDS
+   ========================================================================== */
+.wizard-step-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: wizard-fade-in 0.25s ease-out;
+}
+
+@keyframes wizard-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--clr-slate-100);
+}
+
+.step-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.step-number-pill {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background-color: var(--clr-forest-base);
+  color: var(--clr-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 900;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-heading {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--clr-slate-900);
+  margin-bottom: 2px;
+}
+
+.step-instruction {
+  font-size: 12.5px;
+  color: var(--clr-slate-500);
+  margin: 0;
+}
+
+.step-count-badge {
+  font-size: 11.5px;
+  font-weight: 700;
+  background-color: #dcfce7;
+  color: #166534;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   STEP 1: LOCATION CARDS
+   ========================================================================== */
+.booking-clinics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.booking-clinic-card {
+  padding: 16px;
+  background-color: var(--clr-slate-50);
+  border: 1.5px solid var(--clr-slate-200);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: right;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.booking-clinic-card:hover {
+  background-color: var(--clr-white);
+  border-color: var(--clr-forest-base);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
 .booking-clinic-card.active {
   background-color: #f0fdf4;
   border-color: var(--clr-forest-base);
-  box-shadow: 0 0 0 1.5px var(--clr-forest-base), 0 4px 12px rgba(24, 59, 43, 0.08);
+  box-shadow: 0 0 0 1.5px var(--clr-forest-base), 0 6px 18px rgba(24, 59, 43, 0.08);
 }
 
 .modal-clinic-card-top {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
 }
 
@@ -126,7 +280,7 @@
 }
 
 .modal-clinic-name {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 800;
   color: var(--clr-slate-900);
   flex: 1;
@@ -136,17 +290,22 @@
   color: var(--clr-forest-base);
 }
 
-.modal-clinic-check {
+.modal-clinic-radio {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: var(--clr-forest-base);
-  color: var(--clr-white);
+  border: 2px solid var(--clr-slate-300);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  transition: all var(--transition-fast);
   flex-shrink: 0;
+}
+
+.modal-clinic-radio.checked {
+  background-color: var(--clr-forest-base);
+  border-color: var(--clr-forest-base);
+  color: var(--clr-white);
 }
 
 .modal-clinic-loc,
@@ -154,9 +313,13 @@
   display: flex;
   align-items: flex-start;
   gap: 6px;
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--clr-slate-600);
-  line-height: 1.35;
+  line-height: 1.4;
+}
+
+.modal-clinic-days strong {
+  color: var(--clr-orange-primary);
 }
 
 .modal-clinic-bottom {
@@ -164,125 +327,354 @@
   align-items: center;
   justify-content: space-between;
   margin-top: 4px;
-  padding-top: 6px;
+  padding-top: 8px;
   border-top: 1px dashed var(--clr-slate-200);
 }
 
 .modal-slots-count {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   color: #0369a1;
   background-color: #e0f2fe;
-  padding: 2px 7px;
+  padding: 3px 8px;
   border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .modal-clinic-price {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 800;
-  color: var(--clr-orange-primary);
-}
-
-.inline-slot-icon {
-  margin-left: 4px;
-}
-
-.day-name {
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--clr-slate-800);
-}
-
-.day-card.active .day-name {
   color: var(--clr-forest-base);
 }
 
-.day-sub {
+/* ==========================================================================
+   STEP 2: DATE & TIME SELECTOR
+   ========================================================================== */
+.selected-location-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: #f8fafc;
+  border: 1px solid var(--clr-slate-200);
+  border-radius: 14px;
+  gap: 12px;
+}
+
+.selected-location-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sel-loc-icon {
+  color: var(--clr-forest-base);
+  flex-shrink: 0;
+}
+
+.sel-loc-label {
+  display: block;
   font-size: 11px;
   color: var(--clr-slate-500);
+  font-weight: 600;
 }
 
-.time-slots-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+.sel-loc-name {
+  display: block;
+  font-size: 13.5px;
+  color: var(--clr-slate-900);
+  font-weight: 800;
+}
+
+.sel-loc-address {
+  display: block;
+  font-size: 11.5px;
+  color: var(--clr-slate-600);
+  margin-top: 2px;
+}
+
+.btn-change-step {
+  padding: 6px 12px;
+  background-color: var(--clr-white);
+  border: 1px solid var(--clr-slate-300);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--clr-slate-700);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-change-step:hover {
+  border-color: var(--clr-forest-base);
+  color: var(--clr-forest-base);
+}
+
+.wizard-day-selector {
+  display: flex;
   gap: 8px;
+  margin-top: 6px;
 }
 
-.slot-btn {
-  padding: 9px 4px;
+.wizard-day-btn {
+  flex: 1;
+  padding: 9px 12px;
   background-color: var(--clr-slate-50);
   border: 1.5px solid var(--clr-slate-200);
   border-radius: 10px;
   font-size: 13px;
   font-weight: 700;
   color: var(--clr-slate-700);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
   transition: all var(--transition-fast);
-  text-align: center;
 }
 
-.slot-btn:hover {
+.wizard-day-btn:hover {
   background-color: var(--clr-white);
   border-color: var(--clr-slate-400);
 }
 
-.slot-btn.active {
+.wizard-day-btn.active {
   background-color: var(--clr-forest-base);
   border-color: var(--clr-forest-base);
   color: var(--clr-white);
   box-shadow: 0 4px 10px var(--clr-forest-glow);
 }
 
-.form-row-2 {
+.time-slots-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 8px;
 }
 
-.input-with-label {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.mini-label {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--clr-slate-600);
-}
-
-.booking-trust-bar {
-  background-color: #f8fafc;
-  border: 1px solid var(--clr-slate-200);
+.slot-btn {
+  padding: 11px 8px;
+  background-color: var(--clr-slate-50);
+  border: 1.5px solid var(--clr-slate-200);
   border-radius: 12px;
-  padding: 12px 14px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--clr-slate-800);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.slot-btn:hover {
+  background-color: var(--clr-white);
+  border-color: var(--clr-forest-base);
+  color: var(--clr-forest-base);
+  transform: translateY(-1px);
+}
+
+.slot-btn.active {
+  background-color: var(--clr-forest-base);
+  border-color: var(--clr-forest-base);
+  color: var(--clr-white);
+  box-shadow: 0 4px 12px var(--clr-forest-glow);
+}
+
+.slot-check-icon {
+  margin-right: 2px;
+}
+
+.no-slots-alert {
+  background-color: #fff7ed;
+  border: 1px solid #ffedd5;
+  border-radius: 12px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  font-size: 12.5px;
-  color: var(--clr-slate-700);
+  color: #9a3412;
+  font-size: 13px;
 }
 
-.trust-item {
+.text-muted-small {
+  font-size: 11.5px;
+  color: var(--clr-slate-500);
+  font-weight: 500;
+  margin-right: 6px;
+}
+
+/* ==========================================================================
+   STEP 3: PATIENT DETAILS & FULL SUMMARY
+   ========================================================================== */
+.wizard-booking-summary {
+  background-color: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+  border-radius: 16px;
+  padding: 16px;
   display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.summary-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed #86efac;
+  padding-bottom: 8px;
+}
+
+.summary-badge {
+  font-size: 12px;
+  font-weight: 800;
+  color: #166534;
+  background-color: #dcfce7;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.summary-edit-btn {
+  background: none;
+  border: none;
+  color: var(--clr-forest-base);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.summary-items-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.summary-label {
+  font-size: 11px;
+  color: var(--clr-slate-600);
+}
+
+.summary-item strong {
+  font-size: 13px;
+  color: var(--clr-slate-900);
+}
+
+.price-tag {
+  color: var(--clr-orange-primary) !important;
+  font-weight: 800;
+}
+
+.booking-types-selector {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.booking-type-btn {
+  padding: 7px 14px;
+  background-color: var(--clr-slate-50);
+  border: 1.5px solid var(--clr-slate-200);
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--clr-slate-700);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.booking-type-btn:hover {
+  background-color: var(--clr-white);
+  border-color: var(--clr-slate-400);
+}
+
+.booking-type-btn.active {
+  background-color: #fff7ed;
+  border-color: var(--clr-orange-primary);
+  color: var(--clr-orange-primary);
+  font-weight: 800;
+}
+
+.required-star {
+  color: #ef4444;
+  margin-right: 3px;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   WIZARD BOTTOM ACTION BUTTONS
+   ========================================================================== */
+.wizard-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--clr-slate-200);
+  margin-top: 4px;
+}
+
+.wizard-btn-prev {
+  height: 46px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
-.booking-modal-footer {
-  padding: 16px 24px;
-  background-color: var(--clr-slate-50);
-  border-top: 1px solid var(--clr-slate-200);
-  margin-top: 0;
+.wizard-btn-next {
+  height: 46px;
+  padding: 0 24px;
+  font-size: 14px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+}
+
+.wizard-btn-cancel {
+  height: 46px;
+  padding: 0 20px;
+  font-size: 14px;
 }
 
 .btn-confirm-booking {
   height: 48px;
   padding: 0 26px;
-  font-size: 15px;
+  font-size: 14.5px;
+  font-weight: 800;
   background-color: var(--clr-forest-base);
+  color: var(--clr-white);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
 }
 
-/* Success Ticket */
+.btn-confirm-booking:hover:not(:disabled) {
+  background-color: var(--clr-forest-hover);
+}
+
+/* ==========================================================================
+   SUCCESS TICKET SCREEN
+   ========================================================================== */
 .booking-success-box {
   padding: 30px 24px;
   text-align: center;
@@ -301,7 +693,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 900;
   box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4);
   animation: modal-pop 0.3s ease-out;
@@ -316,7 +708,7 @@
 .success-subtitle {
   font-size: 14px;
   color: var(--clr-slate-500);
-  max-width: 420px;
+  max-width: 440px;
 }
 
 .ticket-card {
@@ -436,3 +828,121 @@
   line-height: 1.4;
 }
 
+/* ==========================================================================
+   DARK THEME ADAPTATIONS
+   ========================================================================== */
+:root[data-theme="dark"] .wizard-stepper {
+  background-color: #0f172a;
+  border-color: #1e293b;
+}
+
+:root[data-theme="dark"] .wizard-step-circle {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .wizard-step-title {
+  color: #cbd5e1;
+}
+
+:root[data-theme="dark"] .wizard-step-item.active .wizard-step-title {
+  color: #ffffff;
+}
+
+:root[data-theme="dark"] .wizard-stepper-line {
+  background-color: #334155;
+}
+
+:root[data-theme="dark"] .step-card-header,
+:root[data-theme="dark"] .wizard-actions {
+  border-color: #1e293b;
+}
+
+:root[data-theme="dark"] .step-heading {
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .step-instruction {
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .selected-location-banner {
+  background-color: #131e2e;
+  border-color: #2a394e;
+}
+
+:root[data-theme="dark"] .sel-loc-name {
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .btn-change-step {
+  background-color: #1a2739;
+  border-color: #33445c;
+  color: #d5deeb;
+}
+
+:root[data-theme="dark"] .wizard-day-btn {
+  background-color: #1a2739;
+  border-color: #33445c;
+  color: #d5deeb;
+}
+
+:root[data-theme="dark"] .slot-btn {
+  background-color: #1a2739;
+  border-color: #33445c;
+  color: #d5deeb;
+}
+
+:root[data-theme="dark"] .wizard-booking-summary {
+  background-color: #132820;
+  border-color: #1e4535;
+}
+
+:root[data-theme="dark"] .summary-card-header {
+  border-color: #1e4535;
+}
+
+:root[data-theme="dark"] .summary-item strong {
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .summary-label {
+  color: #94a3b8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .wizard-stepper {
+    padding: 14px 16px;
+  }
+  .wizard-step-meta {
+    display: none;
+  }
+  .wizard-step-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+  .wizard-step-card {
+    padding: 16px;
+  }
+  .booking-clinics-grid {
+    grid-template-columns: 1fr;
+  }
+  .time-slots-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .summary-items-grid {
+    grid-template-columns: 1fr;
+  }
+  .wizard-actions {
+    flex-wrap: wrap;
+  }
+  .wizard-btn-next,
+  .btn-confirm-booking {
+    width: 100%;
+    margin-right: 0;
+    justify-content: center;
+  }
+}
