@@ -19,40 +19,48 @@ function isClinicWorkingOnDay(clinicDays, dayName) {
   return clinicDays.includes(dayName);
 }
 
-function generateUpcomingDays(clinicDays, count = 14) {
+function generateUpcomingDays(clinicDays, maxWorkingDays = 12) {
   const list = [];
   const now = new Date();
-  for (let i = 0; i < count; i++) {
-    const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+  let dayOffset = 0;
+  // Look ahead up to 60 days to collect only available working dates
+  while (list.length < maxWorkingDays && dayOffset < 60) {
+    const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + dayOffset);
     const dayName = ARABIC_DAYS[d.getDay()];
-    const dayNumber = d.getDate();
-    const monthName = ARABIC_MONTHS[d.getMonth()];
-    const year = d.getFullYear();
-    const isoDate = `${year}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
+    const isWorking = isClinicWorkingOnDay(clinicDays, dayName);
 
-    let quickName = '';
-    if (i === 0) quickName = 'اليوم';
-    else if (i === 1) quickName = 'غداً';
-    else if (i === 2) quickName = 'بعد غد';
-    else if (i === 7) quickName = 'بعد أسبوع';
+    if (isWorking) {
+      const dayNumber = d.getDate();
+      const monthName = ARABIC_MONTHS[d.getMonth()];
+      const year = d.getFullYear();
+      const isoDate = `${year}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
 
-    const fullLabel = i === 0 
-      ? `اليوم (${dayName} ${dayNumber} ${monthName})`
-      : (i === 1 
-        ? `غداً (${dayName} ${dayNumber} ${monthName})` 
-        : `${dayName} ${dayNumber} ${monthName}`);
+      let quickName = '';
+      if (dayOffset === 0) quickName = 'اليوم';
+      else if (dayOffset === 1) quickName = 'غداً';
+      else if (dayOffset === 2) quickName = 'بعد غد';
 
-    list.push({
-      index: i,
-      isoDate,
-      dayName,
-      dayNumber,
-      monthName,
-      year,
-      quickName,
-      fullLabel,
-      isWorkingDay: isClinicWorkingOnDay(clinicDays, dayName)
-    });
+      const fullLabel = dayOffset === 0 
+        ? `اليوم (${dayName} ${dayNumber} ${monthName})`
+        : (dayOffset === 1 
+          ? `غداً (${dayName} ${dayNumber} ${monthName})` 
+          : `${dayName} ${dayNumber} ${monthName}`);
+
+      list.push({
+        index: list.length,
+        dayOffset,
+        isoDate,
+        dayName,
+        dayNumber,
+        monthName,
+        year,
+        quickName,
+        fullLabel,
+        isWorkingDay: true
+      });
+    }
+
+    dayOffset++;
   }
   return list;
 }
@@ -207,6 +215,26 @@ export default function BookingModal({
     }
   };
 
+  // Verify if the currently selected date is an official working day for the active clinic
+  const isSelectedDateWorking = useMemo(() => {
+    if (!selectedDateIso) return true;
+    const [y, m, dNum] = selectedDateIso.split('-').map(Number);
+    const dObj = new Date(y, m - 1, dNum);
+    const dName = ARABIC_DAYS[dObj.getDay()];
+    return isClinicWorkingOnDay(activeClinic?.days, dName);
+  }, [selectedDateIso, activeClinic?.days]);
+
+  // Handle custom date selection from HTML5 date picker
+  const handleCustomDateChange = (val) => {
+    if (!val) return;
+    setSelectedDateIso(val);
+    const [y, m, dNum] = val.split('-').map(Number);
+    const dObj = new Date(y, m - 1, dNum);
+    const dName = ARABIC_DAYS[dObj.getDay()];
+    const mName = ARABIC_MONTHS[dObj.getMonth()];
+    setSelectedDay(`${dName} ${dNum} ${mName} ${y}`);
+  };
+
   if (!isOpen || !doctor) return null;
 
   const currentPrice = doctor.price;
@@ -224,6 +252,10 @@ export default function BookingModal({
   };
 
   const handleNextFromSlot = () => {
+    if (!isSelectedDateWorking) {
+      onToast(`عذراً، هذا اليوم (${selectedDay.split(' ')[0]}) غير متاح للحجز في هذه العيادة. أيام العمل هي: ${activeClinic?.days || 'يومياً'}`, 'normal');
+      return;
+    }
     if (!selectedSlot) {
       onToast('يرجى اختيار توقيت الكشف المناسب للمتابعة', 'normal');
       return;
@@ -233,6 +265,10 @@ export default function BookingModal({
 
   const handleConfirm = async (e) => {
     e.preventDefault();
+    if (!isSelectedDateWorking) {
+      onToast(`لا يمكن تأكيد الحجز في يوم عطلة. أيام العمل المعتمدة للعيادة: ${activeClinic?.days}`, 'normal');
+      return;
+    }
     if (!patientName.trim() || !patientPhone.trim()) {
       onToast('يرجى ملء اسم المريض ورقم الهاتف لتأكيد الموعد', 'normal');
       return;
@@ -577,10 +613,10 @@ export default function BookingModal({
                     </span>
                   </div>
 
-                  {/* Full Schedule Strip (14 Days Ahead Carousel) */}
+                  {/* Full Schedule Strip (Only Available Working Days with Dates) */}
                   <div className="schedule-strip-container">
                     <div className="schedule-strip-label">
-                      <span>جدول الأيام المتاحة للحجز (الـ 14 يوماً القادمة):</span>
+                      <span>الأيام المتاحة للحجز في هذه العيادة بالتواريخ:</span>
                     </div>
                     <div className="schedule-days-scroll">
                       {upcomingDays.map((day) => {
@@ -589,21 +625,19 @@ export default function BookingModal({
                           <button
                             key={day.isoDate}
                             type="button"
-                            className={`schedule-day-card ${isSelected ? 'active' : ''} ${!day.isWorkingDay ? 'non-working' : ''}`}
+                            className={`schedule-day-card ${isSelected ? 'active' : ''}`}
                             onClick={() => {
                               setSelectedDateIso(day.isoDate);
                               setSelectedDay(day.fullLabel);
                             }}
-                            title={`${day.fullLabel} - ${day.isWorkingDay ? 'متاح بالعيادة' : 'خارج أيام العمل الرسمية'}`}
+                            title={`${day.fullLabel} - موعد متاح بالعيادة`}
                           >
                             <span className="sched-day-name">
                               {day.quickName || day.dayName}
                             </span>
                             <span className="sched-date-num">{day.dayNumber}</span>
                             <span className="sched-month-name">{day.monthName}</span>
-                            <span className={`sched-status-dot ${day.isWorkingDay ? 'open' : 'off'}`}>
-                              {day.isWorkingDay ? 'متاح' : 'مغلق'}
-                            </span>
+                            <span className="sched-status-dot open">متاح</span>
                           </button>
                         );
                       })}
@@ -622,38 +656,60 @@ export default function BookingModal({
                         type="date"
                         min={upcomingDays[0]?.isoDate}
                         value={selectedDateIso}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          if (!val) return;
-                          setSelectedDateIso(val);
-                          const [y, m, dNum] = val.split('-').map(Number);
-                          const dObj = new Date(y, m - 1, dNum);
-                          const dName = ARABIC_DAYS[dObj.getDay()];
-                          const mName = ARABIC_MONTHS[dObj.getMonth()];
-                          setSelectedDay(`${dName} ${dNum} ${mName} ${y}`);
-                        }}
-                        className="form-control custom-date-input"
+                        onChange={(e) => handleCustomDateChange(e.target.value)}
+                        className={`form-control custom-date-input ${!isSelectedDateWorking ? 'input-error' : ''}`}
                       />
                     </div>
                   </div>
 
-                  {/* 4. Active Selected Date Confirmation Pill */}
-                  <div className="selected-date-preview-pill">
-                    <Icon name="calendar-check" size={14} className="text-forest" />
-                    <span>الموعد المختار: <strong>{selectedDay}</strong></span>
-                  </div>
+                  {/* Day Availability Status & Warnings */}
+                  {!isSelectedDateWorking ? (
+                    <div className="day-unavailable-alert" role="alert">
+                      <Icon name="alert" size={16} className="unavailable-alert-icon" />
+                      <div className="unavailable-alert-body">
+                        <strong>عذراً، هذا اليوم ({selectedDay.split(' ')[0]}) غير متاح للكشف بهذه العيادة!</strong>
+                        <span>أيام العمل الرسمية لهذه العيادة هي: <strong>{activeClinic?.days || 'يومياً'}</strong>. يرجى اختيار أحد الأيام المتاحة أعلاه.</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="selected-date-preview-pill">
+                      <Icon name="check" size={13} className="text-forest" />
+                      <span>الموعد المختار: <strong>{selectedDay}</strong> (متاح للحجز)</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Available Slots */}
                 <div className="form-group">
                   <label className="form-label">
                     <span>التوقيت المناسب في ({activeClinic?.shortLocation || activeClinic?.name}):</span>
-                    {activeSlots.length > 0 && (
+                    {isSelectedDateWorking && activeSlots.length > 0 && (
                       <span className="text-muted-small">({activeSlots.length} أوقات متوفرة)</span>
                     )}
                   </label>
 
-                  {activeSlots.length === 0 ? (
+                  {!isSelectedDateWorking ? (
+                    <div className="day-unavailable-slots-box">
+                      <Icon name="alert" size={24} className="box-alert-icon" />
+                      <h4>العيادة مغلقة في هذا اليوم</h4>
+                      <p>
+                        لا تتوفر مواعيد للكشف في اليوم الذي حددته ({selectedDay.split(' ')[0]})، حيث أن أيام العمل المعتمدة للعيادة هي: <strong>{activeClinic?.days || 'يومياً'}</strong>.
+                      </p>
+                      {upcomingDays.length > 0 && (
+                        <button 
+                          type="button" 
+                          className="btn btn-outline btn-sm btn-pick-first-available"
+                          onClick={() => {
+                            setSelectedDateIso(upcomingDays[0].isoDate);
+                            setSelectedDay(upcomingDays[0].fullLabel);
+                          }}
+                        >
+                          <Icon name="calendar" size={13} />
+                          <span>التحويل لأقرب يوم متاح ({upcomingDays[0].fullLabel})</span>
+                        </button>
+                      )}
+                    </div>
+                  ) : activeSlots.length === 0 ? (
                     <div className="no-slots-alert">
                       <Icon name="alert" size={16} /> 
                       <div>
@@ -698,10 +754,11 @@ export default function BookingModal({
                   <button 
                     type="button" 
                     className="btn btn-primary wizard-btn-next"
-                    disabled={!selectedSlot}
+                    disabled={!isSelectedDateWorking || !selectedSlot}
                     onClick={handleNextFromSlot}
+                    title={!isSelectedDateWorking ? 'اليوم المحدد غير متاح للحجز' : (!selectedSlot ? 'يرجى اختيار توقيت الكشف' : 'المتابعة لتأكيد البيانات')}
                   >
-                    <span>المتابعة لتأكيد البيانات</span>
+                    <span>{isSelectedDateWorking ? 'المتابعة لتأكيد البيانات' : 'اليوم المحدد مغلق'}</span>
                     <Icon name="arrow-left" size={14} />
                   </button>
                 </div>
