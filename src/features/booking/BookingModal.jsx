@@ -66,25 +66,19 @@ function ModalDoctorAvatar({ doctor }) {
 
   return (
     <div 
-      className="booking-avatar-halo"
-      style={{ '--avatar-theme': doctor?.avatarBg || '#183b2b' }}
+      className="booking-avatar-wrap" 
+      style={{ backgroundColor: doctor?.avatarBg || '#183b2b' }}
     >
-      <div 
-        className="booking-avatar-wrap" 
-        style={{ backgroundColor: doctor?.avatarBg || '#183b2b' }}
-      >
-        {showImg ? (
-          <img
-            src={doctor.image}
-            alt={doctor.name}
-            className="booking-avatar-img"
-            onError={() => setImgError(true)}
-          />
-        ) : (
-          <span>{doctor?.initials}</span>
-        )}
-      </div>
-      <div className="avatar-ambient-glow" aria-hidden="true"></div>
+      {showImg ? (
+        <img
+          src={doctor.image}
+          alt={doctor.name}
+          className="booking-avatar-img"
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <span>{doctor?.initials}</span>
+      )}
     </div>
   );
 }

@@ -245,12 +245,11 @@
 
 .doctor-card {
   position: relative;
-  overflow: hidden;
-  background-color: var(--clr-white);
-  border: 1.5px solid var(--clr-slate-200);
-  border-radius: 22px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--doc-theme, #183b2b) 5%, #ffffff) 0%, #ffffff 115px);
+  border: 1px solid var(--clr-slate-200);
+  border-radius: 20px;
   padding: 18px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -260,35 +259,7 @@
 .doctor-card:hover {
   transform: translateY(-4px);
   border-color: var(--clr-forest-base);
-  box-shadow: 0 20px 40px -12px rgba(24, 59, 43, 0.15);
-}
-
-/* Corner Triangle & Diagonal Line Accent */
-.doc-corner-triangle-wrap {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 175px;
-  height: 175px;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-  border-top-right-radius: 22px;
-}
-
-.doc-corner-triangle-svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.doctor-card:hover .doc-corner-triangle-svg {
-  transform: scale(1.05);
-}
-
-.doctor-card:hover .corner-line {
-  stroke-opacity: 0.75;
+  box-shadow: 0 16px 36px -8px rgba(24, 59, 43, 0.12);
 }
 
 .doctors-pagination {
@@ -323,44 +294,35 @@
 }
 
 .doc-card-header {
-  position: relative;
-  z-index: 2;
   display: flex;
   align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: 14px;
+  margin-bottom: 14px;
 }
 
-/* Creative Sculpted Doctor Avatar Halo & Ambient Glow */
-.doc-avatar-halo {
-  position: relative;
-  flex-shrink: 0;
-  width: 84px;
-  height: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* Modern Professional Doctor Avatar */
 .doc-avatar-wrap {
   position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
+  flex-shrink: 0;
+  width: 76px;
+  height: 82px;
+  border-radius: 18px;
   overflow: hidden;
   color: var(--clr-white);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 900;
-  font-size: 24px;
+  font-size: 22px;
   background-color: var(--clr-slate-100);
-  box-shadow: 
-    0 0 0 3px #ffffff,
-    0 8px 20px -4px rgba(0, 0, 0, 0.12),
-    0 2px 6px rgba(0, 0, 0, 0.04);
-  z-index: 2;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.doctor-card:hover .doc-avatar-wrap {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.14), 0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
 .doc-avatar-img {
@@ -373,33 +335,8 @@
   transition: transform 0.4s ease;
 }
 
-.avatar-ambient-glow {
-  position: absolute;
-  inset: -2px;
-  border-radius: 24px;
-  background: var(--avatar-theme, var(--clr-forest-base));
-  filter: blur(12px);
-  opacity: 0.2;
-  z-index: 1;
-  pointer-events: none;
-  transition: opacity 0.35s ease, filter 0.35s ease, transform 0.35s ease;
-}
-
-.doctor-card:hover .doc-avatar-wrap {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 
-    0 0 0 3px #ffffff,
-    0 16px 28px -6px rgba(0, 0, 0, 0.18);
-}
-
 .doctor-card:hover .doc-avatar-img {
-  transform: scale(1.06);
-}
-
-.doctor-card:hover .avatar-ambient-glow {
-  opacity: 0.42;
-  filter: blur(16px);
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 /* Pulsing Status Beacon */
@@ -407,16 +344,16 @@
   position: absolute;
   bottom: 3px;
   left: 3px;
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
   background-color: #22c55e;
-  border: 2.5px solid var(--clr-white);
+  border: 2px solid var(--clr-white);
   border-radius: 50%;
   z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
 }
 
 .doc-status-dot.busy {
@@ -425,10 +362,10 @@
 
 .doc-status-ping {
   position: absolute;
-  inset: -3px;
+  inset: -2px;
   border-radius: 50%;
   background-color: #22c55e;
-  opacity: 0.65;
+  opacity: 0.6;
   animation: doc-beacon-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
@@ -907,25 +844,24 @@
   color: #86efac;
 }
 
+:root[data-theme="dark"] .doctor-card {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--doc-theme, #183b2b) 12%, #141f2f) 0%, #141f2f 115px);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
 :root[data-theme="dark"] .doc-avatar-wrap {
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.16), 0 8px 22px -4px rgba(0, 0, 0, 0.55);
+  border-color: #1e293b;
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 :root[data-theme="dark"] .doctor-card:hover .doc-avatar-wrap {
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.28), 0 12px 28px -4px rgba(0, 0, 0, 0.7);
+  border-color: #334155;
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
 :root[data-theme="dark"] .doc-status-dot {
-  border-color: #0f172a;
-}
-
-:root[data-theme="dark"] .corner-poly {
-  opacity: 0.85;
-}
-
-:root[data-theme="dark"] .corner-line {
-  stroke-opacity: 0.55;
-  filter: drop-shadow(0 0 3px var(--doc-theme));
+  border-color: #1e293b;
 }
 
 

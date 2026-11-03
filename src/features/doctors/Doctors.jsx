@@ -6,8 +6,8 @@ import { EGYPT_MEDICAL_REGIONS } from '@/lib/constants';
 
 
 /**
- * Creative Doctor Avatar with organic sculpted frame,
- * dynamic theme aura, live pulsing status indicator, and graceful fallback.
+ * Professional Medical Doctor Avatar with refined squircle framing,
+ * live availability beacon, and graceful monogram fallback.
  */
 function DoctorAvatar({ doc, hasSlots }) {
   const [imgError, setImgError] = useState(false);
@@ -15,33 +15,27 @@ function DoctorAvatar({ doc, hasSlots }) {
 
   return (
     <div 
-      className="doc-avatar-halo"
-      style={{ '--avatar-theme': doc.avatarBg || '#183b2b' }}
+      className="doc-avatar-wrap" 
+      style={{ backgroundColor: doc.avatarBg || '#183b2b' }}
     >
-      <div 
-        className="doc-avatar-wrap" 
-        style={{ backgroundColor: doc.avatarBg || '#183b2b' }}
+      {showImg ? (
+        <img
+          src={doc.image}
+          alt={doc.name}
+          className="doc-avatar-img"
+          loading="lazy"
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <span className="doc-initials">{doc.initials}</span>
+      )}
+      <span 
+        className={`doc-status-dot ${hasSlots ? 'active' : 'busy'}`} 
+        title={hasSlots ? 'متواجد وجاهز للحجز الفوري' : 'المواعيد ممتلئة'}
+        aria-label={hasSlots ? 'متواجد وجاهز للحجز' : 'المواعيد ممتلئة'}
       >
-        {showImg ? (
-          <img
-            src={doc.image}
-            alt={doc.name}
-            className="doc-avatar-img"
-            loading="lazy"
-            onError={() => setImgError(true)}
-          />
-        ) : (
-          <span className="doc-initials">{doc.initials}</span>
-        )}
-        <span 
-          className={`doc-status-dot ${hasSlots ? 'active' : 'busy'}`} 
-          title={hasSlots ? 'متواجد وجاهز للحجز الفوري' : 'المواعيد ممتلئة'}
-          aria-label={hasSlots ? 'متواجد وجاهز للحجز' : 'المواعيد ممتلئة'}
-        >
-          <span className="doc-status-ping"></span>
-        </span>
-      </div>
-      <div className="avatar-ambient-glow" aria-hidden="true"></div>
+        <span className="doc-status-ping"></span>
+      </span>
     </div>
   );
 }
@@ -112,38 +106,6 @@ function DoctorCard({ doc, selectedCity, searchQuery, onBookDoctor }) {
       id={`doctor-${doc.id}`}
       style={{ '--doc-theme': doc.avatarBg || '#183b2b' }}
     >
-      {/* Corner Geometric Triangle & Diagonal Accent Line */}
-      <div className="doc-corner-triangle-wrap" aria-hidden="true">
-        <svg 
-          className="doc-corner-triangle-svg" 
-          viewBox="0 0 170 170" 
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id={`doc-grad-${doc.id}`} x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor={doc.avatarBg || '#183b2b'} stopOpacity="0.24" />
-              <stop offset="60%" stopColor={doc.avatarBg || '#183b2b'} stopOpacity="0.10" />
-              <stop offset="100%" stopColor={doc.avatarBg || '#183b2b'} stopOpacity="0.02" />
-            </linearGradient>
-          </defs>
-          <polygon 
-            points="0,0 170,0 170,170" 
-            fill={`url(#doc-grad-${doc.id})`}
-            className="corner-poly"
-          />
-          <line 
-            x1="0" 
-            y1="0" 
-            x2="170" 
-            y2="170" 
-            stroke={doc.avatarBg || '#183b2b'} 
-            strokeWidth="1.5" 
-            strokeOpacity="0.38"
-            className="corner-line"
-          />
-        </svg>
-      </div>
-
       {/* Doctor Card Top / Badges */}
       <div className="doc-card-header">
         <DoctorAvatar doc={doc} hasSlots={hasSlots} />
