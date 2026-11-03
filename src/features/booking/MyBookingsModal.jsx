@@ -22,7 +22,7 @@ export default function MyBookingsModal({
               <h3 className="modal-title">حجوزاتي الطبية</h3>
               <p className="modal-subtitle">
                 {bookings.length > 0 
-                  ? `لديك ${bookings.length} موعد مؤكد في عيادات دكتورك` 
+                  ? `لديك ${bookings.length} موعد مؤكد عبر حجز الأطباء` 
                   : 'لا توجد حجوزات نشطة حالياً'}
               </p>
             </div>

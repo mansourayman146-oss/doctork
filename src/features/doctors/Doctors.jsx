@@ -406,7 +406,7 @@ export default function Doctors({
         {loading ? (
           <div className="loading-state-wrapper">
             <div className="spinner"></div>
-            <span>جارِ تحميل جدول أطباء دكتورك وعياداتهم...</span>
+            <span>جارِ تحميل جدول الأطباء وعياداتهم...</span>
           </div>
         ) : filteredDoctors.length === 0 ? (
           <div className="no-doctors-card">

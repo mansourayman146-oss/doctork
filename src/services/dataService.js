@@ -285,7 +285,7 @@ export const dataService = {
       name: reviewData.name.trim(),
       role: reviewData.role?.trim() || 'مريض موثق',
       location: reviewData.location?.trim() || 'مصر',
-      doctorVisited: reviewData.doctorVisited || 'طبيب استشاري في دكتورك',
+      doctorVisited: reviewData.doctorVisited || 'طبيب استشاري عبر حجز الأطباء',
       stars: Number(reviewData.stars) || 5,
       text: reviewData.text.trim(),
       date: 'الآن (جديد)',

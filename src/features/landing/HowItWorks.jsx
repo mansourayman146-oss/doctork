@@ -46,7 +46,7 @@ export default function HowItWorks() {
         {/* Section Header */}
         <div className="section-header-center">
           <h2 className="section-main-title">
-            كيف يعمل <span className="highlight-text">دكتورك؟</span>
+            كيف يعمل <span className="highlight-text">حجز الأطباء؟</span>
           </h2>
           <p className="section-main-subtitle">
             خطوات بسيطة وسلسة تفصلك عن حجز موعدك الطبي والدخول فوراً بدون أي تعقيد أو انتظار.

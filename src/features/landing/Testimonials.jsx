@@ -10,7 +10,7 @@ export default function Testimonials({ reviews = [], onOpenAddReview }) {
         {/* Section Header */}
         <div className="section-header-center">
           <h2 className="section-main-title">
-            ماذا يقول <span className="highlight-text">مرضى دكتورك؟</span>
+            ماذا يقول <span className="highlight-text">مرضى حجز الأطباء؟</span>
           </h2>
           <p className="section-main-subtitle">
             آلاف المرضى حجزوا موعدهم بدون زحمة وتخلصوا من ساعات الانتظار المرهقة. تجارب حقيقية نعتز بها يومياً.
@@ -23,7 +23,7 @@ export default function Testimonials({ reviews = [], onOpenAddReview }) {
               className="btn btn-outline btn-add-review"
               onClick={onOpenAddReview}
             >
-              <span>شاركنا رأيك وتجربتك في دكتورك</span>
+              <span>شاركنا رأيك وتجربتك في حجز الأطباء</span>
               <span className="arrow-icon">←</span>
             </button>
           </div>
