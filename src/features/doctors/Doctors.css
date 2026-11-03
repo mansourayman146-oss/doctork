@@ -303,8 +303,8 @@
 .doc-avatar-halo {
   position: relative;
   flex-shrink: 0;
-  width: 68px;
-  height: 68px;
+  width: 84px;
+  height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -314,24 +314,28 @@
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 20px 6px 20px 20px; /* Sculpted architectural organic curve */
+  border-radius: 20px;
   overflow: hidden;
   color: var(--clr-white);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 900;
-  font-size: 20px;
-  box-shadow: 0 0 0 2.5px var(--clr-white), 0 8px 18px -4px rgba(0, 0, 0, 0.16);
+  font-size: 24px;
+  background-color: var(--clr-slate-100);
+  box-shadow: 
+    0 0 0 3px #ffffff,
+    0 8px 20px -4px rgba(0, 0, 0, 0.12),
+    0 2px 6px rgba(0, 0, 0, 0.04);
   z-index: 2;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
 }
 
 .doc-avatar-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 15%;
   display: block;
   border-radius: inherit;
   transition: transform 0.4s ease;
@@ -339,19 +343,21 @@
 
 .avatar-ambient-glow {
   position: absolute;
-  inset: -3px;
-  border-radius: 24px 8px 24px 24px;
+  inset: -2px;
+  border-radius: 24px;
   background: var(--avatar-theme, var(--clr-forest-base));
-  filter: blur(10px);
-  opacity: 0.28;
+  filter: blur(12px);
+  opacity: 0.2;
   z-index: 1;
   pointer-events: none;
-  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.35s ease, filter 0.35s ease, transform 0.35s ease;
 }
 
 .doctor-card:hover .doc-avatar-wrap {
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 0 0 2.5px var(--clr-white), 0 12px 24px -4px rgba(0, 0, 0, 0.22);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 
+    0 0 0 3px #ffffff,
+    0 16px 28px -6px rgba(0, 0, 0, 0.18);
 }
 
 .doctor-card:hover .doc-avatar-img {
@@ -359,18 +365,18 @@
 }
 
 .doctor-card:hover .avatar-ambient-glow {
-  opacity: 0.55;
-  filter: blur(14px);
+  opacity: 0.42;
+  filter: blur(16px);
   transform: scale(1.06);
 }
 
 /* Pulsing Status Beacon */
 .doc-status-dot {
   position: absolute;
-  bottom: 2px;
-  left: 2px;
-  width: 14px;
-  height: 14px;
+  bottom: 3px;
+  left: 3px;
+  width: 15px;
+  height: 15px;
   background-color: #22c55e;
   border: 2.5px solid var(--clr-white);
   border-radius: 50%;
@@ -378,6 +384,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .doc-status-dot.busy {
@@ -386,10 +393,10 @@
 
 .doc-status-ping {
   position: absolute;
-  inset: -2px;
+  inset: -3px;
   border-radius: 50%;
   background-color: #22c55e;
-  opacity: 0.6;
+  opacity: 0.65;
   animation: doc-beacon-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
