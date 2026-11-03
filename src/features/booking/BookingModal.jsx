@@ -568,36 +568,7 @@ export default function BookingModal({
                     </span>
                   </div>
 
-                  {/* 1. Quick Day Buttons */}
-                  <div className="wizard-day-selector">
-                    {[
-                      { key: 'today', label: 'اليوم', idx: 0 },
-                      { key: 'tomorrow', label: 'غداً', idx: 1 },
-                      { key: 'afterTomorrow', label: 'بعد غد', idx: 2 },
-                      { key: 'nextWeek', label: 'بعد أسبوع', idx: 7 }
-                    ].map((item) => {
-                      const targetDay = upcomingDays[item.idx];
-                      const isSelected = targetDay && selectedDateIso === targetDay.isoDate;
-                      return (
-                        <button
-                          key={item.key}
-                          type="button"
-                          className={`wizard-day-btn ${isSelected ? 'active' : ''}`}
-                          onClick={() => {
-                            if (targetDay) {
-                              setSelectedDateIso(targetDay.isoDate);
-                              setSelectedDay(targetDay.fullLabel);
-                            }
-                          }}
-                        >
-                          <Icon name="calendar" size={13} />
-                          <span>{item.label}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* 2. Full Schedule Strip (14 Days Ahead Carousel) */}
+                  {/* Full Schedule Strip (14 Days Ahead Carousel) */}
                   <div className="schedule-strip-container">
                     <div className="schedule-strip-label">
                       <span>جدول الأيام المتاحة للحجز (الـ 14 يوماً القادمة):</span>
