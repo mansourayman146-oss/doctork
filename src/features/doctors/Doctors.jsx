@@ -6,6 +6,47 @@ import { EGYPT_GOVERNORATES } from '@/lib/constants';
 
 
 /**
+ * Creative Doctor Avatar with organic sculpted frame,
+ * dynamic theme aura, live pulsing status indicator, and graceful fallback.
+ */
+function DoctorAvatar({ doc, hasSlots }) {
+  const [imgError, setImgError] = useState(false);
+  const showImg = Boolean(doc.image && !imgError);
+
+  return (
+    <div 
+      className="doc-avatar-halo"
+      style={{ '--avatar-theme': doc.avatarBg || '#183b2b' }}
+    >
+      <div 
+        className="doc-avatar-wrap" 
+        style={{ backgroundColor: doc.avatarBg || '#183b2b' }}
+      >
+        {showImg ? (
+          <img
+            src={doc.image}
+            alt={doc.name}
+            className="doc-avatar-img"
+            loading="lazy"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <span className="doc-initials">{doc.initials}</span>
+        )}
+        <span 
+          className={`doc-status-dot ${hasSlots ? 'active' : 'busy'}`} 
+          title={hasSlots ? 'متواجد وجاهز للحجز الفوري' : 'المواعيد ممتلئة'}
+          aria-label={hasSlots ? 'متواجد وجاهز للحجز' : 'المواعيد ممتلئة'}
+        >
+          <span className="doc-status-ping"></span>
+        </span>
+      </div>
+      <div className="avatar-ambient-glow" aria-hidden="true"></div>
+    </div>
+  );
+}
+
+/**
  * Individual Doctor Card with Interactive Multi-Clinic Selector
  * and Real-Time Clinic-Specific Available Appointments
  */
@@ -58,13 +99,7 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
     <article className="doctor-card modern-doc-card" id={`doctor-${doc.id}`}>
       {/* Doctor Card Top / Badges */}
       <div className="doc-card-header">
-        <div className="doc-avatar-wrap" style={{ backgroundColor: doc.avatarBg || '#183b2b' }}>
-          <span className="doc-initials">{doc.initials}</span>
-          <span 
-            className={`doc-status-dot ${hasSlots ? 'active' : 'busy'}`} 
-            title={hasSlots ? 'متواجد وجاهز للحجز' : 'المواعيد ممتلئة'}
-          ></span>
-        </div>
+        <DoctorAvatar doc={doc} hasSlots={hasSlots} />
 
         <div className="doc-header-info">
           <div className="doc-title-row">

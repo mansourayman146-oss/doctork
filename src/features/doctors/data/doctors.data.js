@@ -17,6 +17,7 @@ export const INITIAL_DOCTORS = [
     availableSlots: ['05:00 م', '05:30 م', '06:00 م', '07:00 م', '07:30 م', '08:00 م'],
     initials: 'د.أ',
     avatarBg: '#d8532c',
+    image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=280&h=280&q=80',
     gender: 'male',
     tags: ['كشف قلب شامل', 'رسم قلب فوري', 'متاح اليوم', 'متعدد العيادات'],
     clinics: [
@@ -76,6 +77,7 @@ export const INITIAL_DOCTORS = [
     availableSlots: ['01:00 م', '01:30 م', '06:30 م', '07:00 م', '07:30 م', '08:30 م'],
     initials: 'د.س',
     avatarBg: '#ec4899',
+    image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=280&h=280&q=80',
     gender: 'female',
     tags: ['ليزر وتجميل', 'علاج البشرة والشعر', 'متاح اليوم', 'فروع متعددة'],
     clinics: [
@@ -135,6 +137,7 @@ export const INITIAL_DOCTORS = [
     availableSlots: ['02:00 م', '04:30 م', '05:00 م', '06:00 م', '07:00 م', '07:30 م'],
     initials: 'د.ط',
     avatarBg: '#8b5cf6',
+    image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=280&h=280&q=80',
     gender: 'male',
     tags: ['مناظير مفاصل', 'إصابات ملاعب', 'كشف دقيق', 'أكثر من عيادة'],
     clinics: [
@@ -194,6 +197,7 @@ export const INITIAL_DOCTORS = [
     availableSlots: ['01:30 م', '02:00 م', '05:00 م', '05:30 م', '06:30 م', '07:00 م'],
     initials: 'د.م',
     avatarBg: '#f59e0b',
+    image: 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=280&h=280&q=80',
     gender: 'female',
     tags: ['حديثي ولادة', 'تطعيمات', 'حساسية صدر', 'عيادات بالقاهرة والجيزة'],
     clinics: [
@@ -253,6 +257,7 @@ export const INITIAL_DOCTORS = [
     availableSlots: ['03:00 م', '03:45 م', '06:00 م', '07:00 م', '08:00 م', '08:30 م'],
     initials: 'د.ح',
     avatarBg: '#06b6d4',
+    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=280&h=280&q=80',
     gender: 'male',
     tags: ['زراعة أسنان', 'تبييض بالليزر', 'حشو تجميلي', 'الإسكندرية والجيزة'],
     clinics: [
@@ -312,6 +317,7 @@ export const INITIAL_DOCTORS = [
     availableSlots: ['01:00 م', '01:30 م', '05:30 م', '06:00 م', '06:45 م', '07:45 م'],
     initials: 'د.ن',
     avatarBg: '#10b981',
+    image: 'https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=280&h=280&q=80',
     gender: 'female',
     tags: ['قولون عصبي', 'متابعة السكري', 'جرثومة معدة', 'فروع متعددة'],
     clinics: [
@@ -371,6 +377,7 @@ export const INITIAL_DOCTORS = [
     availableSlots: ['02:00 م', '04:30 م', '05:30 م', '06:30 م', '07:00 م', '07:45 م'],
     initials: 'د.ك',
     avatarBg: '#3b82f6',
+    image: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=280&h=280&q=80',
     gender: 'male',
     tags: ['تصحيح إبصار', 'فحص قاع عين', 'ليزك', '3 مراكز مجهزة'],
     clinics: [
@@ -430,6 +437,7 @@ export const INITIAL_DOCTORS = [
     availableSlots: ['03:30 م', '04:15 م', '07:00 م', '08:00 م', '09:00 م', '09:45 م'],
     initials: 'د.ع',
     avatarBg: '#6366f1',
+    image: 'https://images.unsplash.com/photo-1584467735871-8e85353a8413?auto=format&fit=crop&w=280&h=280&q=80',
     gender: 'male',
     tags: ['انزلاق غضروفي', 'صداع مزمن', 'أعصاب طرفية', 'عيادات الدقي والمعادي وزايد'],
     clinics: [
@@ -490,6 +498,7 @@ export const INITIAL_DOCTORS = [
     availableSlots: ['04:00 م', '04:45 م', '05:30 م', '06:15 م', '07:00 م'],
     initials: 'د.ي',
     avatarBg: '#059669',
+    image: 'https://images.unsplash.com/photo-1622902046580-2b47f47f5471?auto=format&fit=crop&w=280&h=280&q=80',
     gender: 'female',
     tags: ['مناظير جهاز هضمي', 'علاج القولون العصبي', 'جرثومة المعدة', 'فحوصات كبد'],
     clinics: [
@@ -537,6 +546,7 @@ export const INITIAL_DOCTORS = [
     availableSlots: ['05:00 م', '05:40 م', '06:20 م', '07:00 م', '07:40 م'],
     initials: 'د.ح',
     avatarBg: '#0891b2',
+    image: 'https://images.unsplash.com/photo-1637059824899-a441006a6875?auto=format&fit=crop&w=280&h=280&q=80',
     gender: 'male',
     tags: ['مناظير جيوب أنفية', 'علاج الشخير', 'فحص السمعيات', 'تجميل الحاجز الأنفي'],
     clinics: [
@@ -584,6 +594,7 @@ export const INITIAL_DOCTORS = [
     availableSlots: ['03:00 م', '03:45 م', '04:30 م', '05:15 م', '06:00 م'],
     initials: 'د.ن',
     avatarBg: '#db2777',
+    image: 'https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&w=280&h=280&q=80',
     gender: 'female',
     tags: ['زراعة أسنان', 'هوليوود سمايل', 'تقويم شفاف', 'تبييض بالليزر'],
     clinics: [
@@ -631,6 +642,7 @@ export const INITIAL_DOCTORS = [
     availableSlots: ['05:30 م', '06:15 م', '07:00 م', '07:45 م', '08:30 م'],
     initials: 'د.ش',
     avatarBg: '#2563eb',
+    image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=280&h=280&q=80',
     gender: 'male',
     tags: ['تفتيت حصوات ليزر', 'سونار فوري', 'علاج بروستاتا', 'عقم ذكورة'],
     clinics: [

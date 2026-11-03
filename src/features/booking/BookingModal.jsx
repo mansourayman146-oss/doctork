@@ -57,6 +57,38 @@ function generateUpcomingDays(clinicDays, count = 14) {
   return list;
 }
 
+/**
+ * Doctor Avatar within Booking Modal Header Banner
+ */
+function ModalDoctorAvatar({ doctor }) {
+  const [imgError, setImgError] = useState(false);
+  const showImg = Boolean(doctor?.image && !imgError);
+
+  return (
+    <div 
+      className="booking-avatar-halo"
+      style={{ '--avatar-theme': doctor?.avatarBg || '#183b2b' }}
+    >
+      <div 
+        className="booking-avatar-wrap" 
+        style={{ backgroundColor: doctor?.avatarBg || '#183b2b' }}
+      >
+        {showImg ? (
+          <img
+            src={doctor.image}
+            alt={doctor.name}
+            className="booking-avatar-img"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <span>{doctor?.initials}</span>
+        )}
+      </div>
+      <div className="avatar-ambient-glow" aria-hidden="true"></div>
+    </div>
+  );
+}
+
 export default function BookingModal({ 
   isOpen, 
   doctor, 
@@ -267,9 +299,7 @@ export default function BookingModal({
 
         {/* Doctor Summary Bar */}
         <div className="booking-doctor-banner">
-          <div className="booking-avatar-wrap" style={{ backgroundColor: doctor.avatarBg || '#183b2b' }}>
-            <span>{doctor.initials}</span>
-          </div>
+          <ModalDoctorAvatar doctor={doctor} />
           <div className="booking-doc-info">
             <h4 className="booking-doc-name">{doctor.name}</h4>
             <span className="booking-doc-spec">{doctor.specialty}</span>
