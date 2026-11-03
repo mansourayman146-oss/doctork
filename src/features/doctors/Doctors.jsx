@@ -55,7 +55,7 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
     : 'اكتملت مواعيد هذه العيادة';
 
   return (
-    <article className="doctor-card" id={`doctor-${doc.id}`}>
+    <article className="doctor-card modern-doc-card" id={`doctor-${doc.id}`}>
       {/* Doctor Card Top / Badges */}
       <div className="doc-card-header">
         <div className="doc-avatar-wrap" style={{ backgroundColor: doc.avatarBg || '#183b2b' }}>
@@ -70,122 +70,70 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
           <div className="doc-title-row">
             <h3 className="doc-card-name">{doc.name}</h3>
             <span className="verified-check" title="طبيب معتمد وموثق بنقابة الأطباء">
-              <Icon name="check-circle" size={14} /> موثق
+              <Icon name="check-circle" size={13} /> موثق
             </span>
           </div>
           <span className="doc-card-specialty">{doc.specialty}</span>
           
           <div className="doc-rating-row">
             <div className="stars-group" aria-label={`تقييم ${doc.rating} من 5`}>
-              <Icon name="star" className="star-icon" size={14} />
+              <Icon name="star" className="star-icon" size={13} />
               <strong className="rating-value">{doc.rating}</strong>
-              <span className="reviews-count">({doc.reviewsCount} تقييم مريض)</span>
+              <span className="reviews-count">({doc.reviewsCount})</span>
             </div>
             <span className="exp-pill">{doc.experience}</span>
           </div>
         </div>
       </div>
 
-      {/* Doctor Subtitle & tags */}
+      {/* Doctor Subtitle & Highlights */}
       <div className="doc-card-body">
         <p className="doc-full-title">{doc.title}</p>
 
-        {doc.tags && (
-          <div className="doc-tags-row">
-            {doc.tags.map((tag, i) => (
-              <span key={i} className="doc-tag">{tag}</span>
-            ))}
+        {/* Location & Branches Snippet */}
+        <div className="doc-location-snippet">
+          <div className="doc-hospital-line">
+            <Icon name="building" size={13} className="snippet-icon" />
+            <strong className="hospital-name">{activeClinic.name}</strong>
           </div>
-        )}
+          <div className="doc-address-line">
+            <Icon name="pin" size={12} className="snippet-icon text-muted" />
+            <span>{activeClinic.location}</span>
+          </div>
 
-        {/* Multi-Clinic Selection Section */}
-        <div className="doc-clinics-picker">
-          <div className="clinics-picker-header">
-            <Icon name="building" size={13} className="clinics-picker-icon" />
-            <span className="clinics-picker-label">اختر العيادة الأنسب لموقعك:</span>
-            <span className="clinics-count-pill">{clinics.length} عيادات</span>
-          </div>
-          <div className="clinics-buttons-list" role="tablist" aria-label="اختر عيادة الطبيب">
-            {clinics.map((clinic) => {
-              const isSelected = clinic.id === activeClinic.id;
-              return (
-                <button
-                  key={clinic.id}
-                  type="button"
-                  className={`clinic-pill-btn ${isSelected ? 'active' : ''}`}
-                  onClick={() => setActiveClinicId(clinic.id)}
-                  role="tab"
-                  aria-selected={isSelected}
-                  title={`عرض مواعيد عيادة ${clinic.shortLocation || clinic.name}`}
-                >
-                  <Icon name="pin" size={12} className="clinic-pill-pin" />
-                  <span className="clinic-pill-name">{clinic.shortLocation || clinic.name}</span>
-                  {clinic.availableToday && (
-                    <span className="clinic-today-dot" title="متاح كشف اليوم"></span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
+          {clinics.length > 1 && (
+            <div className="doc-branches-selector">
+              <span className="branches-tag">الفروع ({clinics.length}):</span>
+              <div className="branches-pills-row">
+                {clinics.map((clinic) => {
+                  const isCur = clinic.id === activeClinic.id;
+                  return (
+                    <button
+                      key={clinic.id}
+                      type="button"
+                      className={`branch-pill ${isCur ? 'active' : ''}`}
+                      onClick={() => setActiveClinicId(clinic.id)}
+                      title={`تحديد عيادة ${clinic.shortLocation || clinic.name}`}
+                    >
+                      {clinic.shortLocation || clinic.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Selected Clinic Details Box */}
-        <div className="selected-clinic-box">
-          <div className="selected-clinic-header">
-            <div className="clinic-title-line">
-              <Icon name="building" size={14} className="meta-icon" />
-              <strong className="clinic-hospital-title">{activeClinic.name}</strong>
-            </div>
-            <div className="clinic-address-line">
-              <Icon name="pin" size={13} className="meta-icon" />
-              <span className="clinic-address-sub">{activeClinic.location}</span>
-            </div>
-            {activeClinic.days && (
-              <div className="clinic-days-line">
-                <Icon name="calendar" size={13} className="meta-icon text-orange" />
-                <span className="clinic-work-days">أيام العمل: <strong>{activeClinic.days}</strong></span>
-              </div>
-            )}
+        {/* Feature Badges Strip */}
+        <div className="doc-perks-row">
+          <div className="doc-perk-item" title="حجز مؤكد بدون أي انتظار">
+            <Icon name="clock" size={12} className="perk-icon text-emerald" />
+            <span>دخول فوري (0 انتظار)</span>
           </div>
-
-          {/* Underneath the Selected Clinic: Clinic-Specific Available Appointments */}
-          <div className="clinic-slots-area">
-            <div className="slots-header-line">
-              <span className="slots-label">
-                المواعيد المتاحة في ({activeClinic.shortLocation || activeClinic.name}):
-              </span>
-              {hasSlots && (
-                <span className="slots-count-badge">{activeSlots.length} مواعيد</span>
-              )}
-            </div>
-
-            {!hasSlots ? (
-              <div className="no-slots-in-clinic">
-                <span>اكتملت مواعيد هذه العيادة حالياً، يمكنك تجربة عيادة أخرى للطبيب بالأعلى.</span>
-              </div>
-            ) : (
-              <div className="slots-mini-list">
-                {activeSlots.map((slot, idx) => (
-                  <button 
-                    key={idx} 
-                    type="button"
-                    className="mini-slot-badge"
-                    onClick={() => onBookDoctor(doc, slot, activeClinic.id)}
-                    title={`اضغط للحجز الفوري في ${activeClinic.name} - الساعة ${slot}`}
-                  >
-                    <Icon name="clock" size={11} />
-                    <span>{slot}</span>
-                  </button>
-                ))}
-              </div>
-            )}
+          <div className="doc-perk-item slot-highlight" title="أقرب موعد كشف متاح">
+            <span className="perk-dot"></span>
+            <span>{nextSlotText}</span>
           </div>
-        </div>
-
-        {/* Zero Waiting Banner */}
-        <div className="doc-wait-badge">
-          <Icon name="clock" className="wait-icon" size={14} />
-          <span className="wait-text">وقت الانتظار: <strong>0 دقيقة (دخول فوري بدون زحمة)</strong></span>
         </div>
       </div>
 
@@ -201,9 +149,8 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
             <span className="price-note">داخل العيادة</span>
           </div>
 
-          <div className="doc-next-slot-pill" title="أقرب موعد كشف متاح">
-            <span className="slot-indicator"></span>
-            <span className="next-slot-label">{nextSlotText}</span>
+          <div className="doc-steps-indicator" title="حجز فوري في 3 خطوات بسيطة">
+            <span className="steps-badge">3 خطوات للحجز</span>
           </div>
         </div>
 
@@ -302,7 +249,7 @@ export default function Doctors({
     });
   }, [doctors, activeSpecialty, onlyAvailableToday, selectedCity, internalSearch, searchQuery]);
 
-  const pageSize = 4;
+  const pageSize = 6;
   const pageCount = Math.max(1, Math.ceil(filteredDoctors.length / pageSize));
   const filterKey = `${activeSpecialty}|${selectedCity}|${onlyAvailableToday}|${internalSearch}|${searchQuery}`;
   const currentPage = pagination.filterKey === filterKey

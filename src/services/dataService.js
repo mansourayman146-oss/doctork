@@ -33,7 +33,7 @@ export const dataService = {
     let doctors = getStored(STORAGE_KEYS.DOCTORS, INITIAL_DOCTORS);
 
     // Auto-migrate if stored data lacks rich multi-clinic definitions
-    if (!Array.isArray(doctors) || doctors.length === 0 || doctors.some(d => !Array.isArray(d.clinics) || d.clinics.length < 2)) {
+    if (!Array.isArray(doctors) || doctors.length === 0 || doctors.some(d => !Array.isArray(d.clinics) || d.clinics.length < 2) || doctors.length < INITIAL_DOCTORS.length) {
       doctors = INITIAL_DOCTORS;
       setStored(STORAGE_KEYS.DOCTORS, doctors);
     }
