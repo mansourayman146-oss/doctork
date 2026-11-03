@@ -487,7 +487,7 @@
   flex-shrink: 0;
 }
 
-.doc-branches-selector {
+.doc-branches-display {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -503,35 +503,22 @@
   color: var(--clr-slate-500);
 }
 
-.branches-pills-row {
+.branches-tags-row {
   display: flex;
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
 }
 
-.branch-pill {
+.branch-static-tag {
   padding: 3px 8px;
   border-radius: 6px;
   font-size: 11px;
   font-weight: 700;
-  border: 1px solid var(--clr-slate-300);
-  background-color: var(--clr-white);
+  background-color: var(--clr-slate-100);
+  border: 1px solid var(--clr-slate-200);
   color: var(--clr-slate-700);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.branch-pill:hover {
-  border-color: var(--clr-forest-base);
-  color: var(--clr-forest-base);
-  background-color: #f0fdf4;
-}
-
-.branch-pill.active {
-  background-color: var(--clr-forest-base);
-  border-color: var(--clr-forest-base);
-  color: var(--clr-white);
+  display: inline-block;
 }
 
 /* Feature Perks Strip */
@@ -771,16 +758,10 @@
   color: #94a3b8;
 }
 
-:root[data-theme="dark"] .branch-pill {
+:root[data-theme="dark"] .branch-static-tag {
   background-color: #1a2739;
   border-color: #33445c;
   color: #d5deeb;
-}
-
-:root[data-theme="dark"] .branch-pill.active {
-  background-color: var(--clr-forest-base);
-  border-color: var(--clr-forest-base);
-  color: #fff;
 }
 
 :root[data-theme="dark"] .doc-perk-item {

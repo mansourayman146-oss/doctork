@@ -90,7 +90,7 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
       <div className="doc-card-body">
         <p className="doc-full-title">{doc.title}</p>
 
-        {/* Location & Branches Snippet */}
+        {/* Location & Branches Overview (Informative Only) */}
         <div className="doc-location-snippet">
           <div className="doc-hospital-line">
             <Icon name="building" size={13} className="snippet-icon" />
@@ -102,34 +102,24 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
           </div>
 
           {clinics.length > 1 && (
-            <div className="doc-branches-selector">
-              <span className="branches-tag">الفروع ({clinics.length}):</span>
-              <div className="branches-pills-row">
-                {clinics.map((clinic) => {
-                  const isCur = clinic.id === activeClinic.id;
-                  return (
-                    <button
-                      key={clinic.id}
-                      type="button"
-                      className={`branch-pill ${isCur ? 'active' : ''}`}
-                      onClick={() => setActiveClinicId(clinic.id)}
-                      title={`تحديد عيادة ${clinic.shortLocation || clinic.name}`}
-                    >
-                      {clinic.shortLocation || clinic.name}
-                    </button>
-                  );
-                })}
+            <div className="doc-branches-display">
+              <span className="branches-tag">الفروع المتاحة ({clinics.length}):</span>
+              <div className="branches-tags-row">
+                {clinics.map((clinic) => (
+                  <span
+                    key={clinic.id}
+                    className="branch-static-tag"
+                  >
+                    {clinic.shortLocation || clinic.city || clinic.name}
+                  </span>
+                ))}
               </div>
             </div>
           )}
         </div>
 
-        {/* Feature Badges Strip */}
+        {/* Availability Badge */}
         <div className="doc-perks-row">
-          <div className="doc-perk-item" title="حجز مؤكد بدون أي انتظار">
-            <Icon name="clock" size={12} className="perk-icon text-emerald" />
-            <span>دخول فوري (0 انتظار)</span>
-          </div>
           <div className="doc-perk-item slot-highlight" title="أقرب موعد كشف متاح">
             <span className="perk-dot"></span>
             <span>{nextSlotText}</span>
@@ -157,10 +147,10 @@ function DoctorCard({ doc, selectedCity, onBookDoctor }) {
         <button 
           type="button" 
           className="btn btn-primary btn-book-doctor"
-          onClick={() => onBookDoctor(doc, activeSlots[0] || null, activeClinic.id)}
-          title={`احجز الآن في عيادة ${activeClinic.shortLocation || activeClinic.name}`}
+          onClick={() => onBookDoctor(doc)}
+          title={`بدء حجز موعد كشف مع ${doc.name}`}
         >
-          <span className="btn-book-text">احجز الآن في {activeClinic.shortLocation || 'العيادة'}</span>
+          <span className="btn-book-text">احجز موعد كشف</span>
           <Icon name="arrow-left" size={14} className="btn-arrow" />
         </button>
       </div>
