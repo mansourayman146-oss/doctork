@@ -1,18 +1,19 @@
+import './Header.css';
 import React, { useState } from 'react';
-import { CalendarDays, Moon, Siren, Sun, UserRound } from 'lucide-react';
+import Icon from '@/components/ui/Icon';
 
 export default function Header({ 
   onOpenAuth, 
   onOpenEmergency, 
-  currentUser = null,
-  onLogout,
-  bookingsCount = 0,
-  onOpenBookings,
-  theme = 'light',
-  onToggleTheme
+  currentUser = null, 
+  onLogout, 
+  bookingsCount = 0, 
+  onOpenBookings, 
+  theme = 'light', 
+  onToggleTheme 
 }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const ThemeIcon = theme === 'dark' ? Sun : Moon;
+  const themeIconName = theme === 'dark' ? 'sun' : 'moon';
   const themeLabel = theme === 'dark' ? 'الوضع الفاتح' : 'الوضع الداكن';
 
   const toggleDrawer = () => setIsDrawerOpen(prev => !prev);
@@ -24,12 +25,12 @@ export default function Header({
         <div className="header-container">
           
           {/* Brand Logo (Right side in RTL) */}
-          <a href="#" className="brand-logo" aria-label="الصفحة الرئيسية لحجز الأطباء">
+          <a href="#" className="brand-logo" aria-label="الصفحة الرئيسية لدكتورك">
             <div className="logo-icon">
-              <CalendarDays size={23} strokeWidth={2.2} aria-hidden="true" />
+              <span>د</span>
             </div>
             <div className="brand-text-group">
-              <span className="brand-name">حجز الأطباء</span>
+              <span className="brand-name">دكتورك</span>
             </div>
           </a>
 
@@ -52,7 +53,7 @@ export default function Header({
                   onClick={onOpenEmergency}
                   style={{ background: 'none', border: 'none', cursor: 'pointer' }}
                 >
-                  <Siren className="siren-icon" aria-hidden="true" />
+                  <Icon name="siren" className="siren-icon" />
                   <span>طوارئ</span>
                 </button>
               </li>
@@ -74,7 +75,7 @@ export default function Header({
               aria-label={`التبديل إلى ${themeLabel}`}
               title={themeLabel}
             >
-              <ThemeIcon size={18} aria-hidden="true" />
+              <Icon name={themeIconName} size={18} />
               <span>{themeLabel}</span>
             </button>
             {currentUser ? (
@@ -85,7 +86,7 @@ export default function Header({
                   onClick={onOpenBookings}
                   title="عرض وإدارة حجوزاتي"
                 >
-                  <span><CalendarDays size={16} aria-hidden="true" /> حجوزاتي</span>
+                  <span><Icon name="calendar" size={16} /> حجوزاتي</span>
                   {bookingsCount > 0 && <span className="bookings-counter-pill">{bookingsCount}</span>}
                 </button>
 
@@ -148,9 +149,9 @@ export default function Header({
         <div className="drawer-header">
           <div className="brand-logo">
             <div className="logo-icon small">
-              <CalendarDays size={19} strokeWidth={2.2} aria-hidden="true" />
+              <span>د</span>
             </div>
-            <span className="brand-name">حجز الأطباء</span>
+            <span className="brand-name">دكتورك</span>
           </div>
           <button 
             type="button" 
@@ -164,7 +165,7 @@ export default function Header({
         <div className="drawer-content">
           {currentUser && (
             <div className="drawer-user-info">
-              <span className="drawer-avatar"><UserRound size={20} aria-hidden="true" /></span>
+              <span className="drawer-avatar"><Icon name="user" size={20} /></span>
               <div>
                 <strong>{currentUser.name}</strong>
                 <p>{currentUser.email}</p>
@@ -183,7 +184,7 @@ export default function Header({
                 onClick={() => { closeDrawer(); onOpenEmergency(); }}
                 style={{ textAlign: 'right', background: 'none', border: 'none' }}
               >
-                <Siren size={16} aria-hidden="true" /> طوارئ فورية
+                <Icon name="siren" size={16} /> طوارئ فورية
               </button>
             </li>
             <li>
@@ -193,7 +194,7 @@ export default function Header({
                 onClick={() => { closeDrawer(); onOpenBookings(); }}
                 style={{ textAlign: 'right', background: 'none', border: 'none' }}
               >
-                <CalendarDays size={16} aria-hidden="true" /> حجوزاتي الطبية ({bookingsCount})
+                <Icon name="calendar" size={16} /> حجوزاتي الطبية ({bookingsCount})
               </button>
             </li>
             <li><a href="#how-it-works" className="drawer-link" onClick={closeDrawer}>كيف يعمل؟</a></li>
@@ -205,7 +206,7 @@ export default function Header({
             className="theme-toggle-btn drawer-theme-toggle"
             onClick={onToggleTheme}
           >
-            <ThemeIcon size={18} aria-hidden="true" />
+            <Icon name={themeIconName} size={18} />
             <span>التبديل إلى {themeLabel}</span>
           </button>
           

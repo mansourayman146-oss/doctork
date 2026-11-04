@@ -1,0 +1,158 @@
+/* ==========================================================================
+   1. SPECIALTIES SECTION
+   ========================================================================== */
+.specialties-section {
+  padding: 90px 0 80px;
+  background-color: var(--clr-white);
+  border-bottom: 1px solid var(--clr-slate-200);
+}
+
+.specialties-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.specialty-card {
+  position: relative;
+  background-color: var(--clr-slate-50);
+  border: 1.5px solid var(--clr-slate-200);
+  border-radius: 20px;
+  padding: 24px 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all var(--transition-normal);
+  outline: none;
+}
+
+.specialty-card:hover {
+  transform: translateY(-6px);
+  background-color: var(--clr-white);
+  border-color: var(--accent-color, var(--clr-forest-base));
+  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.08);
+}
+
+.specialty-card.selected {
+  border-color: var(--clr-orange-primary);
+  background-color: var(--clr-white);
+  box-shadow: 0 0 0 2px var(--clr-orange-primary), 0 16px 32px -8px rgba(216, 83, 44, 0.2);
+}
+
+.spec-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.spec-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background-color: var(--accent-tint, rgba(24, 59, 43, 0.08));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.spec-icon {
+  width: 26px;
+  height: 26px;
+  color: var(--accent-color, var(--clr-forest-base));
+}
+
+.specialty-card:hover .spec-icon-box {
+  transform: scale(1.1);
+}
+
+.spec-count-badge {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--clr-slate-600);
+  background-color: var(--clr-slate-200);
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+.spec-card-body {
+  margin-bottom: 18px;
+}
+
+.spec-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--clr-slate-900);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.spec-desc {
+  font-size: 13.5px;
+  color: var(--clr-slate-500);
+  line-height: 1.6;
+}
+
+.spec-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--clr-slate-200);
+}
+
+.spec-action-link {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--clr-forest-base);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap var(--transition-fast);
+}
+
+.specialty-card:hover .spec-action-link {
+  gap: 10px;
+  color: var(--clr-orange-primary);
+}
+
+.spec-action-link .arrow-icon {
+  font-size: 15px;
+  transition: transform var(--transition-fast);
+}
+
+.specialty-card:hover .arrow-icon {
+  transform: translateX(-4px);
+}
+
+.no-wait-pill {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #15803d;
+  background-color: #dcfce7;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.specialties-footer-note {
+  margin-top: 40px;
+  background-color: var(--clr-slate-50);
+  border: 1px solid var(--clr-slate-200);
+  border-radius: 14px;
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--clr-slate-700);
+}
+
+.specialties-footer-note .info-icon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  color: var(--clr-orange-primary);
+}
+

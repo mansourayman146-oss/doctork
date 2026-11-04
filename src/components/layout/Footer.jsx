@@ -1,5 +1,6 @@
+import './Footer.css';
 import React from 'react';
-import { CalendarDays, Phone, Siren } from 'lucide-react';
+import Icon from '@/components/ui/Icon';
 
 export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty }) {
   const handleSpecClick = (specName, e) => {
@@ -18,7 +19,7 @@ export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty 
       <div className="footer-emergency-strip">
         <div className="footer-container strip-container">
           <div className="strip-info">
-            <Siren className="strip-siren" aria-hidden="true" />
+            <Icon name="siren" className="strip-siren" />
             <div>
               <strong>تحتاج استشارة أو رعاية عاجلة في الحال؟</strong>
               <p>طواقم الطوارئ وأطباء الرعاية الفورية متاحون 24 ساعة طوال أيام الأسبوع</p>
@@ -26,7 +27,7 @@ export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty 
           </div>
           <div className="strip-actions">
             <a href="tel:16999" className="hotline-btn">
-              <span><Phone size={15} aria-hidden="true" /> اتصل بالخط الساخن:</span>
+              <span><Icon name="phone" size={15} /> اتصل بالخط الساخن:</span>
               <strong>16999</strong>
             </a>
             <button 
@@ -48,11 +49,9 @@ export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty 
             {/* Column 1: Brand Info */}
             <div className="footer-col brand-col">
               <a href="#" className="brand-logo footer-logo">
-                <div className="logo-icon">
-                  <CalendarDays size={23} strokeWidth={2.2} aria-hidden="true" />
-                </div>
+                <div className="logo-icon"><span>د</span></div>
                 <div className="brand-text-group">
-                  <span className="brand-name">حجز الأطباء</span>
+                  <span className="brand-name">دكتورك</span>
                   <span className="brand-divider">|</span>
                   <span className="brand-tagline">بدون زحمة</span>
                 </div>
@@ -129,7 +128,7 @@ export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty 
             <div className="footer-col doctor-join-col">
               <h4 className="footer-col-title">هل أنت طبيب أو مدير عيادة؟</h4>
               <p className="footer-join-text">
-                انضم لأكثر من 200 طبيب متميز إلى شبكتنا، ونظّم مواعيد مرضاك باحترافية، واقضِ على الزحام في عيادتك.
+                انضم لأكثر من 200 طبيب متميز في شبكة دكتورك، نظّم مواعيد مرضاك باحترافية، واقضِ على الزحام في عيادتك.
               </p>
               <button 
                 type="button" 
@@ -160,7 +159,7 @@ export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty 
       <div className="footer-bottom-bar">
         <div className="footer-container bottom-container">
           <p className="copyright-text">
-            جميع الحقوق محفوظة © 2026 منصة حجز الأطباء | رعاية صحية رقمية متكاملة.
+            جميع الحقوق محفوظة © 2026 منصة دكتورك الطبية | رعاية صحية رقمية متكاملة.
           </p>
           <div className="bottom-policy-links">
             <a href="#terms">الشروط والأحكام</a>

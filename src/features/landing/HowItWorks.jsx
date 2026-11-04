@@ -1,31 +1,32 @@
- import React from 'react';
-import { CalendarDays, DoorOpen, MessageCircle, Search, Zap } from 'lucide-react';
+import './HowItWorks.css';
+import React from 'react';
+import Icon from '@/components/ui/Icon';
 
 const STEPS = [
   {
     num: '01',
-    icon: Search,
+    icon: 'search',
     title: 'ابحث عن تخصصك أو طبيبك',
     desc: 'ابحث بالاسم، التخصص الطبي، أو منطقتك السكنية وتصفح ملفات الأطباء وسنوات خبرتهم.',
     badge: 'خطوة سريعة'
   },
   {
     num: '02',
-    icon: CalendarDays,
+    icon: 'calendar',
     title: 'اختر اليوم والموعد المناسب',
     desc: 'اطّلع على جدول المواعيد المتاحة بدقة، واختر التوقيت الذي يناسب جدولك اليومي.',
     badge: 'مرونة تامة'
   },
   {
     num: '03',
-    icon: MessageCircle,
+    icon: 'message',
     title: 'استلم تأكيد الحجز فورياً',
     desc: 'يصلك كود الحجز وتفاصيل العنوان الدقيق عبر تطبيق واتساب فور تأكيد الطلب.',
     badge: 'مجاناً 100%'
   },
   {
     num: '04',
-    icon: DoorOpen,
+    icon: 'door-open',
     title: 'ادخل الكشف في ميعادك',
     desc: 'توجّه للعيادة وادخل مباشرة لغرفة الطبيب دون الحاجة للجلوس في صالات الانتظار والزحمة.',
     badge: 'صفر انتظار'
@@ -60,14 +61,14 @@ export default function HowItWorks() {
                 <div className="step-header">
                   <span className="step-number">{step.num}</span>
                   <div className="step-icon-bubble">
-                    <step.icon className="step-icon" aria-hidden="true" />
+                    <Icon name={step.icon} className="step-icon" />
                   </div>
                 </div>
 
                 <div className="step-body">
                   <span className="step-badge">
                     {step.badge}
-                    {index === STEPS.length - 1 && <Zap size={14} aria-hidden="true" />}
+                    {index === STEPS.length - 1 && <Icon name="zap" size={14} />}
                   </span>
                   <h3 className="step-title">{step.title}</h3>
                   <p className="step-desc">{step.desc}</p>

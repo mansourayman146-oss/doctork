@@ -1,0 +1,1397 @@
+/* ==========================================================================
+   3. BOOKING MODAL (MULTI-STEP WIZARD)
+   ========================================================================== */
+.booking-modal-dialog {
+  max-width: 620px;
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 24px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(24, 59, 43, 0.22) transparent;
+}
+
+/* Elegant Slim Floating Scrollbar for Modal Dialog */
+.booking-modal-dialog::-webkit-scrollbar {
+  width: 5px;
+}
+
+.booking-modal-dialog::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 16px 0;
+}
+
+.booking-modal-dialog::-webkit-scrollbar-thumb {
+  background: rgba(24, 59, 43, 0.22);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+
+.booking-modal-dialog::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-forest-base);
+}
+
+.booking-modal-dialog::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.booking-modal-header {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+  border-bottom: 1px solid rgba(24, 59, 43, 0.12);
+}
+
+.booking-doctor-banner {
+  background-color: var(--clr-slate-100);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid var(--clr-slate-200);
+}
+
+.booking-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 58px;
+  height: 62px;
+  border-radius: 14px;
+  overflow: hidden;
+  color: var(--clr-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 17px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.booking-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+}
+
+.booking-doc-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-doc-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--clr-slate-900);
+}
+
+.booking-doc-spec {
+  font-size: 13px;
+  color: var(--clr-orange-primary);
+  font-weight: 700;
+}
+
+.booking-doc-details {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--clr-slate-600);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   STEPPER PROGRESS BAR
+   ========================================================================== */
+.wizard-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px 14px;
+  background-color: var(--clr-white);
+  border-bottom: 1px solid var(--clr-slate-200);
+  position: relative;
+}
+
+.wizard-step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: default;
+  transition: all var(--transition-fast);
+}
+
+.wizard-step-item.completed {
+  cursor: pointer;
+}
+
+.wizard-step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  background-color: var(--clr-slate-100);
+  border: 1.5px solid var(--clr-slate-300);
+  color: var(--clr-slate-500);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.wizard-step-item.active .wizard-step-circle {
+  background-color: var(--clr-forest-base);
+  border-color: var(--clr-forest-base);
+  color: var(--clr-white);
+  box-shadow: 0 0 0 4px var(--clr-forest-glow);
+}
+
+.wizard-step-item.completed .wizard-step-circle {
+  background-color: #16a34a;
+  border-color: #16a34a;
+  color: var(--clr-white);
+}
+
+.wizard-step-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.wizard-step-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--clr-slate-400);
+  line-height: 1.2;
+}
+
+.wizard-step-item.active .wizard-step-num {
+  color: var(--clr-forest-base);
+}
+
+.wizard-step-title {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--clr-slate-700);
+  white-space: nowrap;
+}
+
+.wizard-step-item.active .wizard-step-title {
+  color: var(--clr-slate-900);
+}
+
+.wizard-stepper-line {
+  flex: 1;
+  height: 2px;
+  background-color: var(--clr-slate-200);
+  margin: 0 10px;
+  transition: background-color var(--transition-fast);
+}
+
+.wizard-stepper-line.active {
+  background-color: #16a34a;
+}
+
+/* ==========================================================================
+   WIZARD STEP CARDS
+   ========================================================================== */
+.wizard-step-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: wizard-fade-in 0.25s ease-out;
+}
+
+@keyframes wizard-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--clr-slate-100);
+}
+
+.step-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.step-number-pill {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background-color: var(--clr-forest-base);
+  color: var(--clr-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 900;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-heading {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--clr-slate-900);
+  margin-bottom: 2px;
+}
+
+.step-instruction {
+  font-size: 12.5px;
+  color: var(--clr-slate-500);
+  margin: 0;
+}
+
+.step-count-badge {
+  font-size: 11.5px;
+  font-weight: 700;
+  background-color: #dcfce7;
+  color: #166534;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   STEP 1: LOCATION CARDS
+   ========================================================================== */
+.booking-clinics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.booking-clinic-card {
+  padding: 16px;
+  background-color: var(--clr-slate-50);
+  border: 1.5px solid var(--clr-slate-200);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: right;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.booking-clinic-card:hover {
+  background-color: var(--clr-white);
+  border-color: var(--clr-forest-base);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.booking-clinic-card.active {
+  background-color: #f0fdf4;
+  border-color: var(--clr-forest-base);
+  box-shadow: 0 0 0 1.5px var(--clr-forest-base), 0 6px 18px rgba(24, 59, 43, 0.08);
+}
+
+.modal-clinic-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.clinic-modal-icon {
+  color: var(--clr-forest-base);
+  flex-shrink: 0;
+}
+
+.modal-clinic-name {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--clr-slate-900);
+  flex: 1;
+}
+
+.booking-clinic-card.active .modal-clinic-name {
+  color: var(--clr-forest-base);
+}
+
+.modal-clinic-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--clr-slate-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.modal-clinic-radio.checked {
+  background-color: var(--clr-forest-base);
+  border-color: var(--clr-forest-base);
+  color: var(--clr-white);
+}
+
+.modal-clinic-loc,
+.modal-clinic-days {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--clr-slate-600);
+  line-height: 1.4;
+}
+
+.modal-clinic-days strong {
+  color: var(--clr-orange-primary);
+}
+
+.modal-clinic-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--clr-slate-200);
+}
+
+.modal-slots-count {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #0369a1;
+  background-color: #e0f2fe;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.modal-clinic-price {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--clr-forest-base);
+}
+
+/* ==========================================================================
+   STEP 2: DATE & TIME SELECTOR
+   ========================================================================== */
+.selected-location-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: #f8fafc;
+  border: 1px solid var(--clr-slate-200);
+  border-radius: 14px;
+  gap: 12px;
+}
+
+.selected-location-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sel-loc-icon {
+  color: var(--clr-forest-base);
+  flex-shrink: 0;
+}
+
+.sel-loc-label {
+  display: block;
+  font-size: 11px;
+  color: var(--clr-slate-500);
+  font-weight: 600;
+}
+
+.sel-loc-name {
+  display: block;
+  font-size: 13.5px;
+  color: var(--clr-slate-900);
+  font-weight: 800;
+}
+
+.sel-loc-address {
+  display: block;
+  font-size: 11.5px;
+  color: var(--clr-slate-600);
+  margin-top: 2px;
+}
+
+.btn-change-step {
+  padding: 6px 12px;
+  background-color: var(--clr-white);
+  border: 1px solid var(--clr-slate-300);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--clr-slate-700);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-change-step:hover {
+  border-color: var(--clr-forest-base);
+  color: var(--clr-forest-base);
+}
+
+.schedule-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.clinic-days-hint {
+  font-size: 11.5px;
+  color: var(--clr-slate-600);
+  background-color: #f8fafc;
+  border: 1px solid var(--clr-slate-200);
+  padding: 3px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.clinic-days-hint strong {
+  color: var(--clr-forest-base);
+}
+
+.wizard-day-selector {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+}
+
+.wizard-day-btn {
+  flex: 1;
+  padding: 9px 8px;
+  background-color: var(--clr-slate-50);
+  border: 1.5px solid var(--clr-slate-200);
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--clr-slate-700);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.wizard-day-btn:hover {
+  background-color: var(--clr-white);
+  border-color: var(--clr-slate-400);
+}
+
+.wizard-day-btn.active {
+  background-color: var(--clr-forest-base);
+  border-color: var(--clr-forest-base);
+  color: var(--clr-white);
+  box-shadow: 0 4px 10px var(--clr-forest-glow);
+}
+
+/* Full Schedule 14-Day Strip */
+.schedule-strip-container {
+  margin-top: 8px;
+  margin-bottom: 12px;
+  background-color: #f8fafc;
+  border: 1px solid var(--clr-slate-200);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.schedule-strip-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--clr-slate-600);
+  margin-bottom: 8px;
+}
+
+.schedule-days-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(24, 59, 43, 0.22) transparent;
+}
+
+.schedule-days-scroll::-webkit-scrollbar {
+  height: 5px;
+}
+
+.schedule-days-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.schedule-days-scroll::-webkit-scrollbar-thumb {
+  background: rgba(24, 59, 43, 0.22);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+
+.schedule-days-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-forest-base);
+}
+
+.schedule-days-scroll::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.schedule-day-card {
+  flex: 0 0 76px;
+  min-width: 76px;
+  padding: 10px 4px;
+  border-radius: 12px;
+  border: 1.5px solid var(--clr-slate-200);
+  background-color: var(--clr-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.schedule-day-card:hover {
+  border-color: var(--clr-forest-base);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.schedule-day-card.active {
+  background-color: var(--clr-forest-base);
+  border-color: var(--clr-forest-base);
+  color: var(--clr-white);
+  box-shadow: 0 4px 12px var(--clr-forest-glow);
+}
+
+.sched-day-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--clr-slate-600);
+}
+
+.sched-date-num {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--clr-slate-900);
+  line-height: 1.2;
+}
+
+.sched-month-name {
+  font-size: 10.5px;
+  color: var(--clr-slate-500);
+}
+
+.sched-status-dot {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-top: 2px;
+}
+
+.sched-status-dot.open {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.sched-status-dot.off {
+  background-color: #f1f5f9;
+  color: #94a3b8;
+}
+
+.schedule-day-card.active .sched-day-name,
+.schedule-day-card.active .sched-date-num,
+.schedule-day-card.active .sched-month-name {
+  color: var(--clr-white);
+}
+
+.schedule-day-card.active .sched-status-dot.open {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: var(--clr-white);
+}
+
+.schedule-day-card.active .sched-status-dot.off {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #e2e8f0;
+}
+
+/* Custom Date Picker */
+.custom-date-picker-row {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.custom-date-input-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: var(--clr-slate-50);
+  border: 1px dashed var(--clr-slate-300);
+  border-radius: 10px;
+  padding: 8px 12px;
+  flex-wrap: wrap;
+}
+
+.custom-date-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--clr-slate-700);
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.custom-date-input {
+  height: 38px;
+  font-size: 13px;
+  font-weight: 700;
+  max-width: 190px;
+  background-color: var(--clr-white);
+  border: 1px solid var(--clr-slate-300);
+  border-radius: 8px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.selected-date-preview-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--clr-slate-800);
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 8px 14px;
+  border-radius: 10px;
+  margin-top: 8px;
+}
+
+/* Unavailable Day Alert */
+.day-unavailable-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background-color: #fef2f2;
+  border: 1.5px solid #fecaca;
+  color: #991b1b;
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-top: 8px;
+  animation: wizard-fade-in 0.2s ease-out;
+}
+
+.unavailable-alert-icon {
+  color: #dc2626;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.unavailable-alert-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.unavailable-alert-body strong {
+  font-size: 13px;
+  color: #b91c1c;
+}
+
+.custom-date-input.input-error {
+  border-color: #ef4444 !important;
+  background-color: #fff5f5;
+  color: #b91c1c;
+}
+
+/* Unavailable Day Slots Box */
+.day-unavailable-slots-box {
+  background-color: #fef2f2;
+  border: 1.5px dashed #fca5a5;
+  border-radius: 14px;
+  padding: 20px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  animation: wizard-fade-in 0.2s ease-out;
+}
+
+.day-unavailable-slots-box .box-alert-icon {
+  color: #ef4444;
+}
+
+.day-unavailable-slots-box h4 {
+  font-size: 15px;
+  font-weight: 800;
+  color: #991b1b;
+  margin: 0;
+}
+
+.day-unavailable-slots-box p {
+  font-size: 12.5px;
+  color: #7f1d1d;
+  margin: 0;
+  max-width: 420px;
+  line-height: 1.5;
+}
+
+.btn-pick-first-available {
+  margin-top: 6px;
+  background-color: #ffffff;
+  border-color: #dc2626;
+  color: #dc2626;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-pick-first-available:hover {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.slot-btn {
+  padding: 11px 8px;
+  background-color: var(--clr-slate-50);
+  border: 1.5px solid var(--clr-slate-200);
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--clr-slate-800);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.slot-btn:hover {
+  background-color: var(--clr-white);
+  border-color: var(--clr-forest-base);
+  color: var(--clr-forest-base);
+  transform: translateY(-1px);
+}
+
+.slot-btn.active {
+  background-color: var(--clr-forest-base);
+  border-color: var(--clr-forest-base);
+  color: var(--clr-white);
+  box-shadow: 0 4px 12px var(--clr-forest-glow);
+}
+
+.slot-check-icon {
+  margin-right: 2px;
+}
+
+.no-slots-alert {
+  background-color: #fff7ed;
+  border: 1px solid #ffedd5;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #9a3412;
+  font-size: 13px;
+}
+
+.text-muted-small {
+  font-size: 11.5px;
+  color: var(--clr-slate-500);
+  font-weight: 500;
+  margin-right: 6px;
+}
+
+/* ==========================================================================
+   STEP 3: PATIENT DETAILS & FULL SUMMARY
+   ========================================================================== */
+.wizard-booking-summary {
+  background-color: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.summary-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed #86efac;
+  padding-bottom: 8px;
+}
+
+.summary-badge {
+  font-size: 12px;
+  font-weight: 800;
+  color: #166534;
+  background-color: #dcfce7;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.summary-edit-btn {
+  background: none;
+  border: none;
+  color: var(--clr-forest-base);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.summary-items-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.summary-label {
+  font-size: 11px;
+  color: var(--clr-slate-600);
+}
+
+.summary-item strong {
+  font-size: 13px;
+  color: var(--clr-slate-900);
+}
+
+.price-tag {
+  color: var(--clr-orange-primary) !important;
+  font-weight: 800;
+}
+
+.booking-types-selector {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.booking-type-btn {
+  padding: 7px 14px;
+  background-color: var(--clr-slate-50);
+  border: 1.5px solid var(--clr-slate-200);
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--clr-slate-700);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.booking-type-btn:hover {
+  background-color: var(--clr-white);
+  border-color: var(--clr-slate-400);
+}
+
+.booking-type-btn.active {
+  background-color: #fff7ed;
+  border-color: var(--clr-orange-primary);
+  color: var(--clr-orange-primary);
+  font-weight: 800;
+}
+
+.required-star {
+  color: #ef4444;
+  margin-right: 3px;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   WIZARD BOTTOM ACTION BUTTONS
+   ========================================================================== */
+.wizard-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--clr-slate-200);
+  margin-top: 4px;
+}
+
+.wizard-btn-prev {
+  height: 46px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wizard-btn-next {
+  height: 46px;
+  padding: 0 24px;
+  font-size: 14px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+}
+
+.wizard-btn-cancel {
+  height: 46px;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+.btn-confirm-booking {
+  height: 48px;
+  padding: 0 26px;
+  font-size: 14.5px;
+  font-weight: 800;
+  background-color: var(--clr-forest-base);
+  color: var(--clr-white);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+}
+
+.btn-confirm-booking:hover:not(:disabled) {
+  background-color: var(--clr-forest-hover);
+}
+
+/* ==========================================================================
+   SUCCESS TICKET SCREEN
+   ========================================================================== */
+.booking-success-box {
+  padding: 30px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.success-badge-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  color: var(--clr-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 900;
+  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4);
+  animation: modal-pop 0.3s ease-out;
+}
+
+.success-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--clr-slate-900);
+}
+
+.success-subtitle {
+  font-size: 14px;
+  color: var(--clr-slate-500);
+  max-width: 440px;
+}
+
+.ticket-card {
+  width: 100%;
+  background-color: var(--clr-slate-50);
+  border: 1.5px dashed var(--clr-forest-base);
+  border-radius: 16px;
+  padding: 18px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ticket-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ticket-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--clr-slate-600);
+}
+
+.ticket-code {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--clr-orange-primary);
+  letter-spacing: 1px;
+}
+
+.ticket-divider {
+  height: 1px;
+  background-color: var(--clr-slate-200);
+}
+
+.ticket-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ticket-mini-label {
+  display: block;
+  font-size: 11.5px;
+  color: var(--clr-slate-500);
+  margin-bottom: 2px;
+}
+
+.ticket-grid strong {
+  font-size: 13.5px;
+  color: var(--clr-slate-800);
+}
+
+.text-forest {
+  color: var(--clr-forest-base) !important;
+}
+
+.ticket-alert {
+  background-color: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* WhatsApp Confirmation Action */
+.ticket-whatsapp-action {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 2px;
+}
+
+.btn-whatsapp-direct {
+  width: 100%;
+  height: 50px;
+  background-color: #25d366;
+  color: #ffffff !important;
+  border-radius: 14px;
+  font-size: 15.5px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-whatsapp-direct:hover {
+  background-color: #1eb756;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(37, 211, 102, 0.45);
+}
+
+.wa-icon-svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.wa-help-text {
+  font-size: 12px;
+  color: var(--clr-slate-500);
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   DARK THEME ADAPTATIONS
+   ========================================================================== */
+:root[data-theme="dark"] .wizard-stepper {
+  background-color: #0f172a;
+  border-color: #1e293b;
+}
+
+:root[data-theme="dark"] .wizard-step-circle {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .wizard-step-title {
+  color: #cbd5e1;
+}
+
+:root[data-theme="dark"] .wizard-step-item.active .wizard-step-title {
+  color: #ffffff;
+}
+
+:root[data-theme="dark"] .wizard-stepper-line {
+  background-color: #334155;
+}
+
+:root[data-theme="dark"] .step-card-header,
+:root[data-theme="dark"] .wizard-actions {
+  border-color: #1e293b;
+}
+
+:root[data-theme="dark"] .step-heading {
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .step-instruction {
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .selected-location-banner {
+  background-color: #131e2e;
+  border-color: #2a394e;
+}
+
+:root[data-theme="dark"] .sel-loc-name {
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .btn-change-step {
+  background-color: #1a2739;
+  border-color: #33445c;
+  color: #d5deeb;
+}
+
+:root[data-theme="dark"] .wizard-day-btn {
+  background-color: #1a2739;
+  border-color: #33445c;
+  color: #d5deeb;
+}
+
+:root[data-theme="dark"] .slot-btn {
+  background-color: #1a2739;
+  border-color: #33445c;
+  color: #d5deeb;
+}
+
+:root[data-theme="dark"] .wizard-booking-summary {
+  background-color: #132820;
+  border-color: #1e4535;
+}
+
+:root[data-theme="dark"] .summary-card-header {
+  border-color: #1e4535;
+}
+
+:root[data-theme="dark"] .summary-item strong {
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .summary-label {
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .schedule-strip-container,
+:root[data-theme="dark"] .custom-date-input-wrap {
+  background-color: #131e2e;
+  border-color: #2a394e;
+}
+
+:root[data-theme="dark"] .schedule-day-card {
+  background-color: #1a2739;
+  border-color: #33445c;
+}
+
+:root[data-theme="dark"] .sched-day-name,
+:root[data-theme="dark"] .sched-date-num {
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .clinic-days-hint {
+  background-color: #131e2e;
+  border-color: #2a394e;
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .custom-date-label {
+  color: #cbd5e1;
+}
+
+:root[data-theme="dark"] .booking-modal-dialog {
+  scrollbar-color: rgba(34, 197, 94, 0.3) transparent;
+}
+
+:root[data-theme="dark"] .booking-modal-dialog::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+:root[data-theme="dark"] .booking-modal-dialog::-webkit-scrollbar-thumb:hover {
+  background: #22c55e;
+}
+
+:root[data-theme="dark"] .schedule-days-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+:root[data-theme="dark"] .schedule-days-scroll::-webkit-scrollbar-thumb:hover {
+  background: #22c55e;
+}
+
+:root[data-theme="dark"] .custom-date-input {
+  background-color: #1a2739;
+  border-color: #33445c;
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .selected-date-preview-pill {
+  background-color: #132820;
+  border-color: #1e4535;
+  color: #86efac;
+}
+
+:root[data-theme="dark"] .day-unavailable-alert {
+  background-color: #3b1219;
+  border-color: #7f1d1d;
+  color: #fca5a5;
+}
+
+:root[data-theme="dark"] .unavailable-alert-icon {
+  color: #f87171;
+}
+
+:root[data-theme="dark"] .unavailable-alert-body strong {
+  color: #fecaca;
+}
+
+:root[data-theme="dark"] .day-unavailable-slots-box {
+  background-color: #2a1216;
+  border-color: #7f1d1d;
+}
+
+:root[data-theme="dark"] .day-unavailable-slots-box h4 {
+  color: #fca5a5;
+}
+
+:root[data-theme="dark"] .day-unavailable-slots-box p {
+  color: #fecaca;
+}
+
+:root[data-theme="dark"] .btn-pick-first-available {
+  background-color: #1e1b2e;
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+:root[data-theme="dark"] .btn-pick-first-available:hover {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+:root[data-theme="dark"] .custom-date-input.input-error {
+  background-color: #3b1219;
+  border-color: #ef4444 !important;
+  color: #fca5a5;
+}
+
+:root[data-theme="dark"] .booking-avatar-wrap {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.16), 0 4px 12px rgba(0, 0, 0, 0.45);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .wizard-stepper {
+    padding: 14px 16px;
+  }
+  .wizard-step-meta {
+    display: none;
+  }
+  .wizard-step-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+  .wizard-step-card {
+    padding: 16px;
+  }
+  .booking-clinics-grid {
+    grid-template-columns: 1fr;
+  }
+  .time-slots-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .summary-items-grid {
+    grid-template-columns: 1fr;
+  }
+  .wizard-actions {
+    flex-wrap: wrap;
+  }
+  .wizard-btn-next,
+  .btn-confirm-booking {
+    width: 100%;
+    margin-right: 0;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,124 @@
+/* ==========================================================================
+   6. TESTIMONIALS SECTION
+   ========================================================================== */
+.testimonials-section {
+  padding: 90px 0 90px;
+  background-color: var(--clr-white);
+  border-bottom: 1px solid var(--clr-slate-200);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.testimonial-card {
+  background-color: var(--clr-slate-50);
+  border: 1.5px solid var(--clr-slate-200);
+  border-radius: 20px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all var(--transition-normal);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  background-color: var(--clr-white);
+  border-color: var(--clr-forest-base);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.08);
+}
+
+.test-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.test-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--clr-forest-base) 0%, var(--clr-forest-light) 100%);
+  color: var(--clr-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 18px;
+  box-shadow: 0 4px 10px var(--clr-forest-glow);
+}
+
+.test-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.test-name {
+  font-size: 16.5px;
+  font-weight: 800;
+  color: var(--clr-slate-900);
+}
+
+.verified-badge-mini {
+  font-size: 11px;
+  font-weight: 700;
+  background-color: #dcfce7;
+  color: #15803d;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.test-role {
+  display: block;
+  font-size: 12.5px;
+  color: var(--clr-slate-500);
+  margin-top: 2px;
+}
+
+.test-stars {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 12px;
+  color: #f59e0b;
+}
+
+.test-stars .star {
+  display: inline-flex;
+}
+
+.test-stars .star svg {
+  width: 14px;
+  height: 14px;
+}
+
+.test-text {
+  font-size: 14.5px;
+  color: var(--clr-slate-700);
+  line-height: 1.75;
+  margin-bottom: 18px;
+  font-style: italic;
+}
+
+.test-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--clr-slate-200);
+  font-size: 12.5px;
+}
+
+.test-doctor-tag {
+  font-weight: 700;
+  color: var(--clr-forest-base);
+}
+
+.test-date {
+  color: var(--clr-slate-400);
+}
+

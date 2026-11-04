@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { CalendarDays } from 'lucide-react';
 
 export default function AuthModal({ 
   isOpen, 
@@ -49,12 +48,10 @@ export default function AuthModal({
       <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div className="modal-title-wrap">
-            <div className="logo-icon small">
-              <CalendarDays size={19} strokeWidth={2.2} aria-hidden="true" />
-            </div>
+            <div className="logo-icon small"><span>د</span></div>
             <div>
               <h3 className="modal-title">
-                {activeTab === 'login' ? 'تسجيل الدخول إلى حجز الأطباء' : 'إنشاء حساب جديد في حجز الأطباء'}
+                {activeTab === 'login' ? 'تسجيل الدخول إلى دكتورك' : 'إنشاء حساب جديد في دكتورك'}
               </h3>
             </div>
           </div>

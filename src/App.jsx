@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import Specialties from './components/Specialties';
-import Doctors from './components/Doctors';
-import HowItWorks from './components/HowItWorks';
-import Testimonials from './components/Testimonials';
-import Footer from './components/Footer';
-import EmergencyModal from './components/EmergencyModal';
-import AuthModal from './components/AuthModal';
-import BookingModal from './components/BookingModal';
-import MyBookingsModal from './components/MyBookingsModal';
-import AddReviewModal from './components/AddReviewModal';
-import Toast from './components/Toast';
+import Header from './components/layout/Header';
+import Hero from './features/landing/Hero';
+import Specialties from './features/landing/Specialties';
+import Doctors from './features/doctors/Doctors';
+import HowItWorks from './features/landing/HowItWorks';
+import Testimonials from './features/landing/Testimonials';
+import Footer from './components/layout/Footer';
+import EmergencyModal from './features/booking/EmergencyModal';
+import AuthModal from './features/landing/AuthModal';
+import BookingModal from './features/booking/BookingModal';
+import MyBookingsModal from './features/booking/MyBookingsModal';
+import AddReviewModal from './features/landing/AddReviewModal';
+import Toast from './components/ui/Toast';
 
 import { dataService } from './services/dataService';
 
