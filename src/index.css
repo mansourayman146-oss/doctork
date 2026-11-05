@@ -773,9 +773,6 @@
   .steps-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .step-connector-arrow {
-    display: none;
-  }
   .comparison-banner {
     grid-template-columns: 1fr;
     padding: 24px;
@@ -1203,17 +1200,18 @@
 .user-profile-menu {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .btn-bookings-badge {
-  background: rgba(24, 59, 43, 0.08);
+  min-height: 46px;
+  background: #edf5f0;
   color: var(--clr-forest-base);
-  border: 1.5px solid rgba(24, 59, 43, 0.22);
+  border: 1.5px solid #cddfd3;
   border-radius: 9999px;
-  padding: 7px 16px;
+  padding: 0 18px;
   font-weight: 700;
-  font-size: 13.5px;
+  font-size: 14px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -1241,9 +1239,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: var(--clr-slate-100);
-  border: 1px solid var(--clr-slate-200);
-  padding: 5px 12px;
+  min-height: 46px;
+  background-color: #f5f8f6;
+  border: 1px solid #dce8df;
+  padding: 5px 8px 5px 14px;
   border-radius: 9999px;
   font-size: 13.5px;
 }
@@ -1259,13 +1258,39 @@
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
-  padding: 2px 6px;
-  border-radius: 4px;
+  padding: 5px 10px;
+  border-radius: 9999px;
   transition: background-color var(--transition-fast);
 }
 
 .btn-logout-mini:hover {
   background-color: #fee2e2;
+}
+
+:root[data-theme="dark"] .user-badge-wrap {
+  background-color: #172235;
+  border-color: #33445c;
+}
+
+:root[data-theme="dark"] .user-greeting {
+  color: #e5ebf3;
+}
+
+:root[data-theme="dark"] .btn-bookings-badge {
+  background-color: #153126;
+  border-color: #28583e;
+  color: #a7e2bd;
+}
+
+:root[data-theme="dark"] .btn-bookings-badge:hover {
+  background-color: var(--clr-forest-base);
+  border-color: var(--clr-forest-base);
+  color: #fff;
+}
+
+:root[data-theme="dark"] .btn-logout-mini:hover {
+  background-color: #3b2019;
+  color: #fca5a5;
 }
 
 .drawer-user-info {
@@ -1524,6 +1549,16 @@
   border: 2px solid #10b981;
   background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
   box-shadow: 0 10px 24px rgba(16, 185, 129, 0.1);
+}
+
+:root[data-theme="dark"] .testimonial-card.user-added {
+  background: #131e2e;
+  border-color: #1e4535;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
+:root[data-theme="dark"] .testimonial-card.user-added:hover {
+  background: #172235;
 }
 
 .new-badge {
@@ -1791,6 +1826,38 @@
   color: #fff;
 }
 
+:root[data-theme="dark"] .btn-outline {
+  background-color: #131e2e;
+  color: #e5ebf3;
+  border-color: #2a394e;
+}
+
+:root[data-theme="dark"] .btn-outline:hover {
+  background-color: #1a2739;
+  border-color: #52647b;
+  color: #fff;
+}
+
+:root[data-theme="dark"] .doctors-page-arrow,
+:root[data-theme="dark"] .pagination-btn {
+  background-color: #131e2e;
+  border-color: #2a394e;
+  color: #d5deeb;
+}
+
+:root[data-theme="dark"] .doctors-page-arrow:hover:not(:disabled),
+:root[data-theme="dark"] .pagination-btn:hover {
+  background-color: #1a2739;
+  border-color: var(--clr-forest-base);
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .pagination-btn.active {
+  background-color: var(--clr-forest-base);
+  border-color: var(--clr-forest-base);
+  color: #fff;
+}
+
 :root[data-theme="dark"] .section-main-title,
 :root[data-theme="dark"] .spec-title,
 :root[data-theme="dark"] .doc-card-name,
@@ -1935,6 +2002,3 @@
 }
 
 [dir="rtl"] .icon-flip-rtl { transform: scaleX(-1); }
-
-
-

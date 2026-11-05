@@ -14,7 +14,7 @@ export default function AppDownload({ onToast }) {
           
           <div className="download-content">
             <div className="download-badge">
-              <span><Icon name="smartphone" size={16} /> تطبيق دكتورك للهواتف الذكية</span>
+              <span><Icon name="smartphone" size={16} /> تطبيق حجز الأطباء للهواتف الذكية</span>
             </div>
             
             <h2 className="download-title">

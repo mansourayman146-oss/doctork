@@ -25,12 +25,12 @@ export default function Header({
         <div className="header-container">
           
           {/* Brand Logo (Right side in RTL) */}
-          <a href="#" className="brand-logo" aria-label="الصفحة الرئيسية لدكتورك">
+          <a href="#" className="brand-logo" aria-label="الصفحة الرئيسية لحجز الأطباء">
             <div className="logo-icon">
-              <span>د</span>
+              <Icon name="calendar-check" size={20} />
             </div>
             <div className="brand-text-group">
-              <span className="brand-name">دكتورك</span>
+              <span className="brand-name">حجز الأطباء</span>
             </div>
           </a>
 
@@ -149,9 +149,9 @@ export default function Header({
         <div className="drawer-header">
           <div className="brand-logo">
             <div className="logo-icon small">
-              <span>د</span>
+              <Icon name="calendar-check" size={16} />
             </div>
-            <span className="brand-name">دكتورك</span>
+            <span className="brand-name">حجز الأطباء</span>
           </div>
           <button 
             type="button" 

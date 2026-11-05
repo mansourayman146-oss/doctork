@@ -90,25 +90,6 @@
   line-height: 1.65;
 }
 
-.step-connector-arrow {
-  position: absolute;
-  left: -14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
-  background-color: var(--clr-white);
-  border: 1px solid var(--clr-slate-300);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--clr-slate-500);
-  font-size: 14px;
-  z-index: 2;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-
 .how-cta-box {
   background: linear-gradient(135deg, var(--clr-forest-dark) 0%, var(--clr-forest-base) 100%);
   border-radius: 20px;
@@ -142,4 +123,3 @@
 .how-cta-box .btn-primary:hover {
   background-color: var(--clr-orange-hover);
 }
-

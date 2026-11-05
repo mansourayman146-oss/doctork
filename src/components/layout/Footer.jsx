@@ -49,9 +49,9 @@ export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty 
             {/* Column 1: Brand Info */}
             <div className="footer-col brand-col">
               <a href="#" className="brand-logo footer-logo">
-                <div className="logo-icon"><span>د</span></div>
+                <div className="logo-icon"><Icon name="calendar-check" size={20} /></div>
                 <div className="brand-text-group">
-                  <span className="brand-name">دكتورك</span>
+                  <span className="brand-name">حجز الأطباء</span>
                   <span className="brand-divider">|</span>
                   <span className="brand-tagline">بدون زحمة</span>
                 </div>
@@ -128,7 +128,7 @@ export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty 
             <div className="footer-col doctor-join-col">
               <h4 className="footer-col-title">هل أنت طبيب أو مدير عيادة؟</h4>
               <p className="footer-join-text">
-                انضم لأكثر من 200 طبيب متميز في شبكة دكتورك، نظّم مواعيد مرضاك باحترافية، واقضِ على الزحام في عيادتك.
+                انضم لأكثر من 200 طبيب متميز في شبكة حجز الأطباء، نظّم مواعيد مرضاك باحترافية، واقضِ على الزحام في عيادتك.
               </p>
               <button 
                 type="button" 
@@ -159,7 +159,7 @@ export default function Footer({ onOpenAuth, onOpenEmergency, onSelectSpecialty 
       <div className="footer-bottom-bar">
         <div className="footer-container bottom-container">
           <p className="copyright-text">
-            جميع الحقوق محفوظة © 2026 منصة دكتورك الطبية | رعاية صحية رقمية متكاملة.
+            جميع الحقوق محفوظة © 2026 منصة حجز الأطباء الطبية | رعاية صحية رقمية متكاملة.
           </p>
           <div className="bottom-policy-links">
             <a href="#terms">الشروط والأحكام</a>

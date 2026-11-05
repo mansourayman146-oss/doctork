@@ -1174,6 +1174,11 @@
 /* ==========================================================================
    DARK THEME ADAPTATIONS
    ========================================================================== */
+:root[data-theme="dark"] .booking-modal-header {
+  background: #131e2e;
+  border-bottom-color: #2a394e;
+}
+
 :root[data-theme="dark"] .wizard-stepper {
   background-color: #0f172a;
   border-color: #1e293b;

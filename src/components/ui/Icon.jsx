@@ -2,6 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCalendarDays,
+  faCalendarCheck,
   faClock,
   faPhone,
   faLocationDot,
@@ -53,6 +54,7 @@ import {
 const ICONS = {
   // Navigation & Actions
   calendar: faCalendarDays,
+  'calendar-check': faCalendarCheck,
   clock: faClock,
   phone: faPhone,
   pin: faLocationDot,

@@ -1,7 +1,17 @@
 import './Doctors.css';
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useSyncExternalStore } from 'react';
 import Icon from '@/components/ui/Icon';
 import { EGYPT_MEDICAL_REGIONS } from '@/lib/constants';
+
+function subscribeToMobileLayout(onChange) {
+  const mediaQuery = window.matchMedia('(max-width: 767px)');
+  mediaQuery.addEventListener('change', onChange);
+  return () => mediaQuery.removeEventListener('change', onChange);
+}
+
+function getMobileLayoutSnapshot() {
+  return typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
+}
 
 
 
@@ -213,6 +223,11 @@ export default function Doctors({
   const [selectedCity, setSelectedCity] = useState('كل المدن');
   const [onlyAvailableToday, setOnlyAvailableToday] = useState(false);
   const [pagination, setPagination] = useState({ page: 1, filterKey: '' });
+  const isMobileLayout = useSyncExternalStore(
+    subscribeToMobileLayout,
+    getMobileLayoutSnapshot,
+    () => false
+  );
 
   // Sync internal search with hero search prop
   useEffect(() => {
@@ -288,7 +303,7 @@ export default function Doctors({
     });
   }, [doctors, activeSpecialty, onlyAvailableToday, selectedCity, internalSearch, searchQuery]);
 
-  const pageSize = 6;
+  const pageSize = isMobileLayout ? 1 : 6;
   const pageCount = Math.max(1, Math.ceil(filteredDoctors.length / pageSize));
   const filterKey = `${activeSpecialty}|${selectedCity}|${onlyAvailableToday}|${internalSearch}|${searchQuery}`;
   const currentPage = pagination.filterKey === filterKey
@@ -436,7 +451,7 @@ export default function Doctors({
                 className="doctors-page-arrow previous"
                 onClick={() => setPagination({ page: currentPage - 1, filterKey })}
                 disabled={currentPage === 1}
-                aria-label="عرض الأطباء السابقين"
+                aria-label={isMobileLayout ? 'عرض الطبيب السابق' : 'عرض الأطباء السابقين'}
               >
                 <Icon name="arrow-right" size={20} />
               </button>
@@ -458,7 +473,7 @@ export default function Doctors({
                 className="doctors-page-arrow next"
                 onClick={() => setPagination({ page: currentPage + 1, filterKey })}
                 disabled={currentPage === pageCount}
-                aria-label="عرض باقي الأطباء"
+                aria-label={isMobileLayout ? 'عرض الطبيب التالي' : 'عرض باقي الأطباء'}
               >
                 <Icon name="arrow-left" size={20} />
               </button>

@@ -74,11 +74,6 @@ export default function HowItWorks() {
                   <p className="step-desc">{step.desc}</p>
                 </div>
 
-                {index < STEPS.length - 1 && (
-                  <div className="step-connector-arrow" aria-hidden="true">
-                    <span>←</span>
-                  </div>
-                )}
               </div>
             ))}
           </div>
